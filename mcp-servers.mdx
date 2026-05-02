@@ -77,45 +77,45 @@ Works with any client that supports [MCP Streamable HTTP transport](https://mode
 
 ### Available Tools
 
-The MCP server exposes 13 tools, one for each API endpoint:
+The MCP server exposes 13 tools using dot-notation names organized into a navigable namespace tree. All tools advertise read-only annotations and ship with output schemas for structured responses.
 
 #### Structure & Navigation
 
 | Tool | Description |
 |------|-------------|
-| `get_table_of_contents` | Get the full table of contents — all 4 parts and 197 papers. Best starting point. |
-| `list_papers` | List all 197 papers with metadata (id, title, partId, labels). |
-| `get_paper` | Get a single paper with all its paragraphs. Supports `include_entities`. |
-| `get_paper_sections` | Get all sections within a paper, ordered by section number. |
+| `toc.get` | Get the full table of contents — all 4 parts and 197 papers. Best starting point. |
+| `papers.list` | List all 197 papers with metadata (id, title, partId, labels). |
+| `papers.get` | Get a single paper with all its paragraphs. Supports `include_entities`. |
+| `papers.sections` | Get all sections within a paper, ordered by section number. |
 
 #### Paragraphs
 
 | Tool | Description |
 |------|-------------|
-| `get_paragraph` | Look up a paragraph by reference. Supports 3 formats: `"1:2.0.1"`, `"2:0.1"`, `"2.0.1"`. |
-| `get_paragraph_context` | Get a paragraph with N paragraphs before and after (configurable `window`, 1-10). |
-| `get_random_paragraph` | Get a random paragraph. Great for exploration. |
+| `paragraphs.get` | Look up a paragraph by reference. Supports 3 formats: `"1:2.0.1"`, `"2:0.1"`, `"2.0.1"`. |
+| `paragraphs.context` | Get a paragraph with N paragraphs before and after (configurable `window`, 1-10). |
+| `paragraphs.random` | Get a random paragraph. Great for exploration. |
 
 #### Search
 
 | Tool | Description |
 |------|-------------|
-| `search` | Full-text search. Modes: `and` (default), `or`, `phrase`. Filters: `paper_id`, `part_id`. |
-| `semantic_search` | Semantic similarity search via vector embeddings. Finds conceptually related passages. |
+| `search.fulltext` | Full-text search. Modes: `and` (default), `or`, `phrase`. Filters: `paper_id`, `part_id`. |
+| `search.semantic` | Semantic similarity search via vector embeddings. Finds conceptually related passages. |
 
 #### Entities
 
 | Tool | Description |
 |------|-------------|
-| `list_entities` | Browse 4,400+ entities (beings, places, orders, races, religions, concepts). Filter by `type` or search by `q`. |
-| `get_entity` | Get entity details: name, type, aliases, description, related entities, citation count. |
-| `get_entity_paragraphs` | Get all paragraphs that mention a specific entity. |
+| `entities.list` | Browse 4,400+ entities (beings, places, orders, races, religions, concepts). Filter by `type` or search by `q`. |
+| `entities.get` | Get entity details: name, type, aliases, description, related entities, citation count. |
+| `entities.paragraphs` | Get all paragraphs that mention a specific entity. |
 
 #### Audio
 
 | Tool | Description |
 |------|-------------|
-| `get_audio` | Get audio file URLs for a paragraph. Accepts any reference format. |
+| `audio.get` | Get audio file URLs for a paragraph. Accepts any reference format. |
 
 ### Resources
 
@@ -139,12 +139,12 @@ The server also publishes two reusable prompt templates for common study workflo
 
 Once connected, try asking your AI agent:
 
-- **"Search the Urantia Book for passages about love"** — uses `search`
-- **"What does the Urantia Book say about what happens after death?"** — uses `semantic_search`
+- **"Search the Urantia Book for passages about love"** — uses `search.fulltext`
+- **"What does the Urantia Book say about what happens after death?"** — uses `search.semantic`
 - **"Read Paper 1 about the Universal Father"** — uses the `urantia://paper/1` resource
-- **"Show me paragraph 2:5.10 with surrounding context"** — uses `get_paragraph_context`
-- **"Find all entities of type 'place'"** — uses `list_entities`
-- **"What entities are mentioned in paragraph 0:0.1?"** — uses `get_paragraph` with `include_entities`
+- **"Show me paragraph 2:5.10 with surrounding context"** — uses `paragraphs.context`
+- **"Find all entities of type 'place'"** — uses `entities.list`
+- **"What entities are mentioned in paragraph 0:0.1?"** — uses `paragraphs.get` with `include_entities`
 - **"Compare what the Urantia Book teaches about the soul with Stoic philosophy"** — uses the `comparative_theology` prompt
 
 ### How It Works

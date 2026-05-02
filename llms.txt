@@ -64,7 +64,7 @@ Add to any MCP-compatible client (Claude Desktop, Cursor, Claude Code, Windsurf)
 
 {"mcpServers":{"urantia-papers":{"url":"https://api.urantia.dev/mcp"}}}
 
-Exposes 13 tools: get_table_of_contents, list_papers, get_paper, get_paper_sections, get_random_paragraph, get_paragraph, get_paragraph_context, search, semantic_search, list_entities, get_entity, get_entity_paragraphs, get_audio. No API key required. Uses Streamable HTTP transport.
+Exposes 13 tools (dot-notation): toc.get, papers.list, papers.get, papers.sections, paragraphs.random, paragraphs.get, paragraphs.context, search.fulltext, search.semantic, entities.list, entities.get, entities.paragraphs, audio.get. Plus 2 resource templates (urantia://paper/{id}, urantia://entity/{id}) and 2 prompt templates (study_assistant, comparative_theology). No API key required. Uses Streamable HTTP transport.
 
 ## OpenAPI Specification
 
