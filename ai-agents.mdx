@@ -77,10 +77,39 @@ The `/paragraphs/:ref/context` endpoint is particularly useful for RAG. It retur
 
 This provides the LLM with the narrative flow around a passage, which leads to more accurate and contextual responses.
 
+## Function-calling schemas
+
+If you're working directly with the OpenAI or Anthropic SDKs (rather than going through MCP), the API publishes ready-to-use tool definitions for both. Drop them straight into your `tools` array — no manual schema authoring required.
+
+<CodeGroup>
+```ts OpenAI
+const { tools } = await fetch("https://api.urantia.dev/tools/openai").then(r => r.json());
+
+const completion = await openai.chat.completions.create({
+  model: "gpt-5",
+  messages,
+  tools, // 13 tools, ready to go
+});
+```
+
+```ts Anthropic
+const { tools } = await fetch("https://api.urantia.dev/tools/anthropic").then(r => r.json());
+
+const message = await anthropic.messages.create({
+  model: "claude-opus-4-7",
+  max_tokens: 1024,
+  tools, // 13 tools, ready to go
+  messages,
+});
+```
+</CodeGroup>
+
+Each tool corresponds 1:1 with an MCP tool, so you can dispatch the call against either the REST API or the published `@urantia/api` SDK.
+
 ## MCP Servers
 
 <Card title="MCP Servers" icon="plug" href="/mcp-servers">
-  Connect AI agents to the Urantia Book via 2 MCP servers — 13 API tools + docs search. Full setup instructions, tool reference, and example prompts.
+  Connect AI agents to the Urantia Book via 2 MCP servers — 13 tools + 2 resources + 2 prompts on the API server, plus docs search. One-click install via Smithery.
 </Card>
 
 ## OpenAPI spec

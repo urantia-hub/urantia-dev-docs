@@ -1,27 +1,33 @@
 ---
 title: "MCP Servers - Give AI Agents Access to the Urantia Book"
 sidebarTitle: "MCP Servers"
-description: "Connect Claude Desktop, Cursor, Windsurf, and other AI agents to the Urantia Papers API and documentation via MCP. 14 tools across 2 servers — zero setup."
+description: "Connect Claude Desktop, Cursor, Windsurf, and other AI agents to the Urantia Papers API and documentation via MCP. 13 tools, 2 resource templates, 2 prompts — zero setup."
 ---
 
 There are two MCP servers available — one for accessing Urantia Book data directly, and one for searching this documentation site.
 
-| Server | URL | Tools | Purpose |
-|--------|-----|-------|---------|
-| **API MCP Server** | `api.urantia.dev/mcp` | 13 tools | Search, paragraphs, entities, audio |
+| Server | URL | Capabilities | Purpose |
+|--------|-----|--------------|---------|
+| **API MCP Server** | `api.urantia.dev/mcp` | 13 tools, 2 resources, 2 prompts | Search, paragraphs, entities, audio |
 | **Docs MCP Server** | `urantia.dev/mcp` | 1 tool | Search the documentation site |
 
 ## API MCP Server
 
-The Urantia Papers API includes a built-in [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server that exposes all 13 API endpoints as tools any AI agent can use natively.
+The Urantia Papers API includes a built-in [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server that exposes API endpoints as tools, papers/entities as resources, and study workflows as prompts that any AI agent can use natively.
 
 ```
 https://api.urantia.dev/mcp
 ```
 
-### Setup
+### One-click install via Smithery
 
-Add the server to your MCP client config. No API key, no installation, no build step.
+The fastest way to add this server to your MCP client is via [Smithery](https://smithery.ai/servers/urantiahub/urantia-papers) — it generates the right config snippet for your client and handles the install.
+
+[![smithery badge](https://smithery.ai/badge/urantiahub/urantia-papers)](https://smithery.ai/servers/urantiahub/urantia-papers)
+
+### Manual setup
+
+Add the server to your MCP client config directly. No API key, no installation, no build step.
 
 <Tabs>
   <Tab title="Claude Desktop">
@@ -111,16 +117,35 @@ The MCP server exposes 13 tools, one for each API endpoint:
 |------|-------------|
 | `get_audio` | Get audio file URLs for a paragraph. Accepts any reference format. |
 
+### Resources
+
+In addition to tools, the server exposes two resource templates clients can read directly:
+
+| URI Template | Description |
+|--------------|-------------|
+| `urantia://paper/{id}` | A single paper rendered as plaintext markdown with section headings and paragraph references. Useful for full-paper context in RAG or summarization. |
+| `urantia://entity/{id}` | An entity (being, place, order, race, religion, or concept) with description, aliases, related entities, and references to all paragraphs that mention it. |
+
+### Prompts
+
+The server also publishes two reusable prompt templates for common study workflows:
+
+| Prompt | Arguments | Description |
+|--------|-----------|-------------|
+| `study_assistant` | `topic` (optional) | Primes the model to act as a Urantia Book study guide. Optionally focuses the session on a specific topic or passage. |
+| `comparative_theology` | `topic`, `tradition` | Structures a comparison between a Urantia Book teaching and another religious or philosophical tradition (e.g. Buddhism, Stoicism). |
+
 ### Example Prompts
 
 Once connected, try asking your AI agent:
 
 - **"Search the Urantia Book for passages about love"** — uses `search`
 - **"What does the Urantia Book say about what happens after death?"** — uses `semantic_search`
-- **"Read Paper 1 about the Universal Father"** — uses `get_paper`
+- **"Read Paper 1 about the Universal Father"** — uses the `urantia://paper/1` resource
 - **"Show me paragraph 2:5.10 with surrounding context"** — uses `get_paragraph_context`
 - **"Find all entities of type 'place'"** — uses `list_entities`
 - **"What entities are mentioned in paragraph 0:0.1?"** — uses `get_paragraph` with `include_entities`
+- **"Compare what the Urantia Book teaches about the soul with Stoic philosophy"** — uses the `comparative_theology` prompt
 
 ### How It Works
 
@@ -140,7 +165,7 @@ Both give you access to the same data. Choose based on your use case:
 | **Best for** | AI agents (Claude, Cursor, etc.) | Apps, scripts, manual exploration |
 | **Protocol** | JSON-RPC over Streamable HTTP | Standard HTTP |
 | **Auth** | None | None |
-| **Tools/Endpoints** | 13 tools | 13 endpoints |
+| **Surface** | 13 tools, 2 resources, 2 prompts | All endpoints + `/tools/openai`, `/tools/anthropic` for SDK use |
 | **Response format** | MCP content blocks | JSON with `data`/`meta` wrappers |
 
 ## Docs MCP Server
