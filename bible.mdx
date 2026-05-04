@@ -139,20 +139,68 @@ All errors follow [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457.html) Proble
 - **Source:** [eBible.org](https://ebible.org/), package `eng-web`, snapshot date 2026-04-23
 - **Editor:** Michael Paul Johnson and the WEB team
 
-## Cross-references
+## Cross-references and search
 
-The API ships pre-computed semantic cross-references for three of the four cross-corpus query patterns:
+Five query surfaces span the cross-corpus space:
 
-| Use case | How to query |
-|---|---|
-| User input → UB paragraphs | `POST /search/semantic` (live, `text-embedding-3-small` + HNSW) |
-| **UB paragraph → UB paragraphs** | `GET /paragraphs/{ref}?include=paragraphParallels` |
-| **UB paragraph → Bible verses** | `GET /paragraphs/{ref}?include=bibleParallels` |
-| **Bible verse → UB paragraphs** | `GET /bible/{book}/{chapter}/{verse}/paragraphs` |
+| Use case | How to query | Backing |
+|---|---|---|
+| User input → UB paragraphs | `POST /search/semantic` | live, `text-embedding-3-small` + HNSW |
+| **User input → Bible verses (with UB paragraphs)** | `POST /bible/search/semantic` | live, `text-embedding-3-small` + HNSW; UB paragraphs joined from pre-computed `bible_parallels` |
+| **UB paragraph → UB paragraphs** | `GET /paragraphs/{ref}?include=paragraphParallels` | pre-computed, `text-embedding-3-large` |
+| **UB paragraph → Bible verses** | `GET /paragraphs/{ref}?include=bibleParallels` | pre-computed, `text-embedding-3-large` |
+| **Bible verse → UB paragraphs** | `GET /bible/{book}/{chapter}/{verse}/paragraphs` | pre-computed, `text-embedding-3-large` |
 
-The bottom three are pre-computed at seed time using `text-embedding-3-large` (3072-d) — every response is a fast index lookup. The first stays on the live HNSW path with `text-embedding-3-small` since query text is unbounded.
+Live searches use 1536-d 3-small for HNSW indexability (pgvector caps HNSW at 2000-d for the `vector` type). Pre-computed cross-references use 3072-d 3-large for the +8pt empirical quality benefit on Bible-style retrieval — fine for batch compute, infeasible for live queries.
 
 You can combine includes: `?include=entities,bibleParallels,paragraphParallels` returns all three on a single round-trip.
+
+### Bible semantic search
+
+Free-form natural-language search across all 17,641 Bible chunks. Each result includes the top-N pre-computed Urantia paragraphs related to that chunk, so a single round-trip surfaces both the Bible matches and the relevant UB content.
+
+```bash
+curl -X POST https://api.urantia.dev/bible/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"love your enemies","limit":5,"paragraphLimit":3}'
+```
+
+Optional filters:
+
+- `canon`: `"ot"` | `"deuterocanon"` | `"nt"` — restrict to a part of the canon
+- `bookCode`: any OSIS, USFM, full name, or alias — restrict to a single book
+- `paragraphLimit`: 0–10, default 3 — how many UB paragraphs to attach per Bible chunk (0 suppresses)
+
+Response:
+
+```json
+{
+  "data": [
+    {
+      "id": "Matt.5.43-48",
+      "reference": "Matthew 5:43-48",
+      "bookCode": "Matt",
+      "bookName": "Matthew",
+      "canon": "nt",
+      "chapter": 5,
+      "verseStart": 43,
+      "verseEnd": 48,
+      "text": "“You have heard that it was said, ‘You shall love your neighbor and hate your enemy.’ But I tell you, love your enemies, bless those who curse you...",
+      "similarity": 0.536,
+      "paragraphs": [
+        {
+          "standardReferenceId": "140:3.16",
+          "paperTitle": "The Ordination of the Twelve",
+          "text": "...",
+          "similarity": 0.811,
+          "rank": 1
+        }
+      ]
+    }
+  ],
+  "meta": { "page": 0, "limit": 5, "total": 17641, "totalPages": 3529 }
+}
+```
 
 ### UB paragraph → UB paragraphs
 
