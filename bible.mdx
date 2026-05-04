@@ -149,7 +149,7 @@ Five query surfaces span the cross-corpus space:
 | **User input → Bible verses (with UB paragraphs)** | `POST /bible/search/semantic` | live, `text-embedding-3-small` + HNSW; UB paragraphs joined from pre-computed `bible_parallels` |
 | **UB paragraph → UB paragraphs** | `GET /paragraphs/{ref}?include=urantiaParallels` | pre-computed, `text-embedding-3-large` |
 | **UB paragraph → Bible verses** | `GET /paragraphs/{ref}?include=bibleParallels` | pre-computed, `text-embedding-3-large` |
-| **Bible verse → UB paragraphs** | `GET /bible/{book}/{chapter}/{verse}/paragraphs` | pre-computed, `text-embedding-3-large` |
+| **Bible verse → UB paragraphs** | `GET /bible/{book}/{chapter}/{verse}/urantia-parallels` | pre-computed, `text-embedding-3-large` |
 
 Live searches use 1536-d 3-small for HNSW indexability (pgvector caps HNSW at 2000-d for the `vector` type). Pre-computed cross-references use 3072-d 3-large for the +8pt empirical quality benefit on Bible-style retrieval — fine for batch compute, infeasible for live queries.
 
@@ -274,8 +274,8 @@ The response gains a `bibleParallels` array with up to 10 entries:
 ### Get the UB paragraphs related to a Bible verse (reverse query)
 
 ```bash
-curl 'https://api.urantia.dev/bible/Gen/1/1/paragraphs'
-curl 'https://api.urantia.dev/bible/Matt/5/3/paragraphs'
+curl 'https://api.urantia.dev/bible/Gen/1/1/urantia-parallels'
+curl 'https://api.urantia.dev/bible/Matt/5/3/urantia-parallels'
 ```
 
 Returns the verse, the chunk it belongs to, and up to 10 UB paragraphs ranked by semantic similarity:
