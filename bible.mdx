@@ -139,6 +139,48 @@ All errors follow [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457.html) Proble
 - **Source:** [eBible.org](https://ebible.org/), package `eng-web`, snapshot date 2026-04-23
 - **Editor:** Michael Paul Johnson and the WEB team
 
+## Cross-references
+
+The API ships pre-computed semantic cross-references for three of the four cross-corpus query patterns:
+
+| Use case | How to query |
+|---|---|
+| User input → UB paragraphs | `POST /search/semantic` (live, `text-embedding-3-small` + HNSW) |
+| **UB paragraph → UB paragraphs** | `GET /paragraphs/{ref}?include=paragraphParallels` |
+| **UB paragraph → Bible verses** | `GET /paragraphs/{ref}?include=bibleParallels` |
+| **Bible verse → UB paragraphs** | `GET /bible/{book}/{chapter}/{verse}/paragraphs` |
+
+The bottom three are pre-computed at seed time using `text-embedding-3-large` (3072-d) — every response is a fast index lookup. The first stays on the live HNSW path with `text-embedding-3-small` since query text is unbounded.
+
+You can combine includes: `?include=entities,bibleParallels,paragraphParallels` returns all three on a single round-trip.
+
+### UB paragraph → UB paragraphs
+
+```bash
+curl 'https://api.urantia.dev/paragraphs/1:0.1?include=paragraphParallels'
+```
+
+Returns the top 10 most-similar OTHER Urantia paragraphs by cosine similarity. Self-references are filtered out.
+
+```json
+{
+  "data": {
+    "standardReferenceId": "1:0.1",
+    "text": "THE Universal Father is the God of all creation...",
+    "paragraphParallels": [
+      {
+        "standardReferenceId": "1:1.1",
+        "paperTitle": "The Universal Father",
+        "text": "Of all the names by which God the Father is known...",
+        "similarity": 0.832,
+        "rank": 1,
+        "embeddingModel": "text-embedding-3-large"
+      }
+    ]
+  }
+}
+```
+
 ## Cross-references — UB ↔ Bible parallels
 
 Pre-computed semantic parallels between every Urantia paragraph and the Bible, in both directions. ~146,000 UB→Bible rows + ~176,000 Bible→UB rows, top-10 nearest neighbors per source. Generated with OpenAI's `text-embedding-3-large` (3072-d) and exact KNN.
