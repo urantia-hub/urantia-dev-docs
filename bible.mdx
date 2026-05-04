@@ -162,14 +162,14 @@ Free-form natural-language search across all 17,641 Bible chunks. Each result in
 ```bash
 curl -X POST https://api.urantia.dev/bible/search/semantic \
   -H "Content-Type: application/json" \
-  -d '{"q":"love your enemies","limit":5,"paragraphLimit":3}'
+  -d '{"q":"love your enemies","limit":5,"urantiaParallelLimit":3}'
 ```
 
 Optional filters:
 
 - `canon`: `"ot"` | `"deuterocanon"` | `"nt"` — restrict to a part of the canon
 - `bookCode`: any OSIS, USFM, full name, or alias — restrict to a single book
-- `paragraphLimit`: 0–10, default 3 — how many UB paragraphs to attach per Bible chunk (0 suppresses)
+- `urantiaParallelLimit`: 0–10, default 3 — how many UB paragraphs to attach per Bible chunk (0 suppresses)
 
 Response:
 
