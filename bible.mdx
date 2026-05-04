@@ -1,0 +1,221 @@
+---
+title: "Bible API - World English Bible (eng-web)"
+sidebarTitle: "Bible"
+description: "Query the entire World English Bible (eng-web) including deuterocanon. 38,034 verses across 81 books, public domain, OSIS book codes, forgiving alias resolution."
+---
+
+The API hosts the entire **World English Bible** (eng-web Classic edition) as a queryable resource. 38,034 verses across 81 books — the full ecumenical canon: 39 Old Testament + 15 deuterocanonical + 27 New Testament. Public domain text from [eBible.org](https://ebible.org/Scriptures/eng-web_usfm.zip), updated to the 2026-04-23 snapshot.
+
+The Bible API exists as the foundation for forthcoming UB ↔ Bible cross-references. It's also useful on its own for any agent or app that needs verse-level Bible access alongside the Urantia Papers.
+
+## Why WEB Classic
+
+Three deliberate choices:
+
+- **WEB Classic, not the British or Protestant editions.** The Classic edition (`eng-web`) renders God's proper name as "Yahweh" instead of "LORD," matching the Urantia Papers' usage in Papers 96–97.
+- **Includes deuterocanon.** WEB's ecumenical edition has Tobit, Judith, Sirach, Wisdom, Baruch (with the Letter of Jeremiah as chapter 6), Greek Daniel (with Prayer of Azariah, Susanna, and Bel and the Dragon embedded in context), and the Maccabees series.
+- **Public domain.** No license restrictions — the only constraint is that the name "World English Bible" is reserved for faithful copies.
+
+## Book codes (OSIS)
+
+We use OSIS book codes throughout: `Gen`, `Matt`, `1Macc`, `DanGr`, etc. — short, machine-friendly, standardized across CrossWire.
+
+The endpoint accepts **OSIS, USFM (`GEN`), full names (`Genesis`), and common aliases**, all case-insensitive and tolerant of hyphens/underscores:
+
+```bash
+curl https://api.urantia.dev/bible/Gen          # OSIS
+curl https://api.urantia.dev/bible/GEN          # USFM
+curl https://api.urantia.dev/bible/genesis      # full name
+curl https://api.urantia.dev/bible/1-maccabees  # aliased
+```
+
+Embedded books resolve to their containing canonical book. `letterofjeremiah` and `epjer` both return Baruch (since the Letter of Jeremiah is Baruch chapter 6). `susanna` and `belandthedragon` both return Greek Daniel.
+
+## Endpoints
+
+### List all 81 books
+
+```bash
+curl https://api.urantia.dev/bible/books
+```
+
+Returns books in canonical ecumenical order with chapter and verse counts:
+
+```json
+{
+  "data": [
+    {
+      "bookCode": "Gen",
+      "bookName": "Genesis",
+      "fullName": "The First Book of Moses, Commonly Called Genesis",
+      "abbr": "Gen",
+      "bookOrder": 1,
+      "canon": "ot",
+      "chapterCount": 50,
+      "verseCount": 1533
+    }
+    // ...80 more
+  ]
+}
+```
+
+### Get a single book
+
+```bash
+curl https://api.urantia.dev/bible/Matt
+```
+
+```json
+{
+  "data": {
+    "bookCode": "Matt",
+    "bookName": "Matthew",
+    "fullName": "The Gospel According to Matthew",
+    "abbr": "Matt",
+    "bookOrder": 55,
+    "canon": "nt",
+    "chapterCount": 28,
+    "verseCount": 1071
+  }
+}
+```
+
+### Get a chapter
+
+```bash
+curl https://api.urantia.dev/bible/Gen/1
+```
+
+Returns all verses in the chapter, ordered by verse number. Each verse is the same shape as a single-verse response.
+
+### Get a single verse
+
+```bash
+curl https://api.urantia.dev/bible/Gen/1/1
+```
+
+```json
+{
+  "data": {
+    "id": "Gen.1.1",
+    "reference": "Genesis 1:1",
+    "bookCode": "Gen",
+    "bookName": "Genesis",
+    "bookOrder": 1,
+    "canon": "ot",
+    "chapter": 1,
+    "verse": 1,
+    "text": "In the beginning, God created the heavens and the earth.",
+    "translation": "web"
+  }
+}
+```
+
+## Deuterocanon
+
+The deuterocanon flag is exposed as `canon: "deuterocanon"` so consumers can filter:
+
+```bash
+# Greek Daniel (Daniel + Prayer of Azariah + Susanna + Bel and the Dragon)
+curl https://api.urantia.dev/bible/DanGr/3/24
+
+# 1 Maccabees
+curl https://api.urantia.dev/bible/1Macc/2/19
+```
+
+WEB embeds the Prayer of Azariah, Susanna, and Bel and the Dragon inside Greek Daniel in context (because they make more sense that way — the WEB editor's deliberate choice). The Letter of Jeremiah is included as chapter 6 of Baruch.
+
+## Errors
+
+All errors follow [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457.html) Problem Details:
+
+- `404` for unknown book codes (`/bible/NotABook`)
+- `404` for missing chapters (`/bible/Gen/999`)
+- `404` for missing verses (`/bible/Gen/1/9999`)
+
+## Source attribution
+
+- **Translation:** World English Bible (WEB) Classic edition, public domain
+- **Source:** [eBible.org](https://ebible.org/), package `eng-web`, snapshot date 2026-04-23
+- **Editor:** Michael Paul Johnson and the WEB team
+
+## Cross-references — UB ↔ Bible parallels
+
+Pre-computed semantic parallels between every Urantia paragraph and the Bible, in both directions. ~146,000 UB→Bible rows + ~176,000 Bible→UB rows, top-10 nearest neighbors per source. Generated with OpenAI's `text-embedding-3-large` (3072-d) and exact KNN.
+
+### Get the Bible verses related to a UB paragraph
+
+Add `?include=bibleParallels` to any single-paragraph endpoint:
+
+```bash
+curl 'https://api.urantia.dev/paragraphs/1:0.1?include=bibleParallels'
+curl 'https://api.urantia.dev/paragraphs/random?include=bibleParallels'
+curl 'https://api.urantia.dev/paragraphs/1:0.1?include=entities,bibleParallels'
+curl 'https://api.urantia.dev/paragraphs/1:0.1?include=bibleParallels&format=rag'
+```
+
+The response gains a `bibleParallels` array with up to 10 entries:
+
+```json
+{
+  "data": {
+    "id": "1:1.0.1",
+    "standardReferenceId": "1:0.1",
+    "text": "THE Universal Father is the God of all creation...",
+    "bibleParallels": [
+      {
+        "chunkId": "Sir.18.1",
+        "reference": "Sirach 18:1",
+        "bookCode": "Sir",
+        "chapter": 18,
+        "verseStart": 1,
+        "verseEnd": 1,
+        "text": "He who lives forever created the whole universe.",
+        "similarity": 0.488,
+        "rank": 1,
+        "source": "semantic",
+        "embeddingModel": "text-embedding-3-large"
+      }
+    ]
+  }
+}
+```
+
+### Get the UB paragraphs related to a Bible verse (reverse query)
+
+```bash
+curl 'https://api.urantia.dev/bible/Gen/1/1/paragraphs'
+curl 'https://api.urantia.dev/bible/Matt/5/3/paragraphs'
+```
+
+Returns the verse, the chunk it belongs to, and up to 10 UB paragraphs ranked by semantic similarity:
+
+```json
+{
+  "data": {
+    "verse": { "reference": "Matthew 5:3", ... },
+    "chunk": { "id": "Matt.5.3", "reference": "Matthew 5:3", ... },
+    "paragraphs": [
+      {
+        "standardReferenceId": "140:3.3",
+        "paperTitle": "The Ordination of the Twelve",
+        "text": "Happy are the poor in spirit, the humble, for theirs are the treasures of the kingdom of heaven...",
+        "similarity": 0.854,
+        "rank": 1
+      }
+    ]
+  }
+}
+```
+
+### Honest framing
+
+**These are *semantic* parallels, not curated parallels.** OpenAI's embedding model treats surface-level vocabulary as meaning, but the Urantia Papers use standard religious terms ("Father", "Spirit", "Son") in nonstandard ways. Some matches will be subtly wrong.
+
+Use them as starting points for further reading and as RAG context for AI agents — not as authoritative parallels. Every row carries `similarity`, `source: "semantic"`, and `embeddingModel` so consumers can filter and audit.
+
+In practice the system surfaces some genuinely striking matches: Matt 5:3 (Beatitudes) → UB 140:3.3 ("Happy are the poor in spirit, the humble") at similarity 0.854 — the UB literally rephrases the Sermon on the Mount.
+
+### Why no Faw's Paramony
+
+Duane Faw's 1986 *Paramony* is the gold-standard hand-curated UB↔Bible reference, but its license is uncertain and we generate strictly better RAG context with semantic search at 100% paragraph coverage (vs Faw's ~30%). Our schema reserves a `source: "paramony"` value for a future curated layer if his license ever clears.

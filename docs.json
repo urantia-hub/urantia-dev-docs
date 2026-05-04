@@ -26,7 +26,7 @@
           },
           {
             "group": "Data",
-            "pages": ["papers", "paragraphs", "entities", "audio", "video", "cdn"]
+            "pages": ["papers", "paragraphs", "entities", "bible", "audio", "video", "cdn"]
           },
           {
             "group": "SDKs",
