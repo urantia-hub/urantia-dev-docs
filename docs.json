@@ -93,6 +93,17 @@
             ]
           },
           {
+            "group": "Bible",
+            "pages": [
+              "api-reference/endpoint/list-bible-books",
+              "api-reference/endpoint/get-bible-book",
+              "api-reference/endpoint/get-bible-chapter",
+              "api-reference/endpoint/get-bible-verse",
+              "api-reference/endpoint/get-bible-verse-urantia-parallels",
+              "api-reference/endpoint/bible-semantic-search"
+            ]
+          },
+          {
             "group": "Audio",
             "pages": ["api-reference/endpoint/get-audio"]
           },

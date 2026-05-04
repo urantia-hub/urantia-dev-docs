@@ -92,8 +92,19 @@ const { data: audio } = await api.audio.get('2:0.1')
 // Citations (APA, MLA, Chicago, BibTeX)
 const { data: cite } = await api.cite.get('2:0.1', 'apa')
 
-// Vector embeddings
-const { data: embeddings } = await api.embeddings.get(['2:0.1', '2:0.2'])
+// Vector embeddings (default: text-embedding-3-large 3072-d)
+const { data: vec } = await api.embeddings.get('2:0.1')
+const { data: vecSmall } = await api.embeddings.get('2:0.1', { model: 'small' })
+
+// Bible — UB↔Bible cross-references
+const { data: bibleHits } = await api.bible.semanticSearch({
+  q: 'love your enemies',
+  limit: 5,
+  urantiaParallelLimit: 3,
+})
+const { data: para } = await api.paragraphs.get('1:0.1', {
+  include: 'entities,bibleParallels,urantiaParallels',
+})
 ```
 
 ### User Data (Authenticated)
