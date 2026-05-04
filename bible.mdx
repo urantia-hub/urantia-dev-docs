@@ -147,13 +147,13 @@ Five query surfaces span the cross-corpus space:
 |---|---|---|
 | User input → UB paragraphs | `POST /search/semantic` | live, `text-embedding-3-small` + HNSW |
 | **User input → Bible verses (with UB paragraphs)** | `POST /bible/search/semantic` | live, `text-embedding-3-small` + HNSW; UB paragraphs joined from pre-computed `bible_parallels` |
-| **UB paragraph → UB paragraphs** | `GET /paragraphs/{ref}?include=paragraphParallels` | pre-computed, `text-embedding-3-large` |
+| **UB paragraph → UB paragraphs** | `GET /paragraphs/{ref}?include=urantiaParallels` | pre-computed, `text-embedding-3-large` |
 | **UB paragraph → Bible verses** | `GET /paragraphs/{ref}?include=bibleParallels` | pre-computed, `text-embedding-3-large` |
 | **Bible verse → UB paragraphs** | `GET /bible/{book}/{chapter}/{verse}/paragraphs` | pre-computed, `text-embedding-3-large` |
 
 Live searches use 1536-d 3-small for HNSW indexability (pgvector caps HNSW at 2000-d for the `vector` type). Pre-computed cross-references use 3072-d 3-large for the +8pt empirical quality benefit on Bible-style retrieval — fine for batch compute, infeasible for live queries.
 
-You can combine includes: `?include=entities,bibleParallels,paragraphParallels` returns all three on a single round-trip.
+You can combine includes: `?include=entities,bibleParallels,urantiaParallels` returns all three on a single round-trip.
 
 ### Bible semantic search
 
@@ -187,7 +187,7 @@ Response:
       "verseEnd": 48,
       "text": "“You have heard that it was said, ‘You shall love your neighbor and hate your enemy.’ But I tell you, love your enemies, bless those who curse you...",
       "similarity": 0.536,
-      "paragraphs": [
+      "urantiaParallels": [
         {
           "standardReferenceId": "140:3.16",
           "paperTitle": "The Ordination of the Twelve",
@@ -205,7 +205,7 @@ Response:
 ### UB paragraph → UB paragraphs
 
 ```bash
-curl 'https://api.urantia.dev/paragraphs/1:0.1?include=paragraphParallels'
+curl 'https://api.urantia.dev/paragraphs/1:0.1?include=urantiaParallels'
 ```
 
 Returns the top 10 most-similar OTHER Urantia paragraphs by cosine similarity. Self-references are filtered out.
@@ -215,7 +215,7 @@ Returns the top 10 most-similar OTHER Urantia paragraphs by cosine similarity. S
   "data": {
     "standardReferenceId": "1:0.1",
     "text": "THE Universal Father is the God of all creation...",
-    "paragraphParallels": [
+    "urantiaParallels": [
       {
         "standardReferenceId": "1:1.1",
         "paperTitle": "The Universal Father",
