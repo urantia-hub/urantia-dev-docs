@@ -1,14 +1,14 @@
 ---
 title: "MCP Servers - Give AI Agents Access to the Urantia Book"
 sidebarTitle: "MCP Servers"
-description: "Connect Claude Desktop, Cursor, Windsurf, and other AI agents to the Urantia Papers API and documentation via MCP. 13 tools, 2 resource templates, 2 prompts — zero setup."
+description: "Connect Claude Desktop, Cursor, Windsurf, and other AI agents to the Urantia Papers API and documentation via MCP. 19 tools, 2 resource templates, 2 prompts — zero setup."
 ---
 
 There are two MCP servers available — one for accessing Urantia Book data directly, and one for searching this documentation site.
 
 | Server | URL | Capabilities | Purpose |
 |--------|-----|--------------|---------|
-| **API MCP Server** | `api.urantia.dev/mcp` | 13 tools, 2 resources, 2 prompts | Search, paragraphs, entities, audio |
+| **API MCP Server** | `api.urantia.dev/mcp` | 19 tools, 2 resources, 2 prompts | Search, paragraphs, entities, audio, Bible (WEB) + UB↔Bible cross-references |
 | **Docs MCP Server** | `urantia.dev/mcp` | 1 tool | Search the documentation site |
 
 ## API MCP Server
@@ -50,7 +50,7 @@ Add the server to your MCP client config directly. No API key, no installation, 
     }
     ```
 
-    Restart Claude Desktop. You'll see 13 tools available.
+    Restart Claude Desktop. You'll see 19 tools available.
   </Tab>
   <Tab title="Claude Code">
     Add to `.mcp.json` in your project root:
@@ -84,7 +84,7 @@ Works with any client that supports [MCP Streamable HTTP transport](https://mode
 
 ### Available Tools
 
-The MCP server exposes 13 tools using dot-notation names organized into a navigable namespace tree. All tools advertise read-only annotations and ship with output schemas for structured responses.
+The MCP server exposes 19 tools using dot-notation names organized into a navigable namespace tree. All tools advertise read-only annotations and ship with output schemas for structured responses.
 
 #### Structure & Navigation
 
@@ -124,6 +124,28 @@ The MCP server exposes 13 tools using dot-notation names organized into a naviga
 |------|-------------|
 | `audio.get` | Get audio file URLs for a paragraph. Accepts any reference format. |
 
+#### Bible (World English Bible)
+
+| Tool | Description |
+|------|-------------|
+| `bible.books` | List all 81 books (39 OT + 15 deuterocanonical + 27 NT) with OSIS codes, canon, chapter counts. |
+| `bible.book` | Get a single book's metadata. Accepts OSIS, USFM, full names, and aliases (case-insensitive). |
+| `bible.chapter` | Get all verses in a chapter, ordered by verse number. |
+| `bible.verse` | Get a single verse by `bookCode`, `chapter`, `verse`. |
+| `bible.verse.urantia_parallels` | Reverse cross-reference — top-10 Urantia paragraphs semantically nearest a Bible verse. |
+| `bible.search.semantic` | Live semantic search over all 38,034 Bible verses; results arrive with their nearest UB paragraphs already attached. |
+
+### Cross-reference enrichment on existing tools
+
+`paragraphs.get`, `paragraphs.random`, `search.fulltext`, and `search.semantic` accept two optional booleans that attach pre-computed semantic neighbors to each result:
+
+| Param | What you get |
+|-------|--------------|
+| `include_bible_parallels` | Top-10 Bible verses semantically nearest each UB paragraph. |
+| `include_urantia_parallels` | Top-10 Urantia paragraphs semantically nearest each UB paragraph (UB ↔ UB "see also"). |
+
+Both can be combined. Parallels are pre-computed via `text-embedding-3-large` cosine similarity, so adding them is cheap. Note: these are *semantic* neighbors, not curated linguistic parallels (e.g. Faw's Paramony) — best results trend conceptual rather than verse-citation.
+
 ### Resources
 
 In addition to tools, the server exposes two resource templates clients can read directly:
@@ -153,6 +175,9 @@ Once connected, try asking your AI agent:
 - **"Find all entities of type 'place'"** — uses `entities.list`
 - **"What entities are mentioned in paragraph 0:0.1?"** — uses `paragraphs.get` with `include_entities`
 - **"Compare what the Urantia Book teaches about the soul with Stoic philosophy"** — uses the `comparative_theology` prompt
+- **"Find Urantia Book paragraphs related to Matthew 5:3"** — uses `bible.verse.urantia_parallels`
+- **"Search the Bible for passages about forgiveness and show the related Urantia teachings"** — uses `bible.search.semantic`
+- **"Show me 0:0.1 with both Bible parallels and related Urantia paragraphs"** — uses `paragraphs.get` with `include_bible_parallels` and `include_urantia_parallels`
 
 ### How It Works
 
@@ -172,7 +197,7 @@ Both give you access to the same data. Choose based on your use case:
 | **Best for** | AI agents (Claude, Cursor, etc.) | Apps, scripts, manual exploration |
 | **Protocol** | JSON-RPC over Streamable HTTP | Standard HTTP |
 | **Auth** | None | None |
-| **Surface** | 13 tools, 2 resources, 2 prompts | All endpoints + `/tools/openai`, `/tools/anthropic` for SDK use |
+| **Surface** | 19 tools, 2 resources, 2 prompts | All endpoints + `/tools/openai`, `/tools/anthropic` for SDK use |
 | **Response format** | MCP content blocks | JSON with `data`/`meta` wrappers |
 
 ## Docs MCP Server
@@ -247,7 +272,7 @@ For the best experience, add both servers to your client:
 }
 ```
 
-- **API MCP Server** (`api.urantia.dev/mcp`) — 13 tools for accessing Urantia Book data directly
+- **API MCP Server** (`api.urantia.dev/mcp`) — 19 tools for accessing Urantia Book data, the World English Bible, and UB↔Bible cross-references
 - **Docs MCP Server** (`urantia.dev/mcp`) — 1 tool for searching this documentation site
 
 ## Building a Custom MCP Server

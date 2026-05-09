@@ -71,6 +71,20 @@ You can also include entity mentions inline on any paragraph-returning endpoint 
 curl "https://api.urantia.dev/paragraphs/2:0.1?include=entities"
 ```
 
+## Bible cross-references
+
+The API hosts the World English Bible (38,034 verses, 81 books) alongside pre-computed UB↔Bible and UB↔UB semantic cross-references. Two ways to wire this into an agent:
+
+**1. Enrich any Urantia result inline.** Add `?include=bibleParallels` and/or `?include=urantiaParallels` to any paragraph-returning endpoint (`/paragraphs/{ref}`, `/paragraphs/random`, `/search`, `/search/semantic`) to get the top-10 semantically nearest Bible verses and/or Urantia paragraphs attached to each result.
+
+```bash
+curl "https://api.urantia.dev/paragraphs/2:0.1?include=entities,bibleParallels,urantiaParallels"
+```
+
+**2. Start from a Bible verse.** `GET /bible/{bookCode}/{chapter}/{verse}/urantia-parallels` returns the top-10 Urantia paragraphs nearest a given verse. `POST /bible/search/semantic` does free-form semantic search over the Bible and joins each hit against the UB cross-references in one request — useful when a user asks a Bible-shaped question and you want to surface the Urantia perspective alongside.
+
+These are *semantic* neighbors (computed with `text-embedding-3-large`), not curated linguistic parallels — top results are conceptually related (e.g. Matt 5:3 ↔ UB 140:3.3 at 0.854). Use them as RAG candidates, not as authoritative citations.
+
 ## Context window
 
 The `/paragraphs/:ref/context` endpoint is particularly useful for RAG. It returns the target paragraph plus surrounding paragraphs (configurable via the `window` parameter, 1-10).
@@ -88,7 +102,7 @@ const { tools } = await fetch("https://api.urantia.dev/tools/openai").then(r => 
 const completion = await openai.chat.completions.create({
   model: "gpt-5",
   messages,
-  tools, // 13 tools, ready to go
+  tools, // 19 tools, ready to go
 });
 ```
 
@@ -98,7 +112,7 @@ const { tools } = await fetch("https://api.urantia.dev/tools/anthropic").then(r 
 const message = await anthropic.messages.create({
   model: "claude-opus-4-7",
   max_tokens: 1024,
-  tools, // 13 tools, ready to go
+  tools, // 19 tools, ready to go
   messages,
 });
 ```
@@ -109,7 +123,7 @@ Each tool corresponds 1:1 with an MCP tool, so you can dispatch the call against
 ## MCP Servers
 
 <Card title="MCP Servers" icon="plug" href="/mcp-servers">
-  Connect AI agents to the Urantia Book via 2 MCP servers — 13 tools + 2 resources + 2 prompts on the API server, plus docs search. One-click install via Smithery.
+  Connect AI agents to the Urantia Book via 2 MCP servers — 19 tools + 2 resources + 2 prompts on the API server, plus docs search. One-click install via Smithery.
 </Card>
 
 ## OpenAPI spec
