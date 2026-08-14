@@ -111,13 +111,13 @@ Every paragraph has audio narration. The `audio` field is a nested object keyed 
 {
   "audio": {
     "tts-1-hd": {
-      "nova": { "format": "mp3", "url": "https://audio.urantia.dev/tts-1-hd-nova-1:2.0.1.mp3" }
+      "nova": { "format": "mp3", "url": "https://cdn.urantia.dev/audio/eng/paragraphs/nova/tts-1-hd-nova-1:2.0.1.mp3" }
     }
   }
 }
 ```
 
-Models: `tts-1-hd`, `tts-1`. Voices: `nova`, `echo`, `onyx`, `alloy`, `fable`, `shimmer`. Full coverage with `tts-1-hd/nova`.
+Models: `tts-1-hd`, `gpt-4o-mini-tts`, `tts-1`. Voices: `nova`, `cedar`, `onyx`, `echo`, `alloy`, `fable`, `shimmer`. Only `tts-1-hd/nova` covers every paragraph, so read the `audio` object instead of building a URL.
 
 ## Book Structure
 

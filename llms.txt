@@ -52,7 +52,7 @@ Three formats are auto-detected:
 
 ## Audio
 
-Every paragraph has audio narration. Models: tts-1-hd, tts-1. Voices: nova, echo, onyx, alloy, fable, shimmer. Full coverage with tts-1-hd/nova. Audio served from audio.urantia.dev via Cloudflare CDN.
+Every paragraph has audio narration. Models: tts-1-hd, gpt-4o-mini-tts, tts-1. Voices: nova, cedar, onyx, echo, alloy, fable, shimmer. Only tts-1-hd/nova covers every paragraph, so read the audio object instead of building a URL. Audio served from cdn.urantia.dev/audio/eng/ via Cloudflare CDN.
 
 ## MCP Server
 

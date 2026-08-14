@@ -4,7 +4,11 @@ sidebarTitle: "CDN"
 description: "Access static JSON, audio, entities, and embeddings from cdn.urantia.dev — the Cloudflare R2-backed CDN powering the Urantia Papers API."
 ---
 
-All static data that powers the API is available directly from a public Cloudflare R2 bucket at `cdn.urantia.dev`. Audio files are served from a separate subdomain at `audio.urantia.dev`. You can use these files for offline apps, custom pipelines, or self-hosted setups.
+All static data that powers the API is available directly from a public Cloudflare R2 bucket at `cdn.urantia.dev`. This includes the audio files. You can use these files for offline apps, custom pipelines, or self-hosted setups.
+
+<Warning>
+Audio moved from the old `audio.urantia.dev` subdomain to `cdn.urantia.dev/audio/...`. The old host is frozen and serves only part of the library. Update any saved URLs to the patterns below.
+</Warning>
 
 ## What's available
 
@@ -12,7 +16,7 @@ All static data that powers the API is available directly from a public Cloudfla
 |-------|--------|-------|-------------|
 | Papers | JSON | 197 | Full paper text with paragraphs, sections, and metadata |
 | Paper audio | MP3 | 197 | Full narration of each paper |
-| Paragraph audio | MP3 | 16,000+ | Individual paragraph narration across 6 voices |
+| Paragraph audio | MP3 | 16,000+ | Individual paragraph narration across 7 voices |
 | Paper videos | MP4 | 197 | Full paper narration with synced text overlay (1080p) |
 | Video thumbnails | PNG | 197 | Paper title cards for video thumbnails |
 | Entities | JSON | 3,000+ | Typed entities (beings, places, concepts) with descriptions |
@@ -27,28 +31,36 @@ All static data that powers the API is available directly from a public Cloudfla
 Paragraph-level audio follows this naming pattern:
 
 ```
-https://audio.urantia.dev/{model}-{voice}-{globalId}.mp3
+https://cdn.urantia.dev/audio/eng/paragraphs/{voice}/{model}-{voice}-{globalId}.mp3
 ```
 
 **Examples:**
 
 ```bash
 # tts-1-hd model, nova voice, paragraph 0:0.0.1 (Foreword, first paragraph)
-https://audio.urantia.dev/tts-1-hd-nova-0:0.0.1.mp3
+https://cdn.urantia.dev/audio/eng/paragraphs/nova/tts-1-hd-nova-0:0.0.1.mp3
 
-# tts-1-hd model, echo voice, paragraph 3:119.1.5
-https://audio.urantia.dev/tts-1-hd-echo-3:119.1.5.mp3
+# gpt-4o-mini-tts model, cedar voice, same paragraph
+https://cdn.urantia.dev/audio/eng/paragraphs/cedar/gpt-4o-mini-tts-cedar-0:0.0.1.mp3
 
-# Whole paper audio (Paper 1)
-https://audio.urantia.dev/1.mp3
+# Whole paper audio (Paper 1). Use 0 for the Foreword
+https://cdn.urantia.dev/audio/eng/papers/1.mp3
+
+# Part-level audio
+https://cdn.urantia.dev/audio/eng/parts/tts-1-hd-nova-Part1.mp3
 ```
+
+Only `nova` covers every paragraph. For any other voice, read the `audio` object on the paragraph instead of building a URL, because a missing voice returns a 404.
 
 **Available voices:**
 
 | Model | Voices | Coverage |
 |-------|--------|----------|
-| `tts-1-hd` | `nova`, `echo`, `onyx`, `alloy`, `fable`, `shimmer` | `nova` has full coverage |
-| `tts-1` | `alloy` | Partial |
+| `tts-1-hd` | `nova` | Full |
+| `gpt-4o-mini-tts` | `cedar` | Partial |
+| `tts-1-hd` | `onyx` | Partial |
+| `tts-1-hd` | `echo`, `alloy`, `fable`, `shimmer` | Samples only |
+| `tts-1` | `alloy` | Samples only |
 
 ### Video files
 
