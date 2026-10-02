@@ -46,4 +46,5 @@ Guides tab groups: Getting Started, Data, SDKs (Overview, @urantia/api, @urantia
 
 - No changelog — intentionally removed as unnecessary
 - Config file is `docs.json` (not `mint.json`)
+- Theme is `luma` (since 2026-10-02), matching the urantia.dev landing page and the demo: `colors.primary` `#8a5a00` (amber text that reads on white), `colors.light` `#f2b441` (dark mode emphasis), `colors.dark` `#0f2a2e` (buttons), font Inter. The API playground's method badges and Try it button keep Mintlify's own method colors.
 - Old single `sdks.mdx` was split into `sdks/` directory with 3 focused pages
