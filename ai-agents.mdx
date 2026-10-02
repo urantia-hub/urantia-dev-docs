@@ -10,10 +10,10 @@ The Urantia Papers API is designed for AI agent consumption. Here's the recommen
 
 <Steps>
   <Step title="Understand the structure">
-    Call `GET /toc` to get the full table of contents — parts, papers, and their titles.
+    Call `GET /toc` to get the full table of contents: parts, papers, and their titles.
   </Step>
   <Step title="Search for relevant passages">
-    Use `POST /search` for keyword matching, or `POST /search/semantic` for meaning-based similarity search. Semantic search finds conceptually related passages even without exact keyword matches — ideal for natural language queries from users.
+    Use `POST /search` for keyword matching, or `POST /search/semantic` for meaning-based similarity search. Semantic search finds conceptually related passages even without exact keyword matches, ideal for natural language queries from users.
   </Step>
   <Step title="Get surrounding context">
     For each relevant result, call `GET /paragraphs/:ref/context?window=3` to get paragraphs before and after. This improves comprehension significantly.
@@ -29,9 +29,9 @@ The Urantia Papers API is designed for AI agent consumption. Here's the recommen
 
 Best for keyword-based queries. Supports three modes:
 
-- **`and`** (default) — all words must appear. Best for specific queries.
-- **`or`** — any word can appear. Best for broad exploratory queries.
-- **`phrase`** — exact phrase match. Best when quoting specific text.
+- **`and`** (default): all words must appear. Best for specific queries.
+- **`or`**: any word can appear. Best for broad exploratory queries.
+- **`phrase`**: exact phrase match. Best when quoting specific text.
 
 ```bash
 curl -X POST https://api.urantia.dev/search \
@@ -53,7 +53,7 @@ Both search endpoints support `paperId` and `partId` filters to narrow scope.
 
 ## Entity lookup
 
-The API catalogs 4,400+ named entities — beings, places, orders, races, religions, and concepts — with descriptions and cross-references, sourced from [Urantiapedia](https://urantiapedia.org) by [Jan Herca](https://github.com/JanHerca).
+The API catalogs 4,400+ named entities (beings, places, orders, races, religions, and concepts) with descriptions and cross-references, sourced from [Urantiapedia](https://urantiapedia.org) by [Jan Herca](https://github.com/JanHerca).
 
 Use `GET /entities?q=<name>` to find entities by name, or `GET /entities?type=being` to browse by type. Each entity includes a `citationCount` showing how often it appears.
 
@@ -81,9 +81,9 @@ The API hosts the World English Bible (38,034 verses, 81 books) alongside pre-co
 curl "https://api.urantia.dev/paragraphs/2:0.1?include=entities,bibleParallels,urantiaParallels"
 ```
 
-**2. Start from a Bible verse.** `GET /bible/{bookCode}/{chapter}/{verse}/urantia-parallels` returns the top-10 Urantia paragraphs nearest a given verse. `POST /bible/search/semantic` does free-form semantic search over the Bible and joins each hit against the UB cross-references in one request — useful when a user asks a Bible-shaped question and you want to surface the Urantia perspective alongside.
+**2. Start from a Bible verse.** `GET /bible/{bookCode}/{chapter}/{verse}/urantia-parallels` returns the top-10 Urantia paragraphs nearest a given verse. `POST /bible/search/semantic` does free-form semantic search over the Bible and joins each hit against the UB cross-references in one request, useful when a user asks a Bible-shaped question and you want to surface the Urantia perspective alongside.
 
-These are *semantic* neighbors (computed with `text-embedding-3-large`), not curated linguistic parallels — top results are conceptually related (e.g. Matt 5:3 ↔ UB 140:3.3 at 0.854). Use them as RAG candidates, not as authoritative citations.
+These are *semantic* neighbors (computed with `text-embedding-3-large`), not curated linguistic parallels. Top results are conceptually related (e.g. Matt 5:3 ↔ UB 140:3.3 at 0.854). Use them as RAG candidates, not as authoritative citations.
 
 ## Context window
 
@@ -93,7 +93,7 @@ This provides the LLM with the narrative flow around a passage, which leads to m
 
 ## Function-calling schemas
 
-If you're working directly with the OpenAI or Anthropic SDKs (rather than going through MCP), the API publishes ready-to-use tool definitions for both. Drop them straight into your `tools` array — no manual schema authoring required.
+If you're working directly with the OpenAI or Anthropic SDKs (rather than going through MCP), the API publishes ready-to-use tool definitions for both. Drop them straight into your `tools` array, no manual schema authoring required.
 
 <CodeGroup>
 ```ts OpenAI
@@ -123,7 +123,7 @@ Each tool corresponds 1:1 with an MCP tool, so you can dispatch the call against
 ## MCP Servers
 
 <Card title="MCP Servers" icon="plug" href="/mcp-servers">
-  Connect AI agents to the Urantia Book via 2 MCP servers — 19 tools + 2 resources + 2 prompts on the API server, plus docs search. One-click install via Smithery.
+  Connect AI agents to the Urantia Book via 2 MCP servers: 19 tools + 2 resources + 2 prompts on the API server, plus docs search. One-click install via Smithery.
 </Card>
 
 ## Report a problem

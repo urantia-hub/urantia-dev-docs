@@ -96,7 +96,7 @@ const { data: cite } = await api.cite.get('2:0.1', 'apa')
 const { data: vec } = await api.embeddings.get('2:0.1')
 const { data: vecSmall } = await api.embeddings.get('2:0.1', { model: 'small' })
 
-// Bible — UB↔Bible cross-references
+// Bible: UB↔Bible cross-references
 const { data: bibleHits } = await api.bible.semanticSearch({
   q: 'love your enemies',
   limit: 5,
