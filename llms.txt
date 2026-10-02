@@ -75,7 +75,7 @@ The cross-references are semantic neighbors computed from embeddings. They are n
 - POST /feedback: report a bug, a docs gap, or an idea. No authentication
   - Body: {"category": "bug|docs|api|product|other", "message": "up to 4000 characters"}
   - Optional: ref, endpoint, requestId, client, contact, pageUrl
-  - Limit: 10 requests per 15 minutes per IP address
+  - Limit: 5 requests per minute and 10 per 15 minutes per IP address. A 429 has a Retry-After header
   - Guide: https://docs.urantia.dev/feedback
 
 ## Paragraph references
