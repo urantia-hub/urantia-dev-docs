@@ -1,0 +1,83 @@
+---
+title: "Changelog"
+sidebarTitle: "Changelog"
+description: "Latest updates and releases for the Urantia Papers API, documentation, and MCP servers."
+---
+
+Stay updated on new features, improvements, and changes to the Urantia Papers API ecosystem.
+
+## October 2026
+
+### October 2, 2026
+
+#### Documentation & Developer Experience
+
+**MCP Server Expansion**
+- Expanded MCP server from 13 to **19 tools** with full Bible integration
+- Added 6 new Bible endpoint tools:
+  - `bible.books` — List all Bible books
+  - `bible.book` — Get specific Bible book details
+  - `bible.chapter` — Retrieve Bible chapter content
+  - `bible.verse` — Get specific Bible verse
+  - `bible.verse.urantia_parallels` — Find Urantia Book parallels for Bible verses
+  - `bible.search.semantic` — Semantic search across Bible content
+- MCP server now available via [Smithery](https://smithery.ai/server/@kevinkid/urantia-mcp-server) with one-click installation
+
+**Developer Onboarding Improvements**
+- Added comprehensive [Daily Quote Bot Tutorial](/blog/daily-quote-bot) with examples for:
+  - Discord, Slack, email, and Twitter/X integrations
+  - Multiple scheduling approaches (GitHub Actions, Cloudflare Workers, cron)
+  - Enhancement patterns (topic filtering, audio narration, history tracking)
+- Enhanced [Quickstart guide](/quickstart) with multi-language SDK examples:
+  - Added tabbed code samples showing cURL, TypeScript SDK, JavaScript, and Python
+  - Integrated demo.urantia.dev references throughout
+  - Added "Next Steps" section for developer onboarding flow
+
+**Documentation Clarity**
+- Clarified alias branding: urantiapapers.com and openurantia.com redirect to UrantiaHub
+- Updated ecosystem documentation to reflect correct platform relationships
+- Improved OpenUrantia.com repository descriptions
+
+## Initial Release - September 2026
+
+### Core API Features
+
+**REST API Endpoints** (19 total)
+- Full access to 197 papers, 1,626 sections, 14,500+ paragraphs
+- Full-text and semantic search capabilities
+- Bible integration with cross-reference support
+- Audio narration endpoints with multi-voice support
+- Citation generation and OG image creation
+- Embeddings export for AI applications
+
+**SDKs & Developer Tools**
+- [@urantia/api](https://www.npmjs.com/package/@urantia/api) — TypeScript/JavaScript SDK for REST API
+- [@urantia/auth](https://www.npmjs.com/package/@urantia/auth) — OAuth 2.1 authentication SDK
+- [Interactive demo](https://demo.urantia.dev) — Live examples of all API capabilities
+
+**MCP Server** (Initial 13 tools)
+- Core content access (papers, paragraphs, entities)
+- Search capabilities (full-text and semantic)
+- Audio narration integration
+- Citation and reference lookup
+- Compatible with Claude, Cursor, and other AI agents
+
+**Documentation**
+- Complete API reference with interactive examples
+- Comprehensive guides for papers, paragraphs, entities, audio, and Bible data
+- Concept explainers for 14 core Urantia Book topics
+- 15 curated quote collections organized by theme
+- Use case examples and integration guides
+
+---
+
+<Info>
+  **Note:** This changelog tracks documentation, API, and tooling updates. For underlying platform updates, see the [UrantiaHub repository](https://github.com/urantia-hub/openurantia.com).
+</Info>
+
+## Future Updates
+
+Looking for something specific? Check our:
+- [Open Source page](/open-source) for repository links
+- [GitHub](https://github.com/urantia-hub) for development activity
+- [Status page](https://status.urantia.dev) for API uptime and incidents
