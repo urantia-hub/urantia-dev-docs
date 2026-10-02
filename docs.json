@@ -22,7 +22,7 @@
         "groups": [
           {
             "group": "Getting Started",
-            "pages": ["index", "quickstart", "use-cases"]
+            "pages": ["index", "quickstart", "use-cases", "changelog"]
           },
           {
             "group": "Data",
