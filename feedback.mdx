@@ -30,16 +30,16 @@ A saved report returns `201`:
 
 ## Request body
 
-| Field | Required | Limit | Description |
-|-------|----------|-------|-------------|
-| `category` | Yes | | One of `bug`, `docs`, `api`, `product`, `other` |
-| `message` | Yes | 4000 characters | What happened, or what you want |
-| `ref` | No | 200 characters | A paragraph or paper reference, such as `196:2.1` |
-| `endpoint` | No | 300 characters | The API path that failed, such as `/search` |
-| `requestId` | No | 100 characters | A correlation ID, or the `CF-Ray` header from the failed response |
-| `client` | No | 100 characters | What sent the request, such as `mcp`, `docs`, or `claude-code` |
-| `contact` | No | 200 characters | An email or a handle, if you want a reply |
-| `pageUrl` | No | 500 characters | The page you were on. Must be an `http` or `https` URL |
+| Field | Required | Description |
+|-------|----------|-------------|
+| `category` | Yes | One of `bug`, `docs`, `api`, `product`, `other` |
+| `message` | Yes | What happened, or what you want. Up to 4000 characters |
+| `ref` | No | A paragraph or paper reference, such as `196:2.1`. Up to 200 characters |
+| `endpoint` | No | The API path that failed, such as `/search`. Up to 300 characters |
+| `requestId` | No | A correlation ID, or the `CF-Ray` header from the failed response. Up to 100 characters |
+| `client` | No | What sent the request, such as `mcp`, `docs`, or `claude-code`. Up to 100 characters |
+| `contact` | No | An email or a handle, if you want a reply. Up to 200 characters |
+| `pageUrl` | No | The page you were on. An `http` or `https` URL, up to 500 characters |
 
 Field names are camelCase. A field that is not in this table is rejected with a `400`.
 
