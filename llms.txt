@@ -1,97 +1,112 @@
-# Urantia Papers API
+# urantia.dev
 
-> Free, open REST API for structured access to the Urantia Book
+> An API and MCP server for the Urantia Papers. Free, with no key.
 
-The Urantia Papers API provides developer and AI-agent friendly access to all 197 papers, 1,626 sections, and 14,500+ paragraphs of the Urantia Book with full-text search and multi-voice audio narration.
+urantia.dev gives agents and developers structured access to the Urantia Papers: all 197 papers, 1,626 sections, and more than 14,500 paragraphs. You can fetch any paragraph by reference, search by keyword or by meaning, look up named entities, and follow cross-references to the Bible.
 
-## Base URL
-
-https://api.urantia.dev
-
-## Authentication
-
-No authentication required. Free and open access.
-
-## Rate Limits
-
-100 requests per minute per IP address.
-
-## Endpoints
-
-### Table of Contents
-- GET /toc — Full table of contents (parts, papers, titles)
-
-### Papers
-- GET /papers — List all 197 papers with metadata
-- GET /papers/:id — Get a single paper with all paragraphs
-- GET /papers/:id/sections — Get sections for a paper
-
-### Paragraphs
-- GET /paragraphs/random — Get a random paragraph
-- GET /paragraphs/:ref — Get a specific paragraph by reference
-- GET /paragraphs/:ref/context?window=3 — Get paragraph with surrounding context (window: 1-10)
-
-### Search
-- POST /search — Full-text search across all paragraphs
-  - Body: {"q": "search terms", "type": "and|or|phrase", "limit": 10}
-  - Filters: paperId, partId
-- POST /search/semantic — Semantic similarity search using vector embeddings
-  - Body: {"q": "natural language query", "limit": 10}
-  - Filters: paperId, partId
-  - Returns results ranked by similarity score (0-1), finds conceptually related passages even without exact keyword matches
-
-### Audio
-- GET /audio/:paragraphId — Get audio URLs for a paragraph
-
-### Feedback
-- POST /feedback — Report a bug, a docs gap, or an idea. No authentication required
-  - Body: {"category": "bug|docs|api|product|other", "message": "up to 4000 characters"}
-  - Optional: ref, endpoint, requestId, client, contact, pageUrl
-  - Limit: 10 requests per 15 minutes per IP address
-
-## Paragraph Reference Formats
-
-Three formats are auto-detected:
-- globalId: partId:paperId.sectionId.paragraphId (e.g., 1:2.0.1)
-- standardReferenceId: paperId:sectionId.paragraphId (e.g., 2:0.1)
-- paperSectionParagraphId: paperId.sectionId.paragraphId (e.g., 2.0.1)
-
-## Audio
-
-Every paragraph has audio narration. Models: tts-1-hd, gpt-4o-mini-tts, tts-1. Voices: nova, cedar, onyx, echo, alloy, fable, shimmer. Only tts-1-hd/nova covers every paragraph, so read the audio object instead of building a URL. Audio served from cdn.urantia.dev/audio/eng/ via Cloudflare CDN.
-
-## MCP Server
-
-The API includes a built-in MCP (Model Context Protocol) server for AI agents:
+## MCP server (for agents)
 
 https://api.urantia.dev/mcp
 
-Add to any MCP-compatible client (Claude Desktop, Cursor, Claude Code, Windsurf):
+Streamable HTTP transport. No key and no sign-in. Add it to any MCP client (Claude, Cursor, Windsurf, and others):
 
 {"mcpServers":{"urantia-papers":{"url":"https://api.urantia.dev/mcp"}}}
 
-Exposes 19 tools (dot-notation): toc.get, papers.list, papers.get, papers.sections, paragraphs.random, paragraphs.get, paragraphs.context, search.fulltext, search.semantic, entities.list, entities.get, entities.paragraphs, audio.get, bible.books, bible.book, bible.chapter, bible.verse, bible.verse.urantia_parallels, bible.search.semantic. Plus 2 resource templates (urantia://paper/{id}, urantia://entity/{id}) and 2 prompt templates (study_assistant, comparative_theology). No API key required. Uses Streamable HTTP transport.
+19 tools: toc.get, papers.list, papers.get, papers.sections, paragraphs.random, paragraphs.get, paragraphs.context, search.fulltext, search.semantic, entities.list, entities.get, entities.paragraphs, audio.get, bible.books, bible.book, bible.chapter, bible.verse, bible.verse.urantia_parallels, bible.search.semantic.
 
-## OpenAPI Specification
+2 resource templates: urantia://paper/{id} and urantia://entity/{id}.
+2 prompt templates: study_assistant and comparative_theology.
 
-https://api.urantia.dev/openapi.json
+Recommended flow for an agent:
+1. toc.get, to learn the structure.
+2. search.semantic for a question, or search.fulltext for exact words.
+3. paragraphs.context, to read the paragraphs around a result.
+4. papers.get, when the whole paper matters.
 
-## Interactive Documentation
+Setup guide: https://urantia.dev/mcp-servers
+Agent guide: https://urantia.dev/ai-agents
 
-https://api.urantia.dev/docs (Swagger UI)
+## REST API (for developers)
 
-## Related Sites
+Base URL: https://api.urantia.dev
+OpenAPI 3.1 spec: https://api.urantia.dev/openapi.json
+Swagger UI: https://api.urantia.dev/docs
+TypeScript client: npm install @urantia/api
 
-- Documentation: https://urantia.dev
-- Reading Platform: https://urantiahub.com (also accessible via https://urantiapapers.com and https://openurantia.com, which redirect here)
-- Interactive Demo: https://demo.urantia.dev
+No authentication for the endpoints below. The limit is 200 requests per minute per IP address. Errors use RFC 9457 problem+json.
 
-## About the Urantia Book
+### Text
+- GET /toc: table of contents (parts and papers)
+- GET /papers: all 197 papers
+- GET /papers/:id: one paper with all its paragraphs
+- GET /papers/:id/sections: the sections of a paper
+- GET /paragraphs/:ref: one paragraph by reference
+- GET /paragraphs/:ref/context?window=3: a paragraph with the paragraphs around it (window 1 to 10)
+- GET /paragraphs/random: a random paragraph
 
-The Urantia Book (published 1955) contains 197 papers organized in four parts:
-- Part I: The Central and Superuniverses (Papers 1-31)
-- Part II: The Local Universe (Papers 32-56)
-- Part III: The History of Urantia (Papers 57-119)
-- Part IV: The Life and Teachings of Jesus (Papers 120-196)
+Add ?include=entities,bibleParallels,urantiaParallels to a paragraph or search request to attach entity mentions and cross-references. Add ?format=rag for a compact shape with a citation and a token count.
+
+### Search
+- POST /search or GET /search?q=: full-text search. Body: {"q": "search terms", "type": "and|or|phrase", "limit": 10}
+- POST /search/semantic or GET /search/semantic?q=: search by meaning. Body: {"q": "a question in plain words", "limit": 10}
+- Both take the filters paperId and partId.
+
+### Entities
+- GET /entities: more than 4,400 beings, places, and concepts. Filter with ?q= or ?type=
+- GET /entities/:id: one entity
+- GET /entities/:id/paragraphs: the paragraphs that name it
+
+### Bible cross-references
+- GET /bible/books, GET /bible/:bookCode, GET /bible/:bookCode/:chapter, GET /bible/:bookCode/:chapter/:verse: the World English Bible (81 books)
+- GET /bible/:bookCode/:chapter/:verse/urantia-parallels: the 10 nearest Urantia paragraphs for a verse
+- POST /bible/search/semantic: search the Bible by meaning, with Urantia paragraphs on each result
+
+The cross-references are semantic neighbors computed from embeddings. They are not a curated list.
+
+### Audio, citations, and more
+- GET /audio/:ref: narration URLs for a paragraph
+- GET /cite?ref=&style=apa|mla|chicago|bibtex: a formatted citation
+- GET /embeddings/:ref and GET /embeddings/export?paperId=: embedding vectors
+- GET /og/:ref: a share image for a passage
+- GET /languages: available languages
+- GET /tools/openai and GET /tools/anthropic: function-calling schemas for those SDKs
+
+### Feedback
+- POST /feedback: report a bug, a docs gap, or an idea. No authentication
+  - Body: {"category": "bug|docs|api|product|other", "message": "up to 4000 characters"}
+  - Optional: ref, endpoint, requestId, client, contact, pageUrl
+  - Limit: 10 requests per 15 minutes per IP address
+  - Guide: https://urantia.dev/feedback
+
+## Paragraph references
+
+Three formats work everywhere and are detected from the string:
+- standardReferenceId, paper:section.paragraph, for example 2:0.1
+- globalId, part:paper.section.paragraph, for example 1:2.0.1
+- paperSectionParagraphId, paper.section.paragraph, for example 2.0.1
+
+## Audio
+
+Every paragraph has narration. Read the `audio` object on the paragraph and use the URLs it gives. Do not build an audio URL yourself: only one voice (tts-1-hd, nova) covers every paragraph.
+
+## About the text
+
+The Urantia Book was published in 1955. Its English text is in the public domain. It has 197 papers in four parts:
+- Part I: The Central and Superuniverses (Papers 1 to 31)
+- Part II: The Local Universe (Papers 32 to 56)
+- Part III: The History of Urantia (Papers 57 to 119)
+- Part IV: The Life and Teachings of Jesus (Papers 120 to 196)
 
 The Foreword is Paper 0.
+
+## Links
+
+- Documentation: https://urantia.dev
+- Full documentation as one file: https://urantia.dev/llms-full.txt
+- Interactive demo: https://demo.urantia.dev
+- Source code: https://github.com/urantia-hub/urantia-dev-api
+- Status: https://status.urantia.dev
+
+Sites built with this API include UrantiaHub (https://www.urantiahub.com), a place to read the Papers. They are separate projects that use the API.
+
+urantia.dev is an independent community project. It is not affiliated with Urantia Foundation.

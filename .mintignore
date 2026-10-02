@@ -5,3 +5,7 @@
 # Draft content
 drafts/
 *.draft.mdx
+
+# Internal notes for coding agents. Without this line Mintlify publishes the
+# file as a public page at /CLAUDE and puts it first in llms-full.txt.
+CLAUDE.md
