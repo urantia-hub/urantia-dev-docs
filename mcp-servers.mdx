@@ -1,10 +1,10 @@
 ---
 title: "MCP Servers - Give AI Agents Access to the Urantia Book"
 sidebarTitle: "MCP Servers"
-description: "Connect Claude Desktop, Cursor, Windsurf, and other AI agents to the Urantia Papers API and documentation via MCP. 19 tools, 2 resource templates, 2 prompts — zero setup."
+description: "Connect Claude Desktop, Cursor, Windsurf, and other AI agents to the Urantia Papers API and documentation via MCP. 19 tools, 2 resource templates, 2 prompts, zero setup."
 ---
 
-There are two MCP servers available — one for accessing Urantia Book data directly, and one for searching this documentation site.
+There are two MCP servers available, one for accessing Urantia Book data directly, and one for searching this documentation site.
 
 | Server | URL | Capabilities | Purpose |
 |--------|-----|--------------|---------|
@@ -23,14 +23,14 @@ https://api.urantia.dev/mcp
 
 This server is published in the canonical registries that MCP-aware clients query for discovery:
 
-- **[MCP Registry](https://registry.modelcontextprotocol.io)** (Anthropic-stewarded, official) — `dev.urantia/urantia-papers`. Verifiable: `curl "https://registry.modelcontextprotocol.io/v0/servers?search=urantia"`
-- **[Smithery](https://smithery.ai/servers/urantiahub/urantia-papers)** — community marketplace with one-click install + 100/100 quality score
+- **[MCP Registry](https://registry.modelcontextprotocol.io)** (Anthropic-stewarded, official): `dev.urantia/urantia-papers`. Verifiable: `curl "https://registry.modelcontextprotocol.io/v0/servers?search=urantia"`
+- **[Smithery](https://smithery.ai/servers/urantiahub/urantia-papers)**: community marketplace with one-click install + 100/100 quality score
 
 [![smithery badge](https://smithery.ai/badge/urantiahub/urantia-papers)](https://smithery.ai/servers/urantiahub/urantia-papers)
 
 ### One-click install via Smithery
 
-The fastest way to add this server to your MCP client is via [Smithery](https://smithery.ai/servers/urantiahub/urantia-papers) — it generates the right config snippet for your client and handles the install.
+The fastest way to add this server to your MCP client is via [Smithery](https://smithery.ai/servers/urantiahub/urantia-papers): it generates the right config snippet for your client and handles the install.
 
 ### Manual setup
 
@@ -90,7 +90,7 @@ The MCP server exposes 19 tools using dot-notation names organized into a naviga
 
 | Tool | Description |
 |------|-------------|
-| `toc.get` | Get the full table of contents — all 4 parts and 197 papers. Best starting point. |
+| `toc.get` | Get the full table of contents: all 4 parts and 197 papers. Best starting point. |
 | `papers.list` | List all 197 papers with metadata (id, title, partId, labels). |
 | `papers.get` | Get a single paper with all its paragraphs. Supports `include_entities`. |
 | `papers.sections` | Get all sections within a paper, ordered by section number. |
@@ -132,7 +132,7 @@ The MCP server exposes 19 tools using dot-notation names organized into a naviga
 | `bible.book` | Get a single book's metadata. Accepts OSIS, USFM, full names, and aliases (case-insensitive). |
 | `bible.chapter` | Get all verses in a chapter, ordered by verse number. |
 | `bible.verse` | Get a single verse by `bookCode`, `chapter`, `verse`. |
-| `bible.verse.urantia_parallels` | Reverse cross-reference — top-10 Urantia paragraphs semantically nearest a Bible verse. |
+| `bible.verse.urantia_parallels` | Reverse cross-reference: top-10 Urantia paragraphs semantically nearest a Bible verse. |
 | `bible.search.semantic` | Live semantic search over all 38,034 Bible verses; results arrive with their nearest UB paragraphs already attached. |
 
 ### Cross-reference enrichment on existing tools
@@ -144,7 +144,7 @@ The MCP server exposes 19 tools using dot-notation names organized into a naviga
 | `include_bible_parallels` | Top-10 Bible verses semantically nearest each UB paragraph. |
 | `include_urantia_parallels` | Top-10 Urantia paragraphs semantically nearest each UB paragraph (UB ↔ UB "see also"). |
 
-Both can be combined. Parallels are pre-computed via `text-embedding-3-large` cosine similarity, so adding them is cheap. Note: these are *semantic* neighbors, not curated linguistic parallels (e.g. Faw's Paramony) — best results trend conceptual rather than verse-citation.
+Both can be combined. Parallels are pre-computed via `text-embedding-3-large` cosine similarity, so adding them is cheap. Note: these are *semantic* neighbors, not curated linguistic parallels (e.g. Faw's Paramony), best results trend conceptual rather than verse-citation.
 
 ### Resources
 
@@ -168,25 +168,25 @@ The server also publishes two reusable prompt templates for common study workflo
 
 Once connected, try asking your AI agent:
 
-- **"Search the Urantia Book for passages about love"** — uses `search.fulltext`
-- **"What does the Urantia Book say about what happens after death?"** — uses `search.semantic`
-- **"Read Paper 1 about the Universal Father"** — uses the `urantia://paper/1` resource
-- **"Show me paragraph 2:5.10 with surrounding context"** — uses `paragraphs.context`
-- **"Find all entities of type 'place'"** — uses `entities.list`
-- **"What entities are mentioned in paragraph 0:0.1?"** — uses `paragraphs.get` with `include_entities`
-- **"Compare what the Urantia Book teaches about the soul with Stoic philosophy"** — uses the `comparative_theology` prompt
-- **"Find Urantia Book paragraphs related to Matthew 5:3"** — uses `bible.verse.urantia_parallels`
-- **"Search the Bible for passages about forgiveness and show the related Urantia teachings"** — uses `bible.search.semantic`
-- **"Show me 0:0.1 with both Bible parallels and related Urantia paragraphs"** — uses `paragraphs.get` with `include_bible_parallels` and `include_urantia_parallels`
+- **"Search the Urantia Book for passages about love"**: uses `search.fulltext`
+- **"What does the Urantia Book say about what happens after death?"**: uses `search.semantic`
+- **"Read Paper 1 about the Universal Father"**: uses the `urantia://paper/1` resource
+- **"Show me paragraph 2:5.10 with surrounding context"**: uses `paragraphs.context`
+- **"Find all entities of type 'place'"**: uses `entities.list`
+- **"What entities are mentioned in paragraph 0:0.1?"**: uses `paragraphs.get` with `include_entities`
+- **"Compare what the Urantia Book teaches about the soul with Stoic philosophy"**: uses the `comparative_theology` prompt
+- **"Find Urantia Book paragraphs related to Matthew 5:3"**: uses `bible.verse.urantia_parallels`
+- **"Search the Bible for passages about forgiveness and show the related Urantia teachings"**: uses `bible.search.semantic`
+- **"Show me 0:0.1 with both Bible parallels and related Urantia paragraphs"**: uses `paragraphs.get` with `include_bible_parallels` and `include_urantia_parallels`
 
 ### How It Works
 
 The MCP server uses [Streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http), which means:
 
-- **No local process** — it runs on the same Cloudflare Worker as the API
-- **Stateless** — each request creates a fresh server instance (no sessions to manage)
+- **No local process**: it runs on the same Cloudflare Worker as the API
+- **Stateless**: each request creates a fresh server instance (no sessions to manage)
 - **Same rate limits** as the REST API (100 requests/minute per IP)
-- **Same data** — MCP tools query the database directly, returning the same results as the REST endpoints
+- **Same data**: MCP tools query the database directly, returning the same results as the REST endpoints
 
 ### MCP vs REST
 
@@ -202,7 +202,7 @@ Both give you access to the same data. Choose based on your use case:
 
 ## Docs MCP Server
 
-Mintlify provides a hosted MCP server that lets AI agents search these documentation pages — useful for discovering endpoints, understanding usage patterns, and learning the API.
+Mintlify provides a hosted MCP server that lets AI agents search these documentation pages, useful for discovering endpoints, understanding usage patterns, and learning the API.
 
 ```
 https://docs.urantia.dev/mcp
@@ -272,8 +272,8 @@ For the best experience, add both servers to your client:
 }
 ```
 
-- **API MCP Server** (`api.urantia.dev/mcp`) — 19 tools for accessing Urantia Book data, the World English Bible, and UB↔Bible cross-references
-- **Docs MCP Server** (`docs.urantia.dev/mcp`) — 1 tool for searching this documentation site
+- **API MCP Server** (`api.urantia.dev/mcp`): 19 tools for accessing Urantia Book data, the World English Bible, and UB↔Bible cross-references
+- **Docs MCP Server** (`docs.urantia.dev/mcp`): 1 tool for searching this documentation site
 
 ## Building a Custom MCP Server
 

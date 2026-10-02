@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "luma",
-  "name": "Urantia.dev",
+  "name": "urantia.dev",
   "colors": {
     "primary": "#8a5a00",
     "light": "#f2b441",
@@ -14,10 +14,34 @@
     "default": "light"
   },
   "favicon": "/favicon.svg",
+  "navbar": {
+    "links": [
+      {
+        "label": "Demo",
+        "href": "https://demo.urantia.dev"
+      },
+      {
+        "type": "github",
+        "href": "https://github.com/urantia-hub/urantia-dev-api"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Quickstart",
+      "href": "https://docs.urantia.dev/quickstart"
+    }
+  },
+  "thumbnails": {
+    "appearance": "light",
+    "background": "/images/thumbnail-background.png",
+    "fonts": {
+      "family": "Inter"
+    }
+  },
   "seo": {
     "indexing": "all",
     "metatags": {
-      "og:site_name": "Urantia Papers API",
+      "og:site_name": "urantia.dev",
       "og:type": "website"
     }
   },
@@ -209,25 +233,12 @@
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Interactive Demo",
-          "href": "https://demo.urantia.dev",
-          "icon": "play"
-        },
-        {
-          "anchor": "urantia.dev",
-          "href": "https://urantia.dev",
-          "icon": "house"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
-    "light": "/logo/mark-dark.svg",
-    "dark": "/logo/mark-white.svg"
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png",
+    "href": "https://urantia.dev"
   },
   "api": {
     "baseUrl": "https://api.urantia.dev"
@@ -235,8 +246,81 @@
   "openapi": "api-reference/openapi.json",
   "footer": {
     "socials": {
-      "github": "https://github.com/urantia-hub",
-      "website": "https://status.urantia.dev"
-    }
+      "website": "https://urantia.dev",
+      "github": "https://github.com/urantia-hub/urantia-dev-api"
+    },
+    "links": [
+      {
+        "header": "Product",
+        "items": [
+          {
+            "label": "Docs",
+            "href": "https://docs.urantia.dev/"
+          },
+          {
+            "label": "API reference",
+            "href": "https://docs.urantia.dev/api-reference/introduction"
+          },
+          {
+            "label": "Demo",
+            "href": "https://demo.urantia.dev/"
+          },
+          {
+            "label": "Changelog",
+            "href": "https://docs.urantia.dev/changelog"
+          }
+        ]
+      },
+      {
+        "header": "Developers",
+        "items": [
+          {
+            "label": "Quickstart",
+            "href": "https://docs.urantia.dev/quickstart"
+          },
+          {
+            "label": "MCP server",
+            "href": "https://docs.urantia.dev/mcp-servers"
+          },
+          {
+            "label": "TypeScript SDK",
+            "href": "https://docs.urantia.dev/sdks/overview"
+          },
+          {
+            "label": "OpenAPI spec",
+            "href": "https://api.urantia.dev/openapi.json"
+          },
+          {
+            "label": "GitHub",
+            "href": "https://github.com/urantia-hub/urantia-dev-api"
+          }
+        ]
+      },
+      {
+        "header": "Project",
+        "items": [
+          {
+            "label": "Report a problem",
+            "href": "https://docs.urantia.dev/feedback"
+          },
+          {
+            "label": "Support the project",
+            "href": "https://docs.urantia.dev/support"
+          },
+          {
+            "label": "Status",
+            "href": "https://status.urantia.dev/"
+          },
+          {
+            "label": "Terms",
+            "href": "https://docs.urantia.dev/terms-of-service"
+          },
+          {
+            "label": "Privacy",
+            "href": "https://docs.urantia.dev/privacy-policy"
+          }
+        ]
+      }
+    ]
   }
 }

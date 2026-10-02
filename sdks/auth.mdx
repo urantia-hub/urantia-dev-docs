@@ -71,7 +71,7 @@ const auth = new UrantiaAuth({
   redirectUri: 'https://myapp.com/callback',
 })
 
-// Opens popup window — resolves when user completes sign-in
+// Opens popup window, resolves when user completes sign-in
 const session = await auth.signIn({ scopes: ['bookmarks', 'notes'] })
 console.log(session.user.email, session.accessToken)
 ```
@@ -92,7 +92,7 @@ const session = await auth.signIn({ code: authorizationCode })
 ```
 
 <Info>
-  Server-side exchange is more secure because the app secret never leaves your server. The [demo app](https://demo.urantia.dev) uses this approach — the browser handles the redirect, and a server-side API route exchanges the code.
+  Server-side exchange is more secure because the app secret never leaves your server. The [demo app](https://demo.urantia.dev) uses this approach: the browser handles the redirect, and a server-side API route exchanges the code.
 </Info>
 
 ## Session Management
@@ -140,18 +140,18 @@ await auth.signIn({ scopes: ['profile', 'bookmarks', 'notes'] })
 
 | Option | Type | Required | Default |
 |--------|------|----------|---------|
-| `appId` | `string` | Yes | — |
-| `appSecret` | `string` | Server only | — |
-| `redirectUri` | `string` | Browser | — |
+| `appId` | `string` | Yes | None |
+| `appSecret` | `string` | Server only | None |
+| `redirectUri` | `string` | Browser | None |
 | `loginUrl` | `string` | No | `https://accounts.urantiahub.com` |
 | `apiUrl` | `string` | No | `https://api.urantia.dev` |
 
 ## Security
 
-- **PKCE** (Proof Key for Code Exchange) — used automatically for browser flows to prevent authorization code interception
-- **State parameter** — CSRF protection via random state verification
-- **Token expiry** — access tokens expire after 7 days; expired sessions are automatically cleared
-- **App secrets** — never stored in the browser; use server-side token exchange for production apps
+- **PKCE** (Proof Key for Code Exchange), used automatically for browser flows to prevent authorization code interception
+- **State parameter**: CSRF protection via random state verification
+- **Token expiry**: access tokens expire after 7 days; expired sessions are automatically cleared
+- **App secrets**: never stored in the browser; use server-side token exchange for production apps
 
 ## Registering Your App
 
@@ -163,13 +163,13 @@ To use `@urantia/auth`, you need a registered OAuth app.
   </Step>
   <Step title="Create a new app">
     Click **Create app** and fill in:
-    - **App ID** — a unique slug (e.g. `my-reading-app`). Lowercase letters, numbers, and hyphens.
-    - **App Name** — shown to users on the consent screen
-    - **Redirect URIs** — URLs where users are sent after authorization (e.g. `http://localhost:3000/callback` for local dev)
-    - **Scopes** — which permissions your app needs
+    - **App ID**: a unique slug (e.g. `my-reading-app`). Lowercase letters, numbers, and hyphens.
+    - **App Name**: shown to users on the consent screen
+    - **Redirect URIs**: URLs where users are sent after authorization (e.g. `http://localhost:3000/callback` for local dev)
+    - **Scopes**: which permissions your app needs
   </Step>
   <Step title="Save your credentials">
-    After creation, you'll see your **App ID** and **App Secret**. The secret is only shown once — save it somewhere secure.
+    After creation, you'll see your **App ID** and **App Secret**. The secret is only shown once. Save it somewhere secure.
 
     <Warning>
       Your app secret is only displayed once. If you lose it, you can rotate it from the app details page, but any existing integrations using the old secret will break.
