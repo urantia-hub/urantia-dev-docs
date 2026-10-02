@@ -26,6 +26,19 @@ The Urantia Papers API provides structured access to all 197 papers, 1,626 secti
   </Card>
 </Columns>
 
+## For AI agents
+
+Connect the MCP server and the agent gets 19 tools for search, lookup, and cross-references. No key needed.
+
+```
+https://api.urantia.dev/mcp
+```
+
+- [Set up the MCP server](/mcp-servers) in Claude, Cursor, or another client
+- [Agent guide](/ai-agents): the recommended flow from table of contents to search to context
+- Listed on [Smithery](https://smithery.ai/servers/urantiahub/urantia-papers) and [Glama](https://glama.ai/mcp/connectors/dev.urantia/urantia-papers)
+- [`llms.txt`](/llms.txt) for a plain-text summary of the API
+
 ## Base URL
 
 ```
@@ -44,14 +57,17 @@ https://api.urantia.dev
 - **OpenAPI spec** at `/openapi.json` for client generation
 - **No authentication required** — free and open
 
-## Ecosystem
+## Built with the API
 
-<Columns cols={2}>
-  <Card title="UrantiaHub Reader" icon="book-open" href="https://urantiahub.com">
-    Modern reading experience with bookmarks, notes, progress tracking, and AI chat. Also accessible at urantiapapers.com and openurantia.com.
-  </Card>
+<Columns cols={3}>
   <Card title="Interactive Demo" icon="play" href="https://demo.urantia.dev">
     Live examples: semantic search, random quotes, audio playback, entity exploration, and passage lookup.
+  </Card>
+  <Card title="UrantiaHub" icon="book-open" href="https://www.urantiahub.com">
+    A reading site for the Papers. It gets its text from this API.
+  </Card>
+  <Card title="Dalamatia" icon="gamepad" href="https://dalamatia.urantiahub.com">
+    A story game set in Paper 66. Every quoted paragraph comes from this API.
   </Card>
 </Columns>
 
