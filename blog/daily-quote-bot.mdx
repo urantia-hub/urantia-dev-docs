@@ -1,0 +1,466 @@
+---
+title: "Build a Daily Quote Bot in 10 Minutes"
+sidebarTitle: "Daily Quote Bot"
+description: "Create a simple bot that fetches and shares inspiring Urantia Book quotes using the free API. Works with Discord, Slack, email, or social media."
+---
+
+This tutorial shows you how to build a bot that fetches random inspiring quotes from the Urantia Book and shares them daily via Discord, Slack, email, or social media. Takes ~10 minutes to build.
+
+<Card title="Try the Live Demo" icon="play" href="https://demo.urantia.dev">
+  See the random quote feature in action at demo.urantia.dev
+</Card>
+
+## What You'll Build
+
+A bot that:
+1. Fetches a random paragraph from the Urantia Book
+2. Formats it with the reference citation
+3. Posts it to your chosen platform (Discord, Slack, email, etc.)
+
+No API key needed — the Urantia API is completely free.
+
+## Prerequisites
+
+- **Node.js 18+** or **Python 3.10+**
+- A platform to post to (Discord webhook, Slack webhook, email service, etc.)
+
+## The Complete Code
+
+<Tabs>
+  <Tab title="Node.js">
+    ```javascript
+    // fetch-quote.js
+    async function getDailyQuote() {
+      const response = await fetch('https://api.urantia.dev/paragraphs/random');
+      const data = await response.json();
+      
+      return {
+        text: data.text,
+        reference: data.standardReferenceId,
+        paperTitle: data.paperTitle,
+        url: `https://urantiahub.com/api/redirect/papers/by-standard-reference-id/${data.standardReferenceId}`
+      };
+    }
+
+    async function postToDiscord(webhookUrl) {
+      const quote = await getDailyQuote();
+      
+      const message = {
+        embeds: [{
+          title: "Daily Urantia Quote",
+          description: `"${quote.text}"`,
+          fields: [
+            {
+              name: "Reference",
+              value: `[${quote.reference}](${quote.url})`,
+              inline: true
+            },
+            {
+              name: "Paper",
+              value: quote.paperTitle,
+              inline: true
+            }
+          ],
+          color: 0x3B82F6,
+          footer: { text: "Powered by api.urantia.dev" }
+        }]
+      };
+
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(message)
+      });
+    }
+
+    // Run it
+    const DISCORD_WEBHOOK = 'YOUR_WEBHOOK_URL_HERE';
+    postToDiscord(DISCORD_WEBHOOK)
+      .then(() => console.log('Quote posted!'))
+      .catch(err => console.error('Error:', err));
+    ```
+  </Tab>
+
+  <Tab title="Python">
+    ```python
+    # fetch_quote.py
+    import requests
+    import json
+
+    def get_daily_quote():
+        response = requests.get('https://api.urantia.dev/paragraphs/random')
+        data = response.json()
+        
+        return {
+            'text': data['text'],
+            'reference': data['standardReferenceId'],
+            'paper_title': data['paperTitle'],
+            'url': f"https://urantiahub.com/api/redirect/papers/by-standard-reference-id/{data['standardReferenceId']}"
+        }
+
+    def post_to_discord(webhook_url):
+        quote = get_daily_quote()
+        
+        message = {
+            'embeds': [{
+                'title': 'Daily Urantia Quote',
+                'description': f'"{quote["text"]}"',
+                'fields': [
+                    {
+                        'name': 'Reference',
+                        'value': f'[{quote["reference"]}]({quote["url"]})',
+                        'inline': True
+                    },
+                    {
+                        'name': 'Paper',
+                        'value': quote['paper_title'],
+                        'inline': True
+                    }
+                ],
+                'color': 3901686,
+                'footer': {'text': 'Powered by api.urantia.dev'}
+            }]
+        }
+
+        response = requests.post(webhook_url, json=message)
+        response.raise_for_status()
+
+    if __name__ == '__main__':
+        DISCORD_WEBHOOK = 'YOUR_WEBHOOK_URL_HERE'
+        post_to_discord(DISCORD_WEBHOOK)
+        print('Quote posted!')
+    ```
+  </Tab>
+
+  <Tab title="Slack">
+    ```javascript
+    // slack-quote.js
+    async function getDailyQuote() {
+      const response = await fetch('https://api.urantia.dev/paragraphs/random');
+      const data = await response.json();
+      
+      return {
+        text: data.text,
+        reference: data.standardReferenceId,
+        paperTitle: data.paperTitle,
+        url: `https://urantiahub.com/api/redirect/papers/by-standard-reference-id/${data.standardReferenceId}`
+      };
+    }
+
+    async function postToSlack(webhookUrl) {
+      const quote = await getDailyQuote();
+      
+      const message = {
+        blocks: [
+          {
+            type: "header",
+            text: {
+              type: "plain_text",
+              text: "📖 Daily Urantia Quote"
+            }
+          },
+          {
+            type: "section",
+            text: {
+              type: "mrkdwn",
+              text: `"${quote.text}"`
+            }
+          },
+          {
+            type: "context",
+            elements: [
+              {
+                type: "mrkdwn",
+                text: `<${quote.url}|${quote.reference}> • ${quote.paperTitle}`
+              }
+            ]
+          }
+        ]
+      };
+
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(message)
+      });
+    }
+
+    const SLACK_WEBHOOK = 'YOUR_WEBHOOK_URL_HERE';
+    postToSlack(SLACK_WEBHOOK)
+      .then(() => console.log('Quote posted to Slack!'))
+      .catch(err => console.error('Error:', err));
+    ```
+  </Tab>
+</Tabs>
+
+## How It Works
+
+### 1. Fetch a Random Paragraph
+
+```bash
+curl https://api.urantia.dev/paragraphs/random
+```
+
+Returns a random paragraph with:
+- `text` — The paragraph content
+- `standardReferenceId` — Citation (e.g., "107:0.1")
+- `paperTitle` — The paper's title
+- `paperId`, `sectionId`, `paragraphId` — Numeric IDs
+
+### 2. Format for Your Platform
+
+The examples above show Discord and Slack formatting. Adapt for your platform:
+
+<Tabs>
+  <Tab title="Email (HTML)">
+    ```html
+    <div style="font-family: Georgia, serif; max-width: 600px; margin: 40px auto; padding: 20px; border-left: 4px solid #3B82F6;">
+      <h2 style="color: #1E40AF; margin-top: 0;">Daily Urantia Quote</h2>
+      <p style="font-size: 18px; line-height: 1.6; color: #374151;">
+        "${quote.text}"
+      </p>
+      <p style="font-size: 14px; color: #6B7280; margin-bottom: 0;">
+        — <a href="${quote.url}" style="color: #3B82F6;">${quote.reference}</a><br>
+        <em>${quote.paperTitle}</em>
+      </p>
+      <hr style="border: none; border-top: 1px solid #E5E7EB; margin: 20px 0;">
+      <p style="font-size: 12px; color: #9CA3AF;">
+        Powered by <a href="https://api.urantia.dev" style="color: #3B82F6;">api.urantia.dev</a>
+      </p>
+    </div>
+    ```
+  </Tab>
+
+  <Tab title="Twitter/X">
+    ```javascript
+    // Format for Twitter (280 char limit)
+    function formatForTwitter(quote) {
+      const maxLength = 240; // Leave room for reference
+      let text = quote.text;
+      
+      if (text.length > maxLength) {
+        text = text.substring(0, maxLength - 3) + '...';
+      }
+      
+      return `${text}\n\n— ${quote.reference}\n${quote.url}`;
+    }
+    ```
+  </Tab>
+
+  <Tab title="Plain Text">
+    ```
+    📖 Daily Urantia Quote
+
+    "${quote.text}"
+
+    — Paper ${quote.reference}
+    ${quote.paperTitle}
+
+    Read more: ${quote.url}
+    ```
+  </Tab>
+</Tabs>
+
+## Schedule It to Run Daily
+
+<Tabs>
+  <Tab title="GitHub Actions (Free)">
+    Create `.github/workflows/daily-quote.yml`:
+
+    ```yaml
+    name: Daily Quote Bot
+
+    on:
+      schedule:
+        - cron: '0 12 * * *'  # Daily at noon UTC
+      workflow_dispatch:  # Manual trigger
+
+    jobs:
+      post-quote:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@v4
+          - uses: actions/setup-node@v4
+            with:
+              node-version: 20
+          - run: node fetch-quote.js
+            env:
+              DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+    ```
+
+    Add your webhook URL to repository secrets.
+  </Tab>
+
+  <Tab title="Cloudflare Workers (Free)">
+    Deploy as a scheduled Worker:
+
+    ```javascript
+    export default {
+      async scheduled(event, env, ctx) {
+        const quote = await getDailyQuote();
+        await postToDiscord(env.DISCORD_WEBHOOK, quote);
+      }
+    };
+
+    async function getDailyQuote() {
+      const response = await fetch('https://api.urantia.dev/paragraphs/random');
+      return response.json();
+    }
+
+    async function postToDiscord(webhookUrl, data) {
+      const message = {
+        embeds: [{
+          title: "Daily Urantia Quote",
+          description: `"${data.text}"`,
+          fields: [
+            { name: "Reference", value: data.standardReferenceId, inline: true },
+            { name: "Paper", value: data.paperTitle, inline: true }
+          ]
+        }]
+      };
+      
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(message)
+      });
+    }
+    ```
+
+    Add trigger in `wrangler.toml`:
+    ```toml
+    [triggers]
+    crons = ["0 12 * * *"]
+    ```
+  </Tab>
+
+  <Tab title="Cron Job (Linux/Mac)">
+    ```bash
+    # Edit crontab
+    crontab -e
+
+    # Add this line (runs daily at noon)
+    0 12 * * * cd /path/to/quote-bot && node fetch-quote.js
+    ```
+  </Tab>
+</Tabs>
+
+## Enhance Your Bot
+
+### 1. Filter by Topic
+
+Search for quotes about specific topics instead of random:
+
+```javascript
+async function getTopicQuote(topic) {
+  const response = await fetch('https://api.urantia.dev/search', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ q: topic, type: 'and', limit: 10 })
+  });
+  
+  const data = await response.json();
+  // Pick a random result from the top 10
+  const randomIndex = Math.floor(Math.random() * data.results.length);
+  return data.results[randomIndex];
+}
+
+// Usage
+const quote = await getTopicQuote('love');
+```
+
+### 2. Add Audio
+
+Every paragraph has audio narration:
+
+```javascript
+async function getQuoteWithAudio(ref) {
+  const response = await fetch(`https://api.urantia.dev/paragraphs/${ref}`);
+  const data = await response.json();
+  
+  // Get audio URL (tts-1-hd/nova covers every paragraph)
+  const audioUrl = data.audio?.['tts-1-hd']?.nova?.url;
+  
+  return { ...data, audioUrl };
+}
+```
+
+### 3. Track Quote History
+
+Store sent quotes to avoid duplicates:
+
+```javascript
+const sentQuotes = new Set();
+
+async function getUniqueQuote() {
+  let attempts = 0;
+  let quote;
+  
+  do {
+    const response = await fetch('https://api.urantia.dev/paragraphs/random');
+    quote = await response.json();
+    attempts++;
+  } while (sentQuotes.has(quote.standardReferenceId) && attempts < 10);
+  
+  sentQuotes.add(quote.standardReferenceId);
+  return quote;
+}
+```
+
+### 4. Theme Days
+
+Rotate topics by day of week:
+
+```javascript
+const themes = {
+  0: 'love',        // Sunday
+  1: 'faith',       // Monday
+  2: 'service',     // Tuesday
+  3: 'truth',       // Wednesday
+  4: 'wisdom',      // Thursday
+  5: 'prayer',      // Friday
+  6: 'worship'      // Saturday
+};
+
+async function getThemedQuote() {
+  const dayOfWeek = new Date().getDay();
+  const topic = themes[dayOfWeek];
+  return getTopicQuote(topic);
+}
+```
+
+## Next Steps
+
+<CardGroup cols={2}>
+  <Card title="Use Cases" icon="lightbulb" href="/use-cases">
+    More ideas for what you can build with the API
+  </Card>
+  <Card title="Search Endpoint" icon="magnifying-glass" href="/api-reference/endpoint/search">
+    Full documentation for the search endpoint
+  </Card>
+  <Card title="Interactive Demo" icon="play" href="https://demo.urantia.dev">
+    Try the API features live
+  </Card>
+  <Card title="Build an AI Chatbot" icon="robot" href="/blog/building-urantia-ai-chatbot">
+    Next-level tutorial: RAG-powered Urantia chatbot
+  </Card>
+</CardGroup>
+
+## Troubleshooting
+
+**Rate limits:** The API allows 100 requests/minute per IP. For a daily bot, this is more than enough. If you hit limits, add retry logic with exponential backoff.
+
+**Quote is too long:** Some paragraphs are lengthy. Truncate with `text.substring(0, 300) + '...'` or filter by character count before posting.
+
+**Want specific topics?** Use the [curated quote collections](/quotes/love) as inspiration — each has 20 hand-picked quotes organized by theme.
+
+## Source Code
+
+Full working example with tests and multiple platforms:
+
+- [GitHub repository](https://github.com/urantia-hub/urantia-dev-demo) — See the quote bot implementation in the demo app
+- Live demo at [demo.urantia.dev](https://demo.urantia.dev)
+
+---
+
+**Questions?** The API is fully documented at [urantia.dev](/) and the source code is MIT-licensed at [github.com/urantia-hub](https://github.com/urantia-hub).

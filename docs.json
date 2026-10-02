@@ -190,8 +190,9 @@
           {
             "group": "Articles",
             "pages": [
-              "blog/religious-text-apis-compared",
+              "blog/daily-quote-bot",
               "blog/building-urantia-ai-chatbot",
+              "blog/religious-text-apis-compared",
               "blog/urantia-book-for-beginners",
               "blog/mcp-server-urantia-book"
             ]
