@@ -107,6 +107,22 @@ const { data: para } = await api.paragraphs.get('1:0.1', {
 })
 ```
 
+### Feedback
+
+Report a bug, a docs gap, or an idea. No token needed. Added in `@urantia/api` 0.5.0.
+
+```ts
+const { data } = await api.feedback.submit({
+  category: 'bug', // 'bug' | 'docs' | 'api' | 'product' | 'other'
+  message: 'Phrase search returns 500 for a query with a quote mark.',
+  endpoint: '/search',
+  client: 'my-app',
+})
+// data.id, data.receivedAt
+```
+
+The limit is 5 requests per minute and 10 per 15 minutes per IP address. A `429` throws an error that starts with `429:`. See [Feedback](/feedback) for every field.
+
 ### User Data (Authenticated)
 
 ```typescript
