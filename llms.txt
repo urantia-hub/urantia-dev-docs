@@ -43,6 +43,12 @@ No authentication required. Free and open access.
 ### Audio
 - GET /audio/:paragraphId — Get audio URLs for a paragraph
 
+### Feedback
+- POST /feedback — Report a bug, a docs gap, or an idea. No authentication required
+  - Body: {"category": "bug|docs|api|product|other", "message": "up to 4000 characters"}
+  - Optional: ref, endpoint, requestId, client, contact, pageUrl
+  - Limit: 10 requests per 15 minutes per IP address
+
 ## Paragraph Reference Formats
 
 Three formats are auto-detected:

@@ -34,7 +34,7 @@
           },
           {
             "group": "Integrations",
-            "pages": ["mcp-servers", "ai-agents"]
+            "pages": ["mcp-servers", "ai-agents", "feedback"]
           },
           {
             "group": "Open Source",
@@ -121,6 +121,10 @@
               "api-reference/endpoint/get-embedding",
               "api-reference/endpoint/export-embeddings"
             ]
+          },
+          {
+            "group": "Feedback",
+            "pages": ["api-reference/endpoint/submit-feedback"]
           }
         ]
       },
