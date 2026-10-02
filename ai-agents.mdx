@@ -126,6 +126,18 @@ Each tool corresponds 1:1 with an MCP tool, so you can dispatch the call against
   Connect AI agents to the Urantia Book via 2 MCP servers — 19 tools + 2 resources + 2 prompts on the API server, plus docs search. One-click install via Smithery.
 </Card>
 
+## Report a problem
+
+If a call fails in a way these docs do not explain, send a report to `POST /feedback`. No authentication required.
+
+```bash
+curl -X POST https://api.urantia.dev/feedback \
+  -H "Content-Type: application/json" \
+  -d '{"category": "bug", "message": "what happened", "endpoint": "/search", "client": "your-agent"}'
+```
+
+See [Feedback](/feedback) for the fields and the limits.
+
 ## OpenAPI spec
 
 The full OpenAPI 3.1 specification is available at:

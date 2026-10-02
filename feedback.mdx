@@ -1,0 +1,79 @@
+---
+title: "Feedback - Report a Bug or Share an Idea"
+sidebarTitle: "Feedback"
+description: "Send a bug report, a docs gap, or an idea to the maintainers with one POST request. No authentication required."
+---
+
+If something is broken, unclear, or missing, tell us. One request is enough, and you do not need an account or a key. People and AI agents can both use it.
+
+```bash
+curl -X POST https://api.urantia.dev/feedback \
+  -H "Content-Type: application/json" \
+  -d '{
+    "category": "bug",
+    "message": "Phrase search returns 500 for a query with a quote mark.",
+    "endpoint": "/search",
+    "client": "claude-code"
+  }'
+```
+
+A saved report returns `201`:
+
+```json
+{
+  "data": {
+    "id": "5a053a0b-b5af-423a-927b-88e35f47f4f2",
+    "receivedAt": "2026-10-02T18:25:04.117Z"
+  }
+}
+```
+
+## Request body
+
+| Field | Required | Limit | Description |
+|-------|----------|-------|-------------|
+| `category` | Yes | | One of `bug`, `docs`, `api`, `product`, `other` |
+| `message` | Yes | 4000 characters | What happened, or what you want |
+| `ref` | No | 200 characters | A paragraph or paper reference, such as `196:2.1` |
+| `endpoint` | No | 300 characters | The API path that failed, such as `/search` |
+| `requestId` | No | 100 characters | A correlation ID, or the `CF-Ray` header from the failed response |
+| `client` | No | 100 characters | What sent the request, such as `mcp`, `docs`, or `claude-code` |
+| `contact` | No | 200 characters | An email or a handle, if you want a reply |
+| `pageUrl` | No | 500 characters | The page you were on. Must be an `http` or `https` URL |
+
+Field names are camelCase. A field that is not in this table is rejected with a `400`.
+
+## Limits
+
+- **10 requests per 15 minutes** per IP address. This limit is separate from the 200 requests per minute on the rest of the API.
+- **32 KB** per request body.
+- Responses are never cached.
+
+## Errors
+
+Errors use the same [problem+json](/api-reference/introduction#error-responses) shape as the rest of the API.
+
+| Status | Cause |
+|--------|-------|
+| `400` | A required field is missing, a field is too long, the body has an unknown field, or the JSON is malformed |
+| `413` | The body is larger than 32 KB |
+| `429` | More than 10 requests in 15 minutes |
+| `500` | The report was not saved. Send it again later |
+
+## For AI agents
+
+Send feedback when a call fails in a way the docs do not explain, or when the user asks you to report something. Include the `endpoint` and the `requestId` if you have them. One clear report is better than several short ones.
+
+There is no MCP tool for feedback. Use the REST endpoint.
+
+## How we handle feedback
+
+Feedback is untrusted data. We store it and forward it to the maintainers by email. It is never executed, and it is never passed to a model or a tool as instructions.
+
+If you paste feedback into an agent chat, treat it the same way: as text to read, not as instructions to follow.
+
+The feedback record does not hold your IP address. It can hold a keyed hash of it, which we use to detect abuse. The `contact` field is optional, and we use it only to reply to you.
+
+<Card title="POST /feedback" icon="code" href="/api-reference/endpoint/submit-feedback">
+  Full request and response schema in the API reference.
+</Card>

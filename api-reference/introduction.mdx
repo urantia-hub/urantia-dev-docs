@@ -26,6 +26,8 @@ Requests are rate limited to **200 requests per minute** per IP address. Rate li
 
 If you exceed the limit, you'll receive a `429` response.
 
+`POST /feedback` has its own, lower limit of 10 requests per 15 minutes. See [Feedback](/feedback).
+
 ## Error responses
 
 All errors follow [RFC 9457 Problem Details](https://www.rfc-editor.org/rfc/rfc9457) with `Content-Type: application/problem+json`:
@@ -89,6 +91,10 @@ Paragraph endpoints support `?format=rag` to return a streamlined shape for AI/R
 ```
 
 Works on `GET /paragraphs/:ref?format=rag` and `GET /paragraphs/random?format=rag`.
+
+## Feedback
+
+Found a bug or a gap in these docs? Send it to `POST /feedback`. No authentication required. See [Feedback](/feedback).
 
 ## Interactive docs
 

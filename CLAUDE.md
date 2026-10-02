@@ -17,6 +17,7 @@ Mintlify-powered documentation for the Urantia Papers API (https://urantia.dev).
 - `papers.mdx`, `paragraphs.mdx`, `entities.mdx`, `audio.mdx`, `cdn.mdx` — Data guides
 - `mcp-servers.mdx` — MCP server setup (API + Docs servers)
 - `ai-agents.mdx` — AI agent integration guide
+- `feedback.mdx` — `POST /feedback` guide (request shape, limits, untrusted-data note)
 - `sdks/` — TypeScript SDK docs (split into 3 pages)
   - `overview.mdx` — Install, package comparison, "Using Both Together", demo link
   - `api.mdx` — @urantia/api usage patterns, endpoint groups, error handling
