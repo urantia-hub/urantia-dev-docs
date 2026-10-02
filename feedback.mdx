@@ -45,7 +45,8 @@ Field names are camelCase. A field that is not in this table is rejected with a 
 
 ## Limits
 
-- **10 requests per 15 minutes** per IP address. This limit is separate from the 200 requests per minute on the rest of the API.
+- **5 requests per minute, and 10 requests per 15 minutes**, per IP address. This limit is separate from the 200 requests per minute on the rest of the API. A request that fails validation counts too.
+- A `429` response has a `Retry-After` header with the number of seconds to wait.
 - **32 KB** per request body.
 - Responses are never cached.
 
@@ -57,7 +58,7 @@ Errors use the same [problem+json](/api-reference/introduction#error-responses) 
 |--------|-------|
 | `400` | A required field is missing, a field is too long, the body has an unknown field, or the JSON is malformed |
 | `413` | The body is larger than 32 KB |
-| `429` | More than 10 requests in 15 minutes |
+| `429` | More than 5 requests in a minute, or more than 10 in 15 minutes. Wait for the `Retry-After` seconds |
 | `500` | The report was not saved. Send it again later |
 
 ## For AI agents
