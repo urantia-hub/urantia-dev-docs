@@ -1,6 +1,10 @@
 # urantia-dev-mintlify-docs
 
-Mintlify-powered documentation for the Urantia Papers API (https://urantia.dev).
+Mintlify-powered documentation for the Urantia Papers API, served at https://docs.urantia.dev.
+
+https://urantia.dev is a separate landing page (repo `urantia-dev-landing`). It redirects every old docs path here.
+
+urantia.dev and UrantiaHub are separate products. In these docs UrantiaHub appears only as something built with the API. Do not put it in the navigation, and do not describe the two as one ecosystem.
 
 ## Tech Stack
 

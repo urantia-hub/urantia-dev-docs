@@ -212,9 +212,9 @@
           "icon": "play"
         },
         {
-          "anchor": "Read the Papers",
-          "href": "https://urantiahub.com",
-          "icon": "book-open"
+          "anchor": "urantia.dev",
+          "href": "https://urantia.dev",
+          "icon": "house"
         }
       ]
     }

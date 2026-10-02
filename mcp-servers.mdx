@@ -9,7 +9,7 @@ There are two MCP servers available — one for accessing Urantia Book data dire
 | Server | URL | Capabilities | Purpose |
 |--------|-----|--------------|---------|
 | **API MCP Server** | `api.urantia.dev/mcp` | 19 tools, 2 resources, 2 prompts | Search, paragraphs, entities, audio, Bible (WEB) + UB↔Bible cross-references |
-| **Docs MCP Server** | `urantia.dev/mcp` | 1 tool | Search the documentation site |
+| **Docs MCP Server** | `docs.urantia.dev/mcp` | 1 tool | Search the documentation site |
 
 ## API MCP Server
 
@@ -205,7 +205,7 @@ Both give you access to the same data. Choose based on your use case:
 Mintlify provides a hosted MCP server that lets AI agents search these documentation pages — useful for discovering endpoints, understanding usage patterns, and learning the API.
 
 ```
-https://urantia.dev/mcp
+https://docs.urantia.dev/mcp
 ```
 
 ### Setup
@@ -219,7 +219,7 @@ https://urantia.dev/mcp
       "mcpServers": {
         "urantia-dev-docs": {
           "command": "npx",
-          "args": ["-y", "@anthropic-ai/mcp-remote@latest", "https://urantia.dev/mcp"]
+          "args": ["-y", "@anthropic-ai/mcp-remote@latest", "https://docs.urantia.dev/mcp"]
         }
       }
     }
@@ -233,7 +233,7 @@ https://urantia.dev/mcp
       "mcpServers": {
         "urantia-dev-docs": {
           "command": "npx",
-          "args": ["-y", "@anthropic-ai/mcp-remote@latest", "https://urantia.dev/mcp"]
+          "args": ["-y", "@anthropic-ai/mcp-remote@latest", "https://docs.urantia.dev/mcp"]
         }
       }
     }
@@ -266,14 +266,14 @@ For the best experience, add both servers to your client:
     },
     "urantia-dev-docs": {
       "command": "npx",
-      "args": ["-y", "@anthropic-ai/mcp-remote@latest", "https://urantia.dev/mcp"]
+      "args": ["-y", "@anthropic-ai/mcp-remote@latest", "https://docs.urantia.dev/mcp"]
     }
   }
 }
 ```
 
 - **API MCP Server** (`api.urantia.dev/mcp`) — 19 tools for accessing Urantia Book data, the World English Bible, and UB↔Bible cross-references
-- **Docs MCP Server** (`urantia.dev/mcp`) — 1 tool for searching this documentation site
+- **Docs MCP Server** (`docs.urantia.dev/mcp`) — 1 tool for searching this documentation site
 
 ## Building a Custom MCP Server
 

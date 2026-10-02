@@ -139,5 +139,5 @@ The Urantia Book contains 197 papers organized in four parts plus a Foreword:
 ## Documentation
 
 - Interactive docs: https://api.urantia.dev/docs (Swagger UI)
-- Full documentation: https://urantia.dev
+- Full documentation: https://docs.urantia.dev
 - OpenAPI 3.1 spec: https://api.urantia.dev/openapi.json

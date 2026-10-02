@@ -23,8 +23,8 @@ Recommended flow for an agent:
 3. paragraphs.context, to read the paragraphs around a result.
 4. papers.get, when the whole paper matters.
 
-Setup guide: https://urantia.dev/mcp-servers
-Agent guide: https://urantia.dev/ai-agents
+Setup guide: https://docs.urantia.dev/mcp-servers
+Agent guide: https://docs.urantia.dev/ai-agents
 
 ## REST API (for developers)
 
@@ -76,7 +76,7 @@ The cross-references are semantic neighbors computed from embeddings. They are n
   - Body: {"category": "bug|docs|api|product|other", "message": "up to 4000 characters"}
   - Optional: ref, endpoint, requestId, client, contact, pageUrl
   - Limit: 10 requests per 15 minutes per IP address
-  - Guide: https://urantia.dev/feedback
+  - Guide: https://docs.urantia.dev/feedback
 
 ## Paragraph references
 
@@ -101,8 +101,9 @@ The Foreword is Paper 0.
 
 ## Links
 
-- Documentation: https://urantia.dev
-- Full documentation as one file: https://urantia.dev/llms-full.txt
+- Home: https://urantia.dev
+- Documentation: https://docs.urantia.dev
+- Full documentation as one file: https://docs.urantia.dev/llms-full.txt
 - Interactive demo: https://demo.urantia.dev
 - Source code: https://github.com/urantia-hub/urantia-dev-api
 - Status: https://status.urantia.dev
