@@ -10,6 +10,9 @@
   "fonts": {
     "family": "Inter"
   },
+  "appearance": {
+    "default": "light"
+  },
   "favicon": "/favicon.svg",
   "seo": {
     "indexing": "all",
