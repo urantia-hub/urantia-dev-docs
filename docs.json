@@ -13,7 +13,10 @@
   "appearance": {
     "default": "light"
   },
-  "favicon": "/favicon.svg",
+  "favicon": {
+    "light": "/favicon-light.svg",
+    "dark": "/favicon-dark.svg"
+  },
   "navbar": {
     "links": [
       {
