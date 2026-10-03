@@ -1,10 +1,10 @@
 ---
-title: "MCP Servers - Give AI Agents Access to the Urantia Book"
+title: "MCP Servers - Give AI Agents Access to the Urantia Papers"
 sidebarTitle: "MCP Servers"
 description: "Connect Claude Desktop, Cursor, Windsurf, and other AI agents to the Urantia Papers API and documentation via MCP. 19 tools, 2 resource templates, 2 prompts, zero setup."
 ---
 
-There are two MCP servers available, one for accessing Urantia Book data directly, and one for searching this documentation site.
+There are two MCP servers available, one for reading the Urantia Papers directly, and one for searching this documentation site.
 
 | Server | URL | Capabilities | Purpose |
 |--------|-----|--------------|---------|
@@ -161,21 +161,21 @@ The server also publishes two reusable prompt templates for common study workflo
 
 | Prompt | Arguments | Description |
 |--------|-----------|-------------|
-| `study_assistant` | `topic` (optional) | Primes the model to act as a Urantia Book study guide. Optionally focuses the session on a specific topic or passage. |
-| `comparative_theology` | `topic`, `tradition` | Structures a comparison between a Urantia Book teaching and another religious or philosophical tradition (e.g. Buddhism, Stoicism). |
+| `study_assistant` | `topic` (optional) | Primes the model to act as a study guide for the Urantia Papers. Optionally focuses the session on a specific topic or passage. |
+| `comparative_theology` | `topic`, `tradition` | Structures a comparison between a teaching of the Urantia Papers and another religious or philosophical tradition (e.g. Buddhism, Stoicism). |
 
 ### Example Prompts
 
 Once connected, try asking your AI agent:
 
-- **"Search the Urantia Book for passages about love"**: uses `search.fulltext`
-- **"What does the Urantia Book say about what happens after death?"**: uses `search.semantic`
+- **"Search the Urantia Papers for passages about love"**: uses `search.fulltext`
+- **"What do the Urantia Papers say about what happens after death?"**: uses `search.semantic`
 - **"Read Paper 1 about the Universal Father"**: uses the `urantia://paper/1` resource
 - **"Show me paragraph 2:5.10 with surrounding context"**: uses `paragraphs.context`
 - **"Find all entities of type 'place'"**: uses `entities.list`
 - **"What entities are mentioned in paragraph 0:0.1?"**: uses `paragraphs.get` with `include_entities`
-- **"Compare what the Urantia Book teaches about the soul with Stoic philosophy"**: uses the `comparative_theology` prompt
-- **"Find Urantia Book paragraphs related to Matthew 5:3"**: uses `bible.verse.urantia_parallels`
+- **"Compare what the Urantia Papers teach about the soul with Stoic philosophy"**: uses the `comparative_theology` prompt
+- **"Find Urantia paragraphs related to Matthew 5:3"**: uses `bible.verse.urantia_parallels`
 - **"Search the Bible for passages about forgiveness and show the related Urantia teachings"**: uses `bible.search.semantic`
 - **"Show me 0:0.1 with both Bible parallels and related Urantia paragraphs"**: uses `paragraphs.get` with `include_bible_parallels` and `include_urantia_parallels`
 
@@ -272,7 +272,7 @@ For the best experience, add both servers to your client:
 }
 ```
 
-- **API MCP Server** (`api.urantia.dev/mcp`): 19 tools for accessing Urantia Book data, the World English Bible, and UB↔Bible cross-references
+- **API MCP Server** (`api.urantia.dev/mcp`): 19 tools for the Urantia Papers, the World English Bible, and cross-references between them
 - **Docs MCP Server** (`docs.urantia.dev/mcp`): 1 tool for searching this documentation site
 
 ## Building a Custom MCP Server
