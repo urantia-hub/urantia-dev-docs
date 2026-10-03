@@ -1,0 +1,36 @@
+---
+title: "Help and Contact"
+sidebarTitle: "Help"
+description: "How to get help with the Urantia Papers API and MCP server, report a problem, or reach the maintainer."
+---
+
+This page is for people who use the API, the MCP server, or one of the plugins and need help.
+
+## Contact
+
+Email [kelson@urantia.dev](mailto:kelson@urantia.dev). A person reads every message.
+
+Include what you tried, what you expected, and what happened. For an API call, include the request URL, the time, and the `cf-ray` response header if you have it.
+
+## Report a problem
+
+- **From code or an AI agent:** send one request to `POST /feedback`. You do not need an account or a key. See [Feedback](/feedback).
+- **On GitHub:** open an issue at [urantia-hub/urantia-dev-api](https://github.com/urantia-hub/urantia-dev-api/issues).
+
+## Check the service
+
+[status.urantia.dev](https://status.urantia.dev) shows whether the API is up, and its history.
+
+## Common questions
+
+**Do I need a key or an account?** No. The API and the MCP server are open.
+
+**Is there a rate limit?** Yes: 200 requests per minute for each IP address. A request over the limit gets a `429` response. See the [API reference](/api-reference/introduction).
+
+**How do I connect an AI assistant?** Add the MCP server at `https://api.urantia.dev/mcp`. See [MCP Servers](/mcp-servers) for each client.
+
+**Can the assistant change anything?** No. Every tool only reads. There are no accounts, and the server does not receive your conversation, only the tool calls the assistant makes. Requests are logged as the [Privacy Policy](/privacy-policy) describes.
+
+**Where does the text come from?** The English text of The Urantia Book is in the public domain. See [Open Source](/open-source) and the [Terms of Service](/terms-of-service).
+
+**How do you handle data?** See the [Privacy Policy](/privacy-policy).

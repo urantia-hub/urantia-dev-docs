@@ -51,7 +51,7 @@
         "groups": [
           {
             "group": "Getting Started",
-            "pages": ["index", "quickstart", "use-cases", "changelog"]
+            "pages": ["index", "quickstart", "use-cases", "changelog", "help"]
           },
           {
             "group": "Data",
@@ -298,6 +298,10 @@
       {
         "header": "Project",
         "items": [
+          {
+            "label": "Help",
+            "href": "https://docs.urantia.dev/help"
+          },
           {
             "label": "Report a problem",
             "href": "https://docs.urantia.dev/feedback"
