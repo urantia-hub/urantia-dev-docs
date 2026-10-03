@@ -1,16 +1,16 @@
 ---
-title: "Building a Urantia Book AI Chatbot with RAG"
+title: "Building a Urantia Papers AI Chatbot with RAG"
 sidebarTitle: "Building a UB AI Chatbot"
-description: "Step-by-step tutorial for building an AI chatbot that answers questions about the Urantia Book using RAG (Retrieval-Augmented Generation) with the Urantia Papers API and OpenAI."
+description: "Step-by-step tutorial for building an AI chatbot that answers questions about the Urantia Papers using RAG (Retrieval-Augmented Generation) with the Urantia Papers API and OpenAI."
 ---
 
-This tutorial walks through building an AI chatbot that can answer questions about the Urantia Book with accurate citations, using the Urantia Papers API for retrieval and OpenAI for generation.
+This tutorial walks through building an AI chatbot that can answer questions about the Urantia Papers with accurate citations, using the Urantia Papers API for retrieval and OpenAI for generation.
 
 ## Architecture
 
 The chatbot follows the RAG (Retrieval-Augmented Generation) pattern:
 
-1. **User asks a question** about the Urantia Book
+1. **User asks a question** about the Urantia Papers
 2. **Search** the Urantia Papers API for relevant passages
 3. **Retrieve context** around the top results
 4. **Generate** an answer using an LLM with the retrieved passages as context
@@ -76,9 +76,9 @@ async function buildPrompt(question: string) {
     return paragraphs;
   }).join('\n\n---\n\n');
 
-  return `You are a knowledgeable assistant about the Urantia Book. Answer the user's question based ONLY on the provided passages. Always cite specific paper references (e.g., Paper 107:0.2) for your claims. If the passages don't contain enough information to answer, say so.
+  return `You are a knowledgeable assistant about the Urantia Papers. Answer the user's question based ONLY on the provided passages. Always cite specific paper references (e.g., Paper 107:0.2) for your claims. If the passages don't contain enough information to answer, say so.
 
-## Relevant Passages from the Urantia Book
+## Relevant Passages from the Urantia Papers
 
 ${passages}
 
@@ -144,7 +144,7 @@ async function askUrantiaStream(question: string) {
 
 1. **Use `type: "and"` for specific questions** and `type: "or"` for exploratory ones
 2. **Increase the context window** for complex topics — `window=5` gives broader narrative context
-3. **Search with key terms** from the Urantia Book's vocabulary (e.g., "Thought Adjuster" instead of "inner spirit")
+3. **Search with key terms** from the vocabulary of the Urantia Papers (e.g., "Thought Adjuster" instead of "inner spirit")
 4. **Filter by paper** when you know the relevant section — use the `paperId` parameter
 5. **Lower the temperature** (0.2-0.4) for factual accuracy; raise it (0.6-0.8) for more creative explanations
 
@@ -177,7 +177,7 @@ def ask_urantia(question):
         model="gpt-4o",
         messages=[{
             "role": "system",
-            "content": f"""Answer based ONLY on these Urantia Book passages. Cite references.
+            "content": f"""Answer based ONLY on these passages from the Urantia Papers. Cite references.
 
 {passages}"""
         }, {
@@ -188,7 +188,7 @@ def ask_urantia(question):
     )
     return response.choices[0].message.content
 
-print(ask_urantia("What happens after death according to the Urantia Book?"))
+print(ask_urantia("What happens after death according to the Urantia Papers?"))
 ```
 
 ## Next Steps

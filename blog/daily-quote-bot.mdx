@@ -1,10 +1,10 @@
 ---
 title: "Build a Daily Quote Bot in 10 Minutes"
 sidebarTitle: "Daily Quote Bot"
-description: "Create a simple bot that fetches and shares inspiring Urantia Book quotes using the free API. Works with Discord, Slack, email, or social media."
+description: "Create a simple bot that fetches and shares quotes from the Urantia Papers using the free API. Works with Discord, Slack, email, or social media."
 ---
 
-This tutorial shows you how to build a bot that fetches random inspiring quotes from the Urantia Book and shares them daily via Discord, Slack, email, or social media. Takes ~10 minutes to build.
+This tutorial shows you how to build a bot that fetches random inspiring quotes from the Urantia Papers and shares them daily via Discord, Slack, email, or social media. Takes ~10 minutes to build.
 
 <Card title="Try the Live Demo" icon="play" href="https://demo.urantia.dev">
   See the random quote feature in action at demo.urantia.dev
@@ -13,7 +13,7 @@ This tutorial shows you how to build a bot that fetches random inspiring quotes 
 ## What You'll Build
 
 A bot that:
-1. Fetches a random paragraph from the Urantia Book
+1. Fetches a random paragraph from the Urantia Papers
 2. Formats it with the reference citation
 3. Posts it to your chosen platform (Discord, Slack, email, etc.)
 
@@ -452,7 +452,7 @@ async function getThemedQuote() {
 
 **Quote is too long:** Some paragraphs are lengthy. Truncate with `text.substring(0, 300) + '...'` or filter by character count before posting.
 
-**Want specific topics?** Use the [curated quote collections](/quotes/love) as inspiration — each has 20 hand-picked quotes organized by theme.
+**Want specific topics?** Use `GET /search?q=...` or `GET /search/semantic?q=...` to pick paragraphs on a theme, and quote the text the API returns.
 
 ## Source Code
 

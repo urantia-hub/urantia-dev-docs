@@ -1,10 +1,10 @@
 ---
-title: "Building an MCP Server for the Urantia Book"
+title: "Building an MCP Server for the Urantia Papers"
 sidebarTitle: "MCP Server Guide"
-description: "Learn how to build a Model Context Protocol (MCP) server that gives AI assistants like Claude access to the Urantia Book through the Urantia Papers API."
+description: "Learn how to build a Model Context Protocol (MCP) server that gives AI assistants like Claude access to the Urantia Papers through the Urantia Papers API."
 ---
 
-The Model Context Protocol (MCP) lets AI assistants access external data sources through a standardized interface. This guide shows how to build an MCP server that gives Claude (and other MCP-compatible assistants) the ability to search and read the Urantia Book.
+The Model Context Protocol (MCP) lets AI assistants access external data sources through a standardized interface. This guide shows how to build an MCP server that gives Claude (and other MCP-compatible assistants) the ability to search and read the Urantia Papers.
 
 <Info>
 **Want instant access without building anything?** The API now includes a [built-in MCP server](/mcp-servers) with 19 tools at `api.urantia.dev/mcp`. Add it to Claude Desktop or any MCP client in one line. This tutorial is for building a **custom** MCP server with your own logic.
@@ -14,7 +14,7 @@ The Model Context Protocol (MCP) lets AI assistants access external data sources
 
 MCP (Model Context Protocol) is an open standard created by Anthropic that allows AI models to interact with external tools and data sources. Instead of relying solely on training data, an AI assistant with MCP access can query live APIs, read files, and perform actions.
 
-An MCP server for the Urantia Book would give any MCP-compatible AI assistant the ability to:
+An MCP server for the Urantia Papers would give any MCP-compatible AI assistant the ability to:
 - Search the Urantia Papers by keyword
 - Read specific paragraphs with context
 - Browse the table of contents
@@ -80,7 +80,7 @@ server.tool(
 // Tool: Get a paragraph with surrounding context
 server.tool(
   "get_context",
-  "Get a Urantia Book paragraph with surrounding context",
+  "Get a paragraph of the Urantia Papers with surrounding context",
   {
     reference: z.string().describe("Paragraph reference (e.g., '2:5.10' or '107:0.1')"),
     window: z.number().min(1).max(10).default(3)
@@ -101,7 +101,7 @@ server.tool(
 // Tool: Read a full paper
 server.tool(
   "read_paper",
-  "Read a full paper from the Urantia Book",
+  "Read a full paper from the Urantia Papers",
   {
     paperId: z.number().min(0).max(196).describe("Paper number (0-196)"),
   },
@@ -123,7 +123,7 @@ server.tool(
 // Tool: Get table of contents
 server.tool(
   "get_toc",
-  "Get the Urantia Book table of contents",
+  "Get the Urantia Papers table of contents",
   {},
   async () => {
     const response = await fetch(`${API_BASE}/toc`);
@@ -162,7 +162,7 @@ Add the server to your Claude Desktop configuration (`claude_desktop_config.json
 
 Once configured, Claude can now:
 
-- **"Search the Urantia Book for passages about love"** — Uses the `search` tool
+- **"Search the Urantia Papers for passages about love"** — Uses the `search` tool
 - **"Read Paper 107 about Thought Adjusters"** — Uses the `read_paper` tool
 - **"Show me the context around passage 2:5.10"** — Uses the `get_context` tool
 - **"What papers are in Part IV?"** — Uses the `get_toc` tool

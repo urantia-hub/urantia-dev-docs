@@ -158,77 +158,11 @@
         ]
       },
       {
-        "tab": "Concepts",
+        "tab": "Tutorials",
         "groups": [
           {
-            "group": "Core Concepts",
-            "pages": [
-              "concepts/thought-adjusters",
-              "concepts/the-soul",
-              "concepts/personality-survival",
-              "concepts/adjuster-fusion"
-            ]
-          },
-          {
-            "group": "Cosmology",
-            "pages": [
-              "concepts/paradise",
-              "concepts/havona",
-              "concepts/grand-universe",
-              "concepts/local-universe",
-              "concepts/nebadon"
-            ]
-          },
-          {
-            "group": "Spiritual Growth",
-            "pages": [
-              "concepts/mansion-worlds",
-              "concepts/morontia",
-              "concepts/morontia-mota",
-              "concepts/seraphim",
-              "concepts/lucifer-rebellion",
-              "concepts/supreme-being"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Quotes",
-        "groups": [
-          {
-            "group": "Quote Collections",
-            "pages": [
-              "quotes/love",
-              "quotes/faith",
-              "quotes/prayer",
-              "quotes/death",
-              "quotes/god",
-              "quotes/jesus",
-              "quotes/truth",
-              "quotes/soul",
-              "quotes/forgiveness",
-              "quotes/family",
-              "quotes/courage",
-              "quotes/service",
-              "quotes/wisdom",
-              "quotes/hope",
-              "quotes/peace"
-            ]
-          }
-        ]
-      },
-      {
-        "tab": "Blog",
-        "groups": [
-          {
-            "group": "Articles",
-            "pages": [
-              "blog/daily-quote-bot",
-              "blog/building-urantia-ai-chatbot",
-              "blog/religious-text-apis-compared",
-              "blog/urantia-book-for-beginners",
-              "blog/mcp-server-urantia-book"
-            ]
+            "group": "Tutorials",
+            "pages": ["blog/daily-quote-bot", "blog/building-urantia-ai-chatbot", "blog/mcp-server-urantia-book"]
           }
         ]
       }
@@ -243,6 +177,12 @@
     "baseUrl": "https://api.urantia.dev"
   },
   "openapi": "api-reference/openapi.json",
+  "redirects": [
+    { "source": "/concepts/:slug*", "destination": "/" },
+    { "source": "/quotes/:slug*", "destination": "/" },
+    { "source": "/blog/urantia-book-for-beginners", "destination": "/" },
+    { "source": "/blog/religious-text-apis-compared", "destination": "/" }
+  ],
   "footer": {
     "socials": {
       "website": "https://urantia.dev",
