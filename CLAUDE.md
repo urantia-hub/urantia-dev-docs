@@ -27,13 +27,11 @@ urantia.dev and UrantiaHub are separate products. In these docs UrantiaHub appea
   - `api.mdx` — @urantia/api usage patterns, endpoint groups, error handling
   - `auth.mdx` — @urantia/auth OAuth flows (redirect/popup/server), session management, scopes
 - `api-reference/` — Auto-generated endpoint docs from OpenAPI spec (17 endpoints)
-- `concepts/` — Urantia Book concept explainers (14 pages)
-- `quotes/` — Curated quote collections (15 themes)
-- `blog/` — Tutorial articles (4 posts)
+- `blog/` — Developer tutorials (3 posts, shown under the Tutorials tab)
 
 ## Navigation (docs.json)
 
-5 tabs: Guides, API Reference, Concepts, Quotes, Blog
+3 tabs: Guides, API Reference, Tutorials
 
 Guides tab groups: Getting Started, Data, SDKs (Overview, @urantia/api, @urantia/auth), Integrations (MCP Servers, AI Agents), Donate, Legal
 
@@ -43,6 +41,8 @@ Guides tab groups: Getting Started, Data, SDKs (Overview, @urantia/api, @urantia
 - Auto-deploys via Mintlify GitHub app on push to default branch
 
 ## Notes
+
+- No reader content here. The Concepts and Quotes sections and two search-bait blog posts were removed on 2026-10-03: they were written for search traffic, and about half of their quoted passages did not match the cited paragraph. Do not add pages that explain or quote the text. Any quote on a docs page must be copied from the API and checked against `api.urantia.dev/paragraphs/<ref>`. Old `/concepts/*` and `/quotes/*` URLs redirect to `/` (see `redirects` in docs.json).
 
 - No changelog — intentionally removed as unnecessary
 - Config file is `docs.json` (not `mint.json`)
