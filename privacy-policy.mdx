@@ -4,7 +4,7 @@ sidebarTitle: "Privacy"
 description: "Privacy Policy for the Urantia Papers API (urantia.dev)"
 ---
 
-**Last updated: March 20, 2026**
+**Last updated: October 3, 2026**
 
 This privacy notice for Adams Technologies LLC, doing business as Urantia.dev ("we," "us," or "our"), describes how and why we might collect, store, use, and/or share your information when you use our services, including the API at api.urantia.dev and the documentation at urantia.dev.
 
@@ -28,13 +28,21 @@ When you make requests to our API, we automatically collect certain information 
 
 This information is collected for security, rate limiting, analytics, and improving our services.
 
+**Semantic search queries:**
+
+Semantic search (on the API and the MCP server) sends the text of your query to OpenAI to compute an embedding. The query is not linked to an account.
+
+**Feedback:**
+
+If you send feedback through `POST /feedback`, we store the message and any contact details you choose to include, and we email it to the maintainers through Resend.
+
 **Documentation site:**
 
 When you visit our documentation site, standard web analytics data may be collected by our hosting provider (Mintlify), including page views, browser type, and referring URLs.
 
 **We do not collect:**
 
-- Personal names or email addresses (the API does not require authentication or registration)
+- Personal names or email addresses, unless you include them in feedback (the API does not require registration)
 - Payment information
 - Cookies for tracking purposes on the API
 
@@ -53,6 +61,8 @@ We process the information we collect to:
 We do not sell your information. We may share information with:
 
 - Infrastructure providers who assist in operating our services (Cloudflare, Supabase, BetterStack)
+- OpenAI, to compute embeddings for semantic search queries
+- Resend, to deliver feedback emails
 - As required by law or to protect our legal rights
 - In connection with a business transfer, merger, or acquisition
 

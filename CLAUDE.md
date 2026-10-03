@@ -46,6 +46,6 @@ Guides tab groups: Getting Started, Data, SDKs (Overview, @urantia/api, @urantia
 
 - No changelog — intentionally removed as unnecessary
 - Config file is `docs.json` (not `mint.json`)
-- One experience with urantia.dev and the demo (spec: `mocks/luma/one-experience.md` in the Urantia folder): name `urantia.dev` (lowercase), logo `logo/light.png` and `logo/dark.png` linking to https://urantia.dev, favicon `favicon.svg` (the shared mark), navbar Demo + GitHub + Quickstart, footer columns Product / Developers / Project, share images on `images/thumbnail-background.png`. No em dashes in guide pages.
+- One experience with urantia.dev and the demo (spec: `mocks/luma/one-experience.md` in the Urantia folder): name `urantia.dev` (lowercase), logo `logo/light.png` and `logo/dark.png` linking to https://urantia.dev, favicon `favicon.svg` (the shared mark), navbar Demo + Quickstart (GitHub is in the footer only), footer columns Product / Developers / Project, share images on `images/thumbnail-background.png`. No em dashes in guide pages.
 - Theme is `luma` (since 2026-10-02), matching the urantia.dev landing page and the demo: `colors.primary` `#8a5a00` (amber text that reads on white), `colors.light` `#f2b441` (dark mode emphasis), `colors.dark` `#0f2a2e` (buttons), font Inter. The API playground's method badges and Try it button keep Mintlify's own method colors.
 - Old single `sdks.mdx` was split into `sdks/` directory with 3 focused pages
