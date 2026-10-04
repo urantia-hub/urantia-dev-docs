@@ -1,0 +1,110 @@
+---
+title: "Use the Urantia Papers in your AI assistant"
+sidebarTitle: "AI Assistants"
+description: "Connect Claude, ChatGPT, Grok, or Gemini to the Urantia Papers. The assistant reads the real text and quotes it with references. No key or account is needed."
+---
+
+You can connect an AI assistant to the Urantia Papers. After that, the assistant looks up the text when you ask, and it quotes the paragraph with its reference, such as 2:5.1. It does not answer from memory.
+
+You need one thing, the server address:
+
+```
+https://api.urantia.dev/mcp
+```
+
+There is no key, no account, and no sign-in. The connection only reads the text. It cannot save or change anything.
+
+## Set it up
+
+Choose your assistant. Each company changes its menus from time to time, so a menu name can differ a little from the steps below. The link under each set of steps opens that company's own instructions.
+
+<Tabs>
+  <Tab title="Claude">
+    <Steps>
+      <Step title="Open the connector settings">
+        In Claude, open **Settings**, then **Connectors**.
+      </Step>
+      <Step title="Add a custom connector">
+        Select **Add custom connector**. For the name, type `Urantia Papers`. For the address, paste `https://api.urantia.dev/mcp`. Select **Add**.
+      </Step>
+      <Step title="Turn it on in a chat">
+        In a chat, select **+**, then **Connectors**, and turn on **Urantia Papers**.
+      </Step>
+    </Steps>
+
+    This works on every Claude plan. The Free plan allows one custom connector.
+
+    [Claude's instructions for custom connectors](https://support.claude.com/en/articles/11175166)
+  </Tab>
+  <Tab title="ChatGPT">
+    <Steps>
+      <Step title="Turn on developer mode">
+        In ChatGPT, open **Settings**, then **Apps & Connectors**. Open **Advanced settings** and turn on **Developer mode**.
+      </Step>
+      <Step title="Create the connector">
+        Go back to **Apps & Connectors** and select **Create**. For the name, type `Urantia Papers`. For the address, paste `https://api.urantia.dev/mcp`. For authentication, choose **No authentication**. Select **Create**.
+      </Step>
+      <Step title="Use it in a chat">
+        In a new chat, select **+** and choose **Urantia Papers**.
+      </Step>
+    </Steps>
+
+    Developer mode needs a paid ChatGPT plan.
+
+    [OpenAI's instructions for developer mode](https://platform.openai.com/docs/guides/developer-mode)
+  </Tab>
+  <Tab title="Grok">
+    <Steps>
+      <Step title="Open the connectors page">
+        Go to [grok.com/connectors](https://grok.com/connectors).
+      </Step>
+      <Step title="Add a custom connector">
+        Select **New Connector**, then **Custom**. Paste `https://api.urantia.dev/mcp` and save.
+      </Step>
+      <Step title="Ask a question">
+        Start a chat and ask about the Urantia Papers.
+      </Step>
+    </Steps>
+
+    [xAI's instructions for connectors](https://docs.x.ai/grok/connectors)
+  </Tab>
+  <Tab title="Gemini">
+    <Steps>
+      <Step title="Open Connected Apps">
+        In [Gemini](https://gemini.google.com), open **Settings**, then **Connected Apps**.
+      </Step>
+      <Step title="Add a custom app">
+        Under **Custom apps**, select **Add a custom app**. Paste `https://api.urantia.dev/mcp` and select **Next**.
+      </Step>
+    </Steps>
+
+    Google offers custom apps on some plans and accounts only. If you do not see **Add a custom app**, your account does not have the feature yet.
+  </Tab>
+</Tabs>
+
+<Note>
+  We tested the connection with Claude. The ChatGPT, Grok, and Gemini steps come from each company's instructions. If a step does not match what you see, write to [kelson@urantia.dev](mailto:kelson@urantia.dev).
+</Note>
+
+## What to ask
+
+Name the Urantia Papers in your question, so the assistant knows to look them up.
+
+- "What do the Urantia Papers say about the Thought Adjuster? Quote the paragraphs and give the references."
+- "Show me paragraph 2:5.10 of the Urantia Papers with the two paragraphs before and after it."
+- "Summarize Paper 1 of the Urantia Papers and cite the paragraphs you use."
+- "Who is Machiventa Melchizedek in the Urantia Papers?"
+- "Which Urantia paragraphs are closest in meaning to Matthew 5:3?"
+
+## What to expect
+
+- **The assistant asks before it looks something up.** The first time, it can ask for permission to use the connector. Allow it.
+- **Answers carry references.** A reference such as 110:4.2 means Paper 110, section 4, paragraph 2. You can check any quote at that reference.
+- **It reads the English text.** It can also read the World English Bible and find related paragraphs between the two.
+- **It only reads.** It cannot keep notes, bookmarks, or anything about you.
+
+If an answer has no references, ask: "Use the Urantia Papers connector and quote the exact text."
+
+## For coding tools
+
+For Claude Code, Cursor, Codex, and other developer tools, see [MCP Servers](/mcp-servers).
