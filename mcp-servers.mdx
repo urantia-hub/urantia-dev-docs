@@ -1,90 +1,67 @@
 ---
-title: "MCP Servers - Give AI Agents Access to the Urantia Papers"
+title: "MCP server for the Urantia Papers"
 sidebarTitle: "MCP Servers"
 description: "Connect Claude, Cursor, or any MCP client to the Urantia Papers. 19 tools, 2 resource templates, 2 prompts. No key needed."
 ---
 
-<Note>
-  Not a developer? See [AI Assistants](/assistants) for steps in Claude, ChatGPT, Grok, and Gemini.
-</Note>
-
-There are two MCP servers available, one for reading the Urantia Papers directly, and one for searching this documentation site.
-
-| Server | URL | Capabilities | Purpose |
-|--------|-----|--------------|---------|
-| **API MCP Server** | `api.urantia.dev/mcp` | 19 tools, 2 resources, 2 prompts | Search, paragraphs, entities, audio, Bible (WEB) + UB↔Bible cross-references |
-| **Docs MCP Server** | `docs.urantia.dev/mcp` | 1 tool | Search the documentation site |
-
-## API MCP Server
-
-The Urantia Papers API includes a built-in [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server that exposes API endpoints as tools, papers/entities as resources, and study workflows as prompts that any AI agent can use natively.
+The Urantia Papers API has a built-in [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server. An AI agent that connects to it can read and search the Urantia Papers and quote them by reference.
 
 ```
 https://api.urantia.dev/mcp
 ```
 
-### Listed in the official registries
+It has 19 read-only tools, 2 resource templates, and 2 prompts. It needs no key, no account, and no local process.
 
-This server is published in the canonical registries that MCP-aware clients query for discovery:
+Not a developer? See [AI Assistants](/assistants) for steps in Claude, ChatGPT, Grok, and Gemini.
 
-- **[MCP Registry](https://registry.modelcontextprotocol.io)** (Anthropic-stewarded, official): `dev.urantia/urantia-papers`. Verifiable: `curl "https://registry.modelcontextprotocol.io/v0/servers?search=urantia"`
-- **[Smithery](https://smithery.ai/servers/urantiahub/urantia-papers)**: a directory with a one-click install
+## Set up
 
-[![smithery badge](https://smithery.ai/badge/urantiahub/urantia-papers)](https://smithery.ai/servers/urantiahub/urantia-papers)
+### Claude Code
 
-### One-click install via Smithery
+Install the plugin. It adds the server and a research skill:
 
-The fastest way to add this server to your MCP client is via [Smithery](https://smithery.ai/servers/urantiahub/urantia-papers): it generates the right config snippet for your client and handles the install.
+```
+/plugin marketplace add urantia-hub/urantia-papers-claude-code-plugin
+/plugin install urantia-papers@urantia-papers
+```
 
-### Manual setup
+Or add the server only:
 
-Add the server to your MCP client config directly. No API key, no installation, no build step.
+```
+claude mcp add --transport http urantia-papers https://api.urantia.dev/mcp
+```
 
-<Tabs>
-  <Tab title="Claude Desktop">
-    Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+### Cursor
 
-    ```json
-    {
-      "mcpServers": {
-        "urantia-papers": {
-          "url": "https://api.urantia.dev/mcp"
-        }
-      }
+Install the plugin from [cursor.directory/plugins/urantia-papers](https://cursor.directory/plugins/urantia-papers), or add the server to your MCP settings:
+
+```json
+{
+  "mcpServers": {
+    "urantia-papers": {
+      "type": "http",
+      "url": "https://api.urantia.dev/mcp"
     }
-    ```
+  }
+}
+```
 
-    Restart Claude Desktop. You'll see 19 tools available.
-  </Tab>
-  <Tab title="Claude Code">
-    Add to `.mcp.json` in your project root:
+### Claude, ChatGPT, Grok, and Gemini
 
-    ```json
-    {
-      "mcpServers": {
-        "urantia-papers": {
-          "url": "https://api.urantia.dev/mcp"
-        }
-      }
-    }
-    ```
-  </Tab>
-  <Tab title="Cursor / Windsurf">
-    Add to your MCP settings:
+Add the address above as a custom connector. [AI Assistants](/assistants) has the steps for each one.
 
-    ```json
-    {
-      "mcpServers": {
-        "urantia-papers": {
-          "url": "https://api.urantia.dev/mcp"
-        }
-      }
-    }
-    ```
-  </Tab>
-</Tabs>
+### Any other client
 
-Works with any client that supports [MCP Streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http).
+Use the same `mcpServers` block as for Cursor. The server works with any client that supports the [Streamable HTTP transport](https://modelcontextprotocol.io/specification/2025-03-26/basic/transports#streamable-http).
+
+## Where it is listed
+
+- [MCP Registry](https://registry.modelcontextprotocol.io), as `dev.urantia/urantia-papers`
+- [Smithery](https://smithery.ai/servers/urantiahub/urantia-papers)
+- [Glama](https://glama.ai/mcp/connectors/dev.urantia/urantia-papers)
+- [cursor.directory](https://cursor.directory/plugins/urantia-papers)
+
+## Reference
 
 ### Available Tools
 
@@ -189,7 +166,7 @@ The MCP server uses [Streamable HTTP transport](https://modelcontextprotocol.io/
 
 - **No local process**: it runs on the same Cloudflare Worker as the API
 - **Stateless**: each request creates a fresh server instance (no sessions to manage)
-- **Same rate limits** as the REST API (100 requests/minute per IP)
+- **Same rate limits** as the REST API (200 requests per minute for each IP address)
 - **Same data**: MCP tools query the database directly, returning the same results as the REST endpoints
 
 ### MCP vs REST
@@ -214,36 +191,18 @@ https://docs.urantia.dev/mcp
 
 ### Setup
 
-<Tabs>
-  <Tab title="Claude Desktop">
-    Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+Add the address to your client as a second server:
 
-    ```json
-    {
-      "mcpServers": {
-        "urantia-dev-docs": {
-          "command": "npx",
-          "args": ["-y", "@anthropic-ai/mcp-remote@latest", "https://docs.urantia.dev/mcp"]
-        }
-      }
+```json
+{
+  "mcpServers": {
+    "urantia-dev-docs": {
+      "type": "http",
+      "url": "https://docs.urantia.dev/mcp"
     }
-    ```
-  </Tab>
-  <Tab title="Claude Code">
-    Add to `.mcp.json` in your project root:
-
-    ```json
-    {
-      "mcpServers": {
-        "urantia-dev-docs": {
-          "command": "npx",
-          "args": ["-y", "@anthropic-ai/mcp-remote@latest", "https://docs.urantia.dev/mcp"]
-        }
-      }
-    }
-    ```
-  </Tab>
-</Tabs>
+  }
+}
+```
 
 ### Available Tool
 
@@ -257,27 +216,6 @@ https://docs.urantia.dev/mcp
 - **"What paragraph reference formats does the API support?"**
 - **"Show me how to use the entities endpoint"**
 - **"What audio voices are available?"**
-
-## Using Both MCP Servers
-
-For the best experience, add both servers to your client:
-
-```json
-{
-  "mcpServers": {
-    "urantia-papers": {
-      "url": "https://api.urantia.dev/mcp"
-    },
-    "urantia-dev-docs": {
-      "command": "npx",
-      "args": ["-y", "@anthropic-ai/mcp-remote@latest", "https://docs.urantia.dev/mcp"]
-    }
-  }
-}
-```
-
-- **API MCP Server** (`api.urantia.dev/mcp`): 19 tools for the Urantia Papers, the World English Bible, and cross-references between them
-- **Docs MCP Server** (`docs.urantia.dev/mcp`): 1 tool for searching this documentation site
 
 ## Building a Custom MCP Server
 
