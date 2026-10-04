@@ -63,7 +63,7 @@
           },
           {
             "group": "Integrations",
-            "pages": ["mcp-servers", "ai-agents", "feedback"]
+            "pages": ["assistants", "mcp-servers", "ai-agents", "feedback"]
           },
           {
             "group": "Open Source",
