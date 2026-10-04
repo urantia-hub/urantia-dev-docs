@@ -4,7 +4,7 @@ sidebarTitle: "Privacy"
 description: "Privacy Policy for the Urantia Papers API (urantia.dev)"
 ---
 
-**Last updated: October 3, 2026**
+**Last updated: October 4, 2026**
 
 This privacy notice for Adams Technologies LLC, doing business as Urantia.dev ("we," "us," or "our"), describes how and why we might collect, store, use, and/or share your information when you use our services, including the API at api.urantia.dev and the documentation at urantia.dev.
 
@@ -68,7 +68,14 @@ We do not sell your information. We may share information with:
 
 ## 4. Data Retention
 
-API request logs are retained for a limited period necessary for operational and security purposes. We do not maintain long-term records of individual API requests beyond what is needed for analytics and abuse prevention.
+We keep data for these periods:
+
+- **API request logs** (IP address, request path and query, User-Agent, status, timing): 3 days. After that they are deleted.
+- **Aggregated counts** made from those logs, such as requests per endpoint: 30 days.
+- **Feedback** you send through `POST /feedback`: until you ask us to delete it.
+- **Edge analytics** kept by Cloudflare for traffic and security: under Cloudflare's own retention terms.
+
+We do not keep long-term records of individual API requests.
 
 ## 5. Data Security
 
