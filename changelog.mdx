@@ -8,6 +8,25 @@ Stay updated on new features, improvements, and changes to the Urantia Papers AP
 
 ## October 2026
 
+### October 5, 2026
+
+#### OpenAPI spec
+
+- Every operation in the [OpenAPI spec](https://api.urantia.dev/openapi.json) now carries an example. The response examples are real output from the API
+- Every error response references one shared `ProblemDetails` schema ([RFC 9457](https://www.rfc-editor.org/rfc/rfc9457))
+- The spec documents the `X-RateLimit-*` headers on every response, and the 429 response
+- Added an API catalog at [`/.well-known/api-catalog`](https://api.urantia.dev/.well-known/api-catalog) ([RFC 9727](https://www.rfc-editor.org/rfc/rfc9727))
+- `robots.txt` on urantia.dev and api.urantia.dev now states that search, AI answers, and AI training are all allowed
+
+### October 4, 2026
+
+#### AI assistants
+
+- Added [AI Assistants](/assistants): steps to connect Claude, ChatGPT, Grok, or Gemini to the Urantia Papers, with no code
+- The plugin now installs as a Gemini CLI extension. See [MCP Servers](/mcp-servers)
+- Rewrote [MCP Servers](/mcp-servers) with the install commands for Claude Code, Cursor, and Gemini CLI
+- Published a [Postman workspace](https://www.postman.com/urantia-dev/urantia-papers) with 28 requests that run as is
+
 ### October 3, 2026
 
 #### Documentation
