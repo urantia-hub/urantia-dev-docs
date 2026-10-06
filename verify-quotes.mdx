@@ -4,7 +4,143 @@ sidebarTitle: "Verify a quote"
 description: "Check whether a quoted passage is in the Urantia Papers. Get the reference, the exact text, and each word that differs."
 ---
 
-Quotes of the Urantia Papers are often slightly wrong, or cite the wrong paragraph. `POST /quotes/verify` checks a quote against the text and tells you which.
+export const QuoteChecker = () => {
+  const [text, setText] = useState("");
+  const [ref, setRef] = useState("");
+  const [state, setState] = useState({ status: "idle" });
+
+  const check = async (event) => {
+    event.preventDefault();
+    setState({ status: "loading" });
+    try {
+      const body = { text: text.trim() };
+      if (ref.trim()) body.ref = ref.trim();
+      const res = await fetch("https://api.urantia.dev/quotes/verify", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const json = await res.json();
+      if (!res.ok) {
+        setState({ status: "error", message: json.detail || "The check failed. Try again." });
+        return;
+      }
+      setState({ status: "done", data: json.data });
+    } catch {
+      setState({ status: "error", message: "The check failed. Check your connection and try again." });
+    }
+  };
+
+  const LABEL = {
+    exact: "Word for word in the Urantia Papers",
+    close: "The passage is in the Urantia Papers, with small changes",
+    not_found: "Not found in the Urantia Papers",
+  };
+  const TONE = {
+    exact: "border-green-600 bg-green-50 text-green-900 dark:bg-green-950 dark:text-green-100",
+    close: "border-amber-500 bg-amber-50 text-amber-900 dark:bg-amber-950 dark:text-amber-100",
+    not_found: "border-red-500 bg-red-50 text-red-900 dark:bg-red-950 dark:text-red-100",
+  };
+  const field =
+    "w-full rounded-lg border border-gray-300 bg-white px-3 py-2 text-base text-gray-900 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100";
+
+  const result = state.data;
+  const claimed = result && result.claimedReference;
+
+  return (
+    <form onSubmit={check} className="not-prose my-6 flex flex-col gap-3">
+      <label className="flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+        Quote
+        <textarea
+          className={field}
+          rows={4}
+          maxLength={2000}
+          required
+          value={text}
+          onChange={(e) => setText(e.target.value)}
+          placeholder="Paste the quote here, for example: The Father loves us enough to bestow his life upon us."
+        />
+      </label>
+      <label className="flex flex-col gap-1 text-sm font-medium text-gray-700 dark:text-gray-300">
+        Reference it claims (optional)
+        <input
+          className={field}
+          value={ref}
+          maxLength={40}
+          onChange={(e) => setRef(e.target.value)}
+          placeholder="For example: 2:5.1"
+        />
+      </label>
+      <button
+        type="submit"
+        disabled={state.status === "loading" || !text.trim()}
+        className="self-start rounded-full bg-[#f2b441] px-5 py-2 text-sm font-semibold text-[#0f2a2e] disabled:opacity-50"
+      >
+        {state.status === "loading" ? "Checking..." : "Check the quote"}
+      </button>
+
+      {state.status === "error" && (
+        <p className="text-sm text-red-700 dark:text-red-300">{state.message}</p>
+      )}
+
+      {state.status === "done" && (
+        <div className={`rounded-lg border-l-4 p-4 ${TONE[result.verdict]}`}>
+          <p className="font-semibold">{LABEL[result.verdict]}</p>
+          {result.match && (
+            <div className="mt-2 flex flex-col gap-2 text-sm">
+              <p>
+                {result.verdict === "not_found" ? "Nearest paragraph: " : "Reference: "}
+                <strong>{result.match.reference}</strong> ({result.match.paperTitle})
+              </p>
+              {result.verdict !== "not_found" && result.match.text && (
+                <blockquote className="border-l-2 border-current pl-3 italic">{result.match.text}</blockquote>
+              )}
+              {result.verdict === "close" && result.match.differences.length > 0 && (
+                <div>
+                  <p className="font-medium">What differs:</p>
+                  <ul className="list-disc pl-5">
+                    {result.match.differences.map((d, i) => (
+                      <li key={i}>
+                        {d.quote && d.text
+                          ? `The quote says "${d.quote}". The text says "${d.text}".`
+                          : d.quote
+                            ? `The quote adds "${d.quote}".`
+                            : `The quote leaves out "${d.text}".`}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          )}
+          {claimed && (
+            <p className="mt-2 text-sm">
+              {!claimed.exists
+                ? `The reference ${claimed.ref} does not exist.`
+                : claimed.verdict === "not_found"
+                  ? `The quote is not at ${claimed.ref}, the reference it claims.`
+                  : `The quote matches ${claimed.ref}, the reference it claims.`}
+            </p>
+          )}
+          {result.alsoFoundAt.length > 0 && (
+            <p className="mt-2 text-sm">Also word for word at: {result.alsoFoundAt.join(", ")}</p>
+          )}
+        </div>
+      )}
+    </form>
+  );
+};
+
+
+Quotes of the Urantia Papers are often slightly wrong, or cite the wrong paragraph. Paste a quote below to check it against the text.
+
+<QuoteChecker />
+
+Case and punctuation do not matter. A quote must be at least 4 words, and it must come from one paragraph.
+
+## Use it from code
+
+`POST /quotes/verify` runs the same check.
 
 ```bash
 curl -X POST https://api.urantia.dev/quotes/verify \
