@@ -4,7 +4,7 @@ sidebarTitle: "Privacy"
 description: "Privacy Policy for the Urantia Papers API (urantia.dev)"
 ---
 
-**Last updated: October 4, 2026**
+**Last updated: October 6, 2026**
 
 This privacy notice for Adams Technologies LLC, doing business as Urantia.dev ("we," "us," or "our"), describes how and why we might collect, store, use, and/or share your information when you use our services, including the API at api.urantia.dev and the documentation at urantia.dev.
 
@@ -20,11 +20,13 @@ If you have questions or concerns, please contact us at [team@urantiahub.com](ma
 
 When you make requests to our API, we automatically collect certain information including:
 
-- IP address
+- A keyed hash of your IP address. Our request logs do not store the IP address itself
+- Your country, from the network edge
 - Request path, method, and query parameters
 - User-Agent header
 - Response status codes and timing
 - Referring URLs (if applicable)
+- For the MCP server: the name and version that your MCP client sends when it connects, and the name of each tool it calls
 
 This information is collected for security, rate limiting, analytics, and improving our services.
 
@@ -60,7 +62,7 @@ We process the information we collect to:
 
 We do not sell your information. We may share information with:
 
-- Infrastructure providers who assist in operating our services (Cloudflare, Supabase, BetterStack)
+- Infrastructure providers who assist in operating our services (Cloudflare, Supabase, PostHog for request logs, BetterStack for uptime monitoring)
 - OpenAI, to compute embeddings for semantic search queries
 - Resend, to deliver feedback emails
 - As required by law or to protect our legal rights
@@ -70,7 +72,7 @@ We do not sell your information. We may share information with:
 
 We keep data for these periods:
 
-- **API request logs** (IP address, request path and query, User-Agent, status, timing): 3 days. After that they are deleted.
+- **API request logs** (the fields listed in section 1): 14 days. After that they are deleted.
 - **Aggregated counts** made from those logs, such as requests per endpoint: 30 days.
 - **Feedback** you send through `POST /feedback`: until you ask us to delete it.
 - **Edge analytics** kept by Cloudflare for traffic and security: under Cloudflare's own retention terms.
