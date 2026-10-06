@@ -145,7 +145,10 @@ Case and punctuation do not matter. A quote must be at least 4 words, and it mus
 ```bash
 curl -X POST https://api.urantia.dev/quotes/verify \
   -H "Content-Type: application/json" \
-  -d '{"text": "Death adds nothing to the intellectual possession or to the spiritual endowment", "ref": "47:3.7"}'
+  -d '{
+    "text": "Death adds nothing to the intellectual possession or to the spiritual endowment",
+    "ref": "47:3.7"
+  }'
 ```
 
 The body has two fields:
