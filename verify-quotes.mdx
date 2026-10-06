@@ -1,0 +1,68 @@
+---
+title: "Verify a quote"
+sidebarTitle: "Verify a quote"
+description: "Check whether a quoted passage is in the Urantia Papers. Get the reference, the exact text, and each word that differs."
+---
+
+Quotes of the Urantia Papers are often slightly wrong, or cite the wrong paragraph. `POST /quotes/verify` checks a quote against the text and tells you which.
+
+```bash
+curl -X POST https://api.urantia.dev/quotes/verify \
+  -H "Content-Type: application/json" \
+  -d '{"text": "Death adds nothing to the intellectual possession or to the spiritual endowment", "ref": "47:3.7"}'
+```
+
+The body has two fields:
+
+| Field | Required | What it is |
+|---|---|---|
+| `text` | Yes | The quoted passage. At least 4 words, at most 2,000 characters |
+| `ref` | No | The reference the quote claims, such as `2:5.1`. When you give it, that paragraph is checked too |
+
+## The response
+
+This is the real response to the request above:
+
+```json
+{
+    "data": {
+        "verdict": "close",
+        "match": {
+            "reference": "48:7.25",
+            "paperId": "48",
+            "paperTitle": "The Morontia Life",
+            "sectionTitle": "Morontia Mota",
+            "verdict": "close",
+            "similarity": 0.917,
+            "text": "Death added nothing to the intellectual possession or to the spiritual endowment",
+            "differences": [
+                {
+                    "quote": "adds",
+                    "text": "added"
+                }
+            ]
+        },
+        "claimedReference": {
+            "ref": "47:3.7",
+            "exists": true,
+            "verdict": "not_found"
+        },
+        "alsoFoundAt": []
+    }
+}
+```
+
+- **`verdict`** is one of three values:
+  - `exact`: the quote is word for word in the text.
+  - `close`: the same passage, with small changes.
+  - `not_found`: the quote is not in the Urantia Papers.
+- **`match`** is the best paragraph: its reference, the exact text that the quote matches, and a similarity from 0 to 1. For `not_found`, it is the nearest paragraph, or `null` when none is near.
+- **`differences`** lists each place the quote differs, as the quote's words and the words in the text. An empty side means a word was added or left out.
+- **`claimedReference`** says whether the reference you gave exists, and how the quote compares with that paragraph. A right quote with a wrong reference shows as `not_found` here and `exact` in `verdict`.
+- **`alsoFoundAt`** lists other references where the quote appears word for word.
+
+## How it works
+
+Case and punctuation are ignored, and curly and straight quote marks count as the same. The API finds the paragraphs that share the most words with the quote, then aligns the words of each one with the quote to find the matching passage.
+
+A quote must fall within one paragraph. A quote that spans two paragraphs shows as `close` or `not_found`.
