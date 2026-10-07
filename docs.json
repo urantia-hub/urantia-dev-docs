@@ -139,7 +139,11 @@
               "api-reference/endpoint/get-scripture",
               "api-reference/endpoint/get-scripture-passages",
               "api-reference/endpoint/get-scripture-urantia-parallels",
-              "api-reference/endpoint/scripture-semantic-search"
+              "api-reference/endpoint/scripture-semantic-search",
+              "api-reference/endpoint/list-shared-currents",
+              "api-reference/endpoint/list-mutual-pairs",
+              "api-reference/endpoint/list-leans",
+              "api-reference/endpoint/list-far-from-texts"
             ]
           },
           {

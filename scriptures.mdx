@@ -139,6 +139,32 @@ curl -X POST https://api.urantia.dev/scriptures/search/semantic \
 
 Searches every text, or one with `"corpus": "bhagavad-gita"`. Each result carries its top Urantia paragraphs; set `urantiaParallelLimit` from 0 to 10 (default 3).
 
+## Patterns across the texts
+
+Four lists rank the Urantia paragraphs by how they relate to all ten texts at once (the nine above and the Bible):
+
+```bash
+# Paragraphs close to many of the texts. Paper 131 is left out: it is a collection of sayings from these religions
+curl 'https://api.urantia.dev/scriptures/insights/shared-currents?limit=10'
+# A paragraph and a passage that are each other's closest match, under two embedding models
+curl 'https://api.urantia.dev/scriptures/insights/pairs?excludeBible=true'
+# Paragraphs much closer to one text than to the others
+curl 'https://api.urantia.dev/scriptures/insights/leans?corpus=tao-te-ching'
+# Paragraphs with no close passage in any text, within one part
+curl 'https://api.urantia.dev/scriptures/insights/far?partId=1'
+```
+
+Add `scriptureScores` to `include` on a paragraph to get its own numbers: how many texts it is close in, its lean, and its pairs.
+
+How the scores work:
+
+- For each text, a paragraph's closest passage is ranked against every other paragraph's, after an adjustment for paragraph length. Longer paragraphs score higher, so without the adjustment the lists favor them.
+- "Close in a text" means the paragraph is in that text's top 10%.
+- The texts often move together, because a paragraph that sounds devotional is close to many of them. A count of texts is not a count of independent votes.
+- A lean and a pair count only when two embedding models, `text-embedding-3-large` and `text-embedding-3-small`, agree. This check removed more than half of the candidate pairs.
+- Paragraphs under 200 characters, such as headings, are left out by default (`minLength`).
+- Subjects the scriptures do not discuss, such as geology, rank as far from every text. Filter `far` by `partId` or `paperId` to compare paragraphs on one subject.
+
 ## How the links are made
 
 The links are semantic parallels, not curated ones. Each chunk and each Urantia paragraph is embedded with OpenAI's `text-embedding-3-large`, and the closest pairs are stored in both directions. A link means "close in meaning by this model". It does not claim that two teachings are the same. Use the links as starting points for reading, and as context for AI agents.

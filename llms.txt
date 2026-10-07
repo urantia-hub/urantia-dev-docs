@@ -68,6 +68,7 @@ Add ?include=entities,bibleParallels,urantiaParallels,scriptureParallels to a pa
 - GET /scriptures/:corpus/:ref/urantia-parallels: the 10 nearest Urantia paragraphs for a passage
 - POST /scriptures/search/semantic: search the texts by meaning, with Urantia paragraphs on each result. Body: {"q": "...", "corpus": "quran", "limit": 10}
 - ?include=scriptureParallels on a paragraph: the 3 nearest passages from each text
+- GET /scriptures/insights/shared-currents, /far, /pairs, /leans: paragraphs ranked by closeness to many texts, distance from all texts, mutual best pairs, and a lean toward one text. ?include=scriptureScores on a paragraph gives its own scores
 
 The cross-references are semantic neighbors computed from embeddings. They are not a curated list, and a match does not mean two teachings are the same.
 
