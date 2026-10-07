@@ -55,7 +55,7 @@
           },
           {
             "group": "Data",
-            "pages": ["papers", "paragraphs", "verify-quotes", "entities", "bible", "audio", "video", "cdn"]
+            "pages": ["papers", "paragraphs", "verify-quotes", "entities", "bible", "scriptures", "audio", "video", "cdn"]
           },
           {
             "group": "SDKs",
@@ -130,6 +130,16 @@
               "api-reference/endpoint/get-bible-verse",
               "api-reference/endpoint/get-bible-verse-urantia-parallels",
               "api-reference/endpoint/bible-semantic-search"
+            ]
+          },
+          {
+            "group": "World religions",
+            "pages": [
+              "api-reference/endpoint/list-scriptures",
+              "api-reference/endpoint/get-scripture",
+              "api-reference/endpoint/get-scripture-passages",
+              "api-reference/endpoint/get-scripture-urantia-parallels",
+              "api-reference/endpoint/scripture-semantic-search"
             ]
           },
           {
