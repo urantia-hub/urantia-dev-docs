@@ -2,7 +2,7 @@
 
 > An API and MCP server for the Urantia Papers. Free, with no key.
 
-urantia.dev gives agents and developers structured access to the Urantia Papers: all 197 papers, 1,626 sections, and more than 14,500 paragraphs. You can fetch any paragraph by reference, search by keyword or by meaning, look up named entities, and follow cross-references to the Bible.
+urantia.dev gives agents and developers structured access to the Urantia Papers: all 197 papers, 1,626 sections, and more than 14,500 paragraphs. You can fetch any paragraph by reference, search by keyword or by meaning, look up named entities, check a quotation, and follow cross-references to the Bible and to the public domain scriptures of nine other texts of the world's religions.
 
 ## MCP server (for agents)
 
@@ -44,7 +44,7 @@ No authentication for the endpoints below. The limit is 200 requests per minute 
 - GET /paragraphs/:ref/context?window=3: a paragraph with the paragraphs around it (window 1 to 10)
 - GET /paragraphs/random: a random paragraph
 
-Add ?include=entities,bibleParallels,urantiaParallels to a paragraph or search request to attach entity mentions and cross-references. Add ?format=rag for a compact shape with a citation and a token count.
+Add ?include=entities,bibleParallels,urantiaParallels,scriptureParallels to a paragraph or search request to attach entity mentions and cross-references. Add ?format=rag for a compact shape with a citation and a token count.
 
 ### Search
 - POST /search or GET /search?q=: full-text search. Body: {"q": "search terms", "type": "and|or|phrase", "limit": 10}
@@ -61,7 +61,18 @@ Add ?include=entities,bibleParallels,urantiaParallels to a paragraph or search r
 - GET /bible/:bookCode/:chapter/:verse/urantia-parallels: the 10 nearest Urantia paragraphs for a verse
 - POST /bible/search/semantic: search the Bible by meaning, with Urantia paragraphs on each result
 
-The cross-references are semantic neighbors computed from embeddings. They are not a curated list.
+### World religions texts
+- GET /scriptures: nine public domain texts with translator, year, source, and license: Diogenes Laertius Book 6 and Epictetus Discourses 3.22 (Cynicism), the Dhammapada, the Bhagavad Gita, Shinto oracles (Aston), the Tao Te Ching, the Analects, the Koran (Pickthall), and the Japji
+- GET /scriptures/:corpus: one text and its chapters. The corpus is a slug, an id, or a ref prefix: bhagavad-gita, bg
+- GET /scriptures/:corpus/:ref: passages, such as 2.47, 2.47-49, a whole chapter (2), Dhp 183, Quran 2.255, or Epictetus 3.22.45
+- GET /scriptures/:corpus/:ref/urantia-parallels: the 10 nearest Urantia paragraphs for a passage
+- POST /scriptures/search/semantic: search the texts by meaning, with Urantia paragraphs on each result. Body: {"q": "...", "corpus": "quran", "limit": 10}
+- ?include=scriptureParallels on a paragraph: the 3 nearest passages from each text
+
+The cross-references are semantic neighbors computed from embeddings. They are not a curated list, and a match does not mean two teachings are the same.
+
+### Verify a quote
+- POST /quotes/verify: checks whether a quotation is in the Urantia Papers. Body: {"text": "the quoted words", "ref": "2:5.1"} (ref optional). Returns exact, close, or not_found, with the reference, the exact text, and each word that differs
 
 ### Audio, citations, and more
 - GET /audio/:ref: narration URLs for a paragraph
@@ -108,6 +119,6 @@ The Foreword is Paper 0.
 - Source code: https://github.com/urantia-hub/urantia-dev-api
 - Status: https://status.urantia.dev
 
-Sites built with this API include UrantiaHub (https://www.urantiahub.com), a place to read the Papers. They are separate projects that use the API.
+Sites built with this API include UrantiaHub (https://www.urantiahub.com), a place to read the Papers. Its Parallels page (https://www.urantiahub.com/explore/parallels) shows any paragraph beside the closest scripture passages. They are separate projects that use the API.
 
 urantia.dev is an independent community project. It is not affiliated with Urantia Foundation.
