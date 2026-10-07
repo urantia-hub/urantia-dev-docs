@@ -1,0 +1,143 @@
+---
+title: "World religions texts"
+sidebarTitle: "World religions"
+description: "Public domain texts of the religions in Paper 131, numbered by verse and linked to the Urantia Papers in both directions."
+---
+
+The API hosts the texts of the religions that Paper 131, "The World's Religions", summarizes. Each text is in the US public domain, numbered the way people cite it, and linked to the Urantia paragraphs closest in meaning.
+
+| Text | Religion | Translation | Passages | Paper 131 |
+|---|---|---|---|---|
+| The Dhammapada | Buddhism | F. Max Muller, 1881 | 414 verses (423 numbers) | 131:3 |
+| The Tao Te Ching | Taoism | James Legge, 1891 | 81 chapters, 236 paragraphs | 131:8 |
+| The Analects | Confucianism | James Legge, 1861 | 20 books, 499 chapters | 131:9 |
+| The Bhagavad Gita | Hinduism | Annie Besant, 4th edition, 1922 | 18 chapters, 701 verses | 131:4 |
+
+For Judaism and Christianity, use the [Bible endpoints](/bible). The other religions in Paper 131 are planned.
+
+## List the texts
+
+```bash
+curl https://api.urantia.dev/scriptures
+```
+
+Each entry names its translator, year, source, and license:
+
+```json
+{
+  "id": "dhammapada-muller-1881",
+  "slug": "dhammapada",
+  "religion": "Buddhism",
+  "title": "The Dhammapada",
+  "translator": "F. Max Muller",
+  "year": 1881,
+  "refPrefix": "Dhp",
+  "urantiaSection": "131:3",
+  "sourceUrl": "https://www.gutenberg.org/ebooks/2017",
+  "license": "Public domain in the United States",
+  "divisionLabel": "chapter",
+  "unitLabel": "verse",
+  "passageCount": 414
+}
+```
+
+`GET /scriptures/{corpus}` returns one text with its chapters (books, for the Analects) and the first and last reference of each. The corpus can be the slug, the id, or the ref prefix: `bhagavad-gita`, `bhagavad-gita-besant-1922`, and `bg` are the same.
+
+## Get passages
+
+```bash
+# One verse
+curl https://api.urantia.dev/scriptures/bhagavad-gita/2.47
+# A range, up to 50
+curl https://api.urantia.dev/scriptures/bg/2.47-49
+# A whole chapter
+curl https://api.urantia.dev/scriptures/tao-te-ching/25
+# Dhammapada verse 183
+curl https://api.urantia.dev/scriptures/dhammapada/183
+```
+
+```json
+{
+  "id": "dhammapada-muller-1881:Dhp 183",
+  "ref": "Dhp 183",
+  "division": 14,
+  "divisionTitle": "The Buddha (The Awakened)",
+  "text": "Not to commit any sin, to do good, and to purify one's mind, that is the teaching of (all) the Awakened."
+}
+```
+
+References:
+
+- **Bhagavad Gita:** chapter and verse, `BG 2.47`
+- **Analects:** book and chapter, `Analects 15.23`
+- **Tao Te Ching:** chapter and paragraph, `TTC 25.1`. Ask for `25` to get the whole chapter
+- **Dhammapada:** the verses are numbered straight through the book, so `Dhp 183` is verse 183, not chapter 183. Muller combines a few pairs of verses, such as `Dhp 58-59`. Asking for either number returns the pair
+
+The prefix is optional, and `2:47` works the same as `2.47`.
+
+## Urantia paragraphs for a passage
+
+```bash
+curl https://api.urantia.dev/scriptures/dhammapada/5/urantia-parallels
+```
+
+Returns the passage, the chunk that holds it, and the 10 closest Urantia paragraphs. A chunk is a group of short passages of about one Urantia paragraph in length. A Tao Te Ching chunk is one whole chapter.
+
+```json
+{
+  "data": {
+    "chunk": {
+      "id": "dhammapada-muller-1881:Dhp 3",
+      "reference": "Dhp 3-5",
+      "text": "... For hatred does not cease by hatred at any time: hatred ceases by love, this is an old rule."
+    },
+    "urantiaParallels": [
+      {
+        "standardReferenceId": "140:3.15",
+        "paperTitle": "The Ordination of the Twelve",
+        "text": "“I say to you: Love your enemies, do good to those who hate you, bless those who curse you, and pray for those who despitefully use you. ...",
+        "similarity": 0.38,
+        "rank": 3
+      }
+    ]
+  }
+}
+```
+
+## Passages for a Urantia paragraph
+
+Add `scriptureParallels` to `include` on any single-paragraph endpoint:
+
+```bash
+curl 'https://api.urantia.dev/paragraphs/131:8.3?include=scriptureParallels'
+curl 'https://api.urantia.dev/paragraphs/2:5.1?include=bibleParallels,scriptureParallels'
+```
+
+The response gains a `scriptureParallels` array: the 3 closest chunks from each text, 12 in all, grouped by text. Each entry carries its `corpus` (title, religion, translator, year), the chunk `reference` and `text`, and the `similarity` and `rank`. It also works with `format=rag`.
+
+## Search by meaning
+
+```bash
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"do your duty without attachment to results","limit":5}'
+```
+
+Searches every text, or one with `"corpus": "bhagavad-gita"`. Each result carries its top Urantia paragraphs; set `urantiaParallelLimit` from 0 to 10 (default 3).
+
+## How the links are made
+
+The links are semantic parallels, not curated ones. Each chunk and each Urantia paragraph is embedded with OpenAI's `text-embedding-3-large`, and the closest pairs are stored in both directions. A link means "close in meaning by this model". It does not claim that two teachings are the same. Use the links as starting points for reading, and as context for AI agents.
+
+As a check, we asked whether each text finds its own religion's section of Paper 131. For 69% to 93% of the chunks in each text, that section is in the top 10 Urantia paragraphs. By chance it would be about 0.05%.
+
+## Sources
+
+| Text | Source |
+|---|---|
+| The Dhammapada | [Project Gutenberg 2017](https://www.gutenberg.org/ebooks/2017), from Sacred Books of the East, volume 10 |
+| The Tao Te Ching | [Project Gutenberg 216](https://www.gutenberg.org/ebooks/216), from Sacred Books of the East, volume 39 |
+| The Analects | [Project Gutenberg 4094](https://www.gutenberg.org/ebooks/4094) |
+| The Bhagavad Gita | [Wikisource, Besant 4th edition](https://en.wikisource.org/wiki/Bhagavad-Gita_(Besant_4th)) |
+
+The text keeps the translator's own words and spelling, including the parentheses that Muller and Legge use for words they added. Page headers, footnotes, and the Chinese and Sanskrit lines are not included.
