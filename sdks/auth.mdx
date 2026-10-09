@@ -1,7 +1,7 @@
 ---
-title: "@urantia/auth - OAuth Authentication"
+title: "@urantia/auth - Sign in with a UrantiaHub account"
 sidebarTitle: "@urantia/auth"
-description: "OAuth client for Urantia apps. Handles sign-in via accounts.urantiahub.com with PKCE security, session persistence, and auth state events."
+description: "Let people sign in to your app with their UrantiaHub account, and read or change their bookmarks, notes, and reading progress with their permission."
 ---
 
 ## Install
@@ -12,183 +12,196 @@ npm install @urantia/auth
 
 ## Overview
 
-`@urantia/auth` handles the OAuth Authorization Code flow with [accounts.urantiahub.com](https://accounts.urantiahub.com). Users sign in once and authorize your app to access their data (bookmarks, notes, reading progress, preferences).
+`@urantia/auth` signs people in through [accounts.urantiahub.com](https://accounts.urantiahub.com). A person signs in once with a 6-digit email code or with Google, sees what your app asks for, and allows it. Your app then gets tokens for the parts of the API that the person allowed.
 
-Your app receives an access token (7-day expiry) that you pass to `@urantia/api` for authenticated endpoints.
+The package has two entries:
 
-## Browser Sign-In (Redirect)
+| Entry | Use it for |
+|-------|-----------|
+| `@urantia/auth/server` | An app with a backend. The tokens stay on your server. This is the recommended way. |
+| `@urantia/auth` | An app that runs only in the browser. |
 
-The most common flow for web apps:
+<Info>
+  The content API itself needs no key and no account. You only need this package for a person's own data: bookmarks, notes, reading progress, and reader settings.
+</Info>
+
+## Register your app
 
 <Steps>
-  <Step title="Start sign-in">
-    Redirect the user to accounts.urantiahub.com:
-
-    ```typescript
-    import { UrantiaAuth } from '@urantia/auth'
-
-    const auth = new UrantiaAuth({
-      appId: 'my-app',
-      redirectUri: 'https://myapp.com/callback',
-    })
-
-    await auth.signIn({ mode: 'redirect', scopes: ['bookmarks', 'notes'] })
-    // → user is redirected to accounts.urantiahub.com
-    ```
+  <Step title="Open the developer pages">
+    Go to [accounts.urantiahub.com/apps](https://accounts.urantiahub.com/apps) and sign in with your UrantiaHub account.
   </Step>
-  <Step title="Handle the callback">
-    On your redirect URI page, complete the flow:
-
-    ```typescript
-    const auth = new UrantiaAuth({
-      appId: 'my-app',
-      redirectUri: 'https://myapp.com/callback',
-    })
-
-    const session = await auth.handleCallback()
-    // session.user.id, session.user.email, session.accessToken
-    ```
+  <Step title="Register an app">
+    Press **Register an app** and fill in:
+    - **Name**: people see it on the sign-in page.
+    - **App ID**: small letters, numbers, and hyphens. It can never change, because your code uses it.
+    - **What does the app do?**: two or three sentences for the reviewer.
+    - **Return address**: where people land after they sign in (also called a redirect URI). Use `http://localhost:3000/callback` for local work.
+    - **What the app can do**: the permissions that your app needs. Ask only for what you use.
   </Step>
-  <Step title="Use the token">
-    Pass the access token to `@urantia/api`:
+  <Step title="Save the secret">
+    You see the **App ID** and the **App secret**. The secret is shown one time.
 
-    ```typescript
-    import { UrantiaAPI } from '@urantia/api'
-
-    const api = new UrantiaAPI({ token: session.accessToken })
-    const { data: bookmarks } = await api.me.bookmarks.list()
-    ```
+    <Warning>
+      Keep the secret where only your server can read it. Never put it in browser code, in a mobile app, or in a repository. If it leaks or you lose it, make a new one on the app page. The old one stops at once.
+    </Warning>
+  </Step>
+  <Step title="Build while it is in review">
+    A new app works for you at once, so you can build and test. Other people can sign in after a reviewer approves it, which takes a few days at most. You get an email with the decision.
   </Step>
 </Steps>
 
-## Browser Sign-In (Popup)
+A later change to the name, the logo, a return address, or a permission goes to a reviewer first. Your app keeps working as it is until the change is approved. A change of a color, and a removal of an address or a permission, are live at once.
 
-For desktop apps or when you don't want to navigate away:
+## Server flow (recommended)
 
 ```typescript
-const auth = new UrantiaAuth({
-  appId: 'my-app',
-  redirectUri: 'https://myapp.com/callback',
-})
+import {
+  createAuthorizeUrl,
+  exchangeCode,
+  refreshTokens,
+  revokeTokens,
+  AuthError,
+} from '@urantia/auth/server'
 
-// Opens popup window, resolves when user completes sign-in
-const session = await auth.signIn({ scopes: ['bookmarks', 'notes'] })
-console.log(session.user.email, session.accessToken)
+const appId = 'my-app'
+const appSecret = process.env.URANTIA_APP_SECRET
+const redirectUri = 'https://myapp.com/auth/callback'
+const scopes = ['profile', 'bookmarks']
 ```
 
-## Server-Side Token Exchange
+<Steps>
+  <Step title="Start the sign-in">
+    Make the address of the sign-in page. Keep `state` and `codeVerifier` in a short-lived cookie that scripts cannot read, and send the person to `url`.
 
-For backend environments where you already have an authorization code and app secret:
+    ```typescript
+    const { url, state, codeVerifier } = await createAuthorizeUrl({ appId, redirectUri, scopes })
+    ```
+  </Step>
+  <Step title="Finish on your return address">
+    Check that the `state` in the address is the one that you kept. Then exchange the code.
+
+    ```typescript
+    const tokens = await exchangeCode({ appId, code, codeVerifier, redirectUri, appSecret })
+    // tokens.accessToken, tokens.refreshToken, tokens.expiresAt, tokens.userId, tokens.email, tokens.scopes
+    ```
+
+    Keep the tokens in your own session, for example a sealed cookie that scripts cannot read.
+  </Step>
+  <Step title="Refresh before the access token ends">
+    An access token lasts 15 minutes. A refresh token lasts 90 days from its last use, and each one works one time: a refresh gives you a new pair.
+
+    ```typescript
+    try {
+      const fresh = await refreshTokens({ appId, refreshToken })
+    } catch (error) {
+      // Only a refusal ends the sign-in. An outage does not.
+      if (error instanceof AuthError && error.kind === 'refused') {
+        // Clear your session. The person signs in again.
+      }
+    }
+    ```
+  </Step>
+  <Step title="Sign out">
+    End the sign-in on the service and clear your own session. The person stays on your page.
+
+    ```typescript
+    await revokeTokens({ appId, refreshToken })
+    ```
+
+    After a sign-out, pass `askAccount: true` to the next `createAuthorizeUrl`. The accounts site then shows its sign-in page, and does not sign the person in by itself.
+  </Step>
+</Steps>
+
+The [demo](https://demo.urantia.dev) uses this flow. Its source is a small example of each step.
+
+## Browser flow
+
+For an app with no backend. The tokens are in the browser, so use this only where that is acceptable.
 
 ```typescript
 import { UrantiaAuth } from '@urantia/auth'
 
 const auth = new UrantiaAuth({
   appId: 'my-app',
-  appSecret: process.env.URANTIA_APP_SECRET,
+  redirectUri: 'https://myapp.com/callback',
 })
 
-const session = await auth.signIn({ code: authorizationCode })
+// Popup (the default), or { mode: 'redirect' }
+const session = await auth.signIn({ scopes: ['profile', 'bookmarks'] })
+
+// On your return page, for redirect mode
+const session = await auth.handleCallback()
+
+// Fires for a sign-in, a refresh, and a sign-out
+auth.onAuthStateChange((session) => {})
+
+auth.getSession()        // the session, or null
+await auth.signOut()     // stays on your page; the next signIn() is not silent
 ```
 
-<Info>
-  Server-side exchange is more secure because the app secret never leaves your server. The [demo app](https://demo.urantia.dev) uses this approach: the browser handles the redirect, and a server-side API route exchanges the code.
-</Info>
+The client keeps the session in `localStorage`, refreshes the access token by itself, and follows a sign-out in another tab.
 
-## Session Management
+## Use the token
 
-Sessions are automatically persisted in `localStorage` and restored on page load.
+Send the access token as a bearer token.
 
 ```typescript
-// Check current session (returns null if not signed in or expired)
-const session = auth.getSession()
-
-// Get just the token
-const token = auth.getToken()
-
-// Listen for auth state changes
-const unsubscribe = auth.onAuthStateChange((session) => {
-  if (session) {
-    console.log('Signed in:', session.user.email)
-  } else {
-    console.log('Signed out')
-  }
+const res = await fetch('https://api.urantia.dev/me/bookmarks', {
+  headers: { Authorization: `Bearer ${accessToken}` },
 })
-
-// Sign out (clears localStorage)
-auth.signOut()
 ```
 
-## Available Scopes
-
-When calling `signIn()`, you can request specific scopes:
-
-| Scope | Access |
-|-------|--------|
-| `profile` | Read your profile information |
-| `bookmarks` | Read and write bookmarks |
-| `notes` | Read and write notes |
-| `reading-progress` | Read and write reading progress |
-| `preferences` | Read and write preferences |
-| `app-data` | Read and write your app data |
+Or with `@urantia/api`:
 
 ```typescript
-await auth.signIn({ scopes: ['profile', 'bookmarks', 'notes'] })
+import { UrantiaAPI } from '@urantia/api'
+
+const api = new UrantiaAPI({ token: accessToken })
+const { data: bookmarks } = await api.me.bookmarks.list()
 ```
 
-## Options
+A `401` means that the token ended, or that the person removed your app in their account. Try one refresh. If the refresh is refused, clear your session.
+
+## Permissions
+
+| Permission | What the person reads on the consent screen |
+|------------|---------------------------------------------|
+| `profile` | See your name, email, and picture |
+| `bookmarks` | See and change your bookmarks |
+| `notes` | See and change your notes |
+| `reading-progress` | See and change your reading progress |
+| `preferences` | See and change your reader settings |
+
+A token reaches only what its permissions allow. Your app can ask only for permissions that it registered. A new permission later asks the person again.
+
+## What a person can do
+
+A person manages their account at [accounts.urantiahub.com](https://accounts.urantiahub.com). There they see each app that has access, remove one, or delete the account. A removal holds at once: your next request with that person's token gets a `401`. A good place for a link to that page is next to your sign-out button.
+
+## Check a token in your own backend
+
+If your backend receives an access token from your own client, verify it before you trust it.
+
+```typescript
+import { createTokenVerifier } from '@urantia/auth/server'
+
+const verify = createTokenVerifier({ appId: 'my-app' })
+const claims = await verify(accessToken)   // throws for a token that is not good, or not for your app
+```
+
+## Options of the browser client
 
 | Option | Type | Required | Default |
 |--------|------|----------|---------|
 | `appId` | `string` | Yes | None |
-| `appSecret` | `string` | Server only | None |
-| `redirectUri` | `string` | Browser | None |
+| `redirectUri` | `string` | Yes | None |
 | `loginUrl` | `string` | No | `https://accounts.urantiahub.com` |
 | `apiUrl` | `string` | No | `https://api.urantia.dev` |
 
-## Security
+## Security notes
 
-- **PKCE** (Proof Key for Code Exchange), used automatically for browser flows to prevent authorization code interception
-- **State parameter**: CSRF protection via random state verification
-- **Token expiry**: access tokens expire after 7 days; expired sessions are automatically cleared
-- **App secrets**: never stored in the browser; use server-side token exchange for production apps
-
-## Registering Your App
-
-To use `@urantia/auth`, you need a registered OAuth app.
-
-<Steps>
-  <Step title="Sign in to the Developer Portal">
-    Go to [accounts.urantiahub.com/apps](https://accounts.urantiahub.com/apps) and sign in with your Urantia account (email or Google).
-  </Step>
-  <Step title="Create a new app">
-    Click **Create app** and fill in:
-    - **App ID**: a unique slug (e.g. `my-reading-app`). Lowercase letters, numbers, and hyphens.
-    - **App Name**: shown to users on the consent screen
-    - **Redirect URIs**: URLs where users are sent after authorization (e.g. `http://localhost:3000/callback` for local dev)
-    - **Scopes**: which permissions your app needs
-  </Step>
-  <Step title="Save your credentials">
-    After creation, you'll see your **App ID** and **App Secret**. The secret is only shown once. Save it somewhere secure.
-
-    <Warning>
-      Your app secret is only displayed once. If you lose it, you can rotate it from the app details page, but any existing integrations using the old secret will break.
-    </Warning>
-  </Step>
-  <Step title="Start building">
-    Use your App ID to initialize the SDK:
-
-    ```typescript
-    import { UrantiaAuth } from '@urantia/auth'
-
-    const auth = new UrantiaAuth({
-      appId: 'my-reading-app',
-      redirectUri: 'http://localhost:3000/callback',
-    })
-    ```
-  </Step>
-</Steps>
-
-<Info>
-  You can manage your apps, rotate secrets, and delete apps at any time from the [Developer Portal](https://accounts.urantiahub.com/apps).
-</Info>
+- **PKCE and state**: each sign-in uses a new PKCE verifier and a new `state`. A return with no `state`, or with another one, is refused.
+- **Short tokens**: an access token lasts 15 minutes. A refresh token works one time. If an old one comes back, the service ends that sign-in.
+- **The secret stays on your server**: the server flow never sends it to a browser.
+- **Review**: each app is reviewed before other people can use it, and each later change to what people see or to what the app can reach.
