@@ -2,7 +2,7 @@
 
 > An API and MCP server for the Urantia Papers. Free, with no key.
 
-urantia.dev gives agents and developers structured access to the Urantia Papers: all 197 papers, 1,626 sections, and more than 14,500 paragraphs. You can fetch any paragraph by reference, search by keyword or by meaning, look up named entities, check a quotation, and follow cross-references to the Bible and to the public domain scriptures of nine other texts of the world's religions.
+urantia.dev gives agents and developers structured access to the Urantia Papers: all 197 papers, 1,626 sections, and more than 14,500 paragraphs. You can fetch any paragraph by reference, search by keyword or by meaning, look up named entities, check a quotation, and follow cross-references to public domain texts of the world's religions.
 
 ## MCP server (for agents)
 
