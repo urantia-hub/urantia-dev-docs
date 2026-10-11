@@ -448,7 +448,7 @@ async function getThemedQuote() {
 
 ## Troubleshooting
 
-**Rate limits:** The API allows 100 requests/minute per IP. For a daily bot, this is more than enough. If you hit limits, add retry logic with exponential backoff.
+**Rate limits:** The API allows 200 requests/minute per IP. For a daily bot, this is more than enough. If you hit limits, add retry logic with exponential backoff.
 
 **Quote is too long:** Some paragraphs are lengthy. Truncate with `text.substring(0, 300) + '...'` or filter by character count before posting.
 
