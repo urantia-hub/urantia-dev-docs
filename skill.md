@@ -1,6 +1,6 @@
 ---
 name: urantia-papers-api
-description: Access and search the Urantia Book via REST API. Use when retrieving paragraphs, searching text, browsing papers, getting audio narration, or building RAG pipelines over the Urantia Papers.
+description: Access and search the Urantia Papers via REST API. Use when retrieving paragraphs, searching text, browsing papers, getting audio narration, or building RAG pipelines over the Urantia Papers.
 license: MIT
 compatibility: Requires network access to api.urantia.dev. No authentication or API keys needed.
 metadata:
@@ -10,7 +10,7 @@ metadata:
 
 # Urantia Papers API
 
-Free, open REST API for structured access to all 197 papers, 1,626 sections, and 14,500+ paragraphs of the Urantia Book — with full-text search and multi-voice audio narration.
+Free, open REST API for structured access to all 197 papers, 1,626 sections, and 14,500+ paragraphs of the Urantia Papers — with full-text search and multi-voice audio narration.
 
 ## Base URL
 
@@ -18,11 +18,11 @@ Free, open REST API for structured access to all 197 papers, 1,626 sections, and
 https://api.urantia.dev
 ```
 
-No authentication required. Rate limit: 100 requests/minute per IP.
+No authentication required. Rate limit: 200 requests/minute per IP.
 
 ## Capabilities
 
-- **Search** the full text of the Urantia Book with ranked results
+- **Search** the full text of the Urantia Papers with ranked results
 - **Retrieve** any paragraph by reference in three auto-detected ID formats
 - **Browse** the table of contents, papers, and sections
 - **Get context** around a paragraph for RAG applications
@@ -121,7 +121,7 @@ Models: `tts-1-hd`, `gpt-4o-mini-tts`, `tts-1`. Voices: `nova`, `cedar`, `onyx`,
 
 ## Book Structure
 
-The Urantia Book contains 197 papers organized in four parts plus a Foreword:
+The Urantia Papers are 196 papers in four parts, plus a Foreword:
 
 - **Foreword** — Paper 0
 - **Part I: The Central and Superuniverses** — Papers 1-31
