@@ -131,7 +131,7 @@ The Urantia Papers are 196 papers in four parts, plus a Foreword:
 
 ## Constraints
 
-- Rate limit: 100 requests/minute per IP (429 response if exceeded)
+- Rate limit: 200 requests/minute per IP (429 response if exceeded)
 - All responses are JSON
 - The `/paragraphs/random` endpoint is never cached; all other endpoints are CDN-cached
 - Response envelope: `{ data, meta: { page, limit, total, totalPages } }` for paginated endpoints
