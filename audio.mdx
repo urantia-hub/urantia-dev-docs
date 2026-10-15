@@ -57,3 +57,50 @@ curl https://api.urantia.dev/audio/119:1.5
 ```
 
 All audio files are served from `cdn.urantia.dev` via Cloudflare CDN. See [CDN & Static Assets](/cdn) for the URL patterns and for paper-level audio.
+
+## Audio for a whole paper
+
+`GET /papers/{id}` also returns `paper.audio`: one MP3 file for the whole paper, with the time where each item starts in that file. An item is the paper title, a section title, or a paragraph. Use it to play a paper from one file and to show which paragraph and sentence the voice reads.
+
+```bash
+curl https://api.urantia.dev/papers/1
+```
+
+```json
+{
+  "paper": {
+    "id": "1",
+    "title": "The Universal Father",
+    "audio": {
+      "tts-1-hd": {
+        "nova": {
+          "url": "https://cdn.urantia.dev/audio/eng/papers/1.mp3",
+          "format": "mp3",
+          "bitrate": 32,
+          "duration": 2353.31,
+          "starts": [
+            { "key": "title", "at": 0 },
+            { "key": "1:0.1", "at": 3.64, "sentences": [3.64, 9.99, 16.38, 24.56, 30.09, 32.84, 40.34] },
+            { "key": "1:0.2", "at": 49.35, "sentences": [49.35, 61.85, 67.54] },
+            { "key": "section:1", "at": 234.94 }
+          ]
+        }
+      }
+    }
+  }
+}
+```
+
+- `key` is `title`, `section:{sectionId}`, or the standard reference of a paragraph.
+- `at` is the start of the item in the file, in seconds. The starts are in reading order and ascend.
+- `sentences` is the start of each sentence of a paragraph, in seconds. The first value is the same as `at`. A paragraph whose sentences have no times has no `sentences`.
+- An item ends where the next item starts. The last item ends at `duration`.
+- Section 0 of a paper has no title, so it has no `section:0` item.
+- `audio` is `null` for a paper with no time map.
+
+To play from a paragraph, set the time of the audio element to its `at`. To find the paragraph that sounds, find the last start that is at or before the current time.
+
+One file for a paper is good for a phone with the screen off: some browsers stop or delay a change from one file to the next while the screen is off. In one file, the voice continues with no change of file.
+
+A speech model checked each start against the words of its item. Some starts were checked by ear.
+
