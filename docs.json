@@ -133,6 +133,16 @@
             ]
           },
           {
+            "group": "Works",
+            "pages": [
+              "api-reference/endpoint/list-works",
+              "api-reference/endpoint/search-works",
+              "api-reference/endpoint/works-semantic-search",
+              "api-reference/endpoint/read-work",
+              "api-reference/endpoint/get-work-urantia-parallels"
+            ]
+          },
+          {
             "group": "World religions",
             "pages": [
               "api-reference/endpoint/list-scriptures",

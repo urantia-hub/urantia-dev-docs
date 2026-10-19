@@ -1,7 +1,7 @@
 ---
 title: "MCP server for the Urantia Papers"
 sidebarTitle: "MCP Servers"
-description: "Connect Claude, Cursor, or any MCP client to the Urantia Papers. 19 tools, 2 resource templates, 2 prompts. No key needed."
+description: "Connect Claude, Cursor, or any MCP client to the Urantia Papers. 26 tools, 2 resource templates, 2 prompts. No key needed."
 ---
 
 The Urantia Papers API has a built-in [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server. An AI agent that connects to it can read and search the Urantia Papers and quote them by reference.
@@ -10,7 +10,7 @@ The Urantia Papers API has a built-in [Model Context Protocol](https://modelcont
 https://api.urantia.dev/mcp
 ```
 
-It has 19 read-only tools, 2 resource templates, and 2 prompts. It needs no key, no account, and no local process.
+It has 26 read-only tools, 2 resource templates, and 2 prompts. It needs no key, no account, and no local process.
 
 Not a developer? See [AI Assistants](/assistants) for steps in Claude, ChatGPT, Grok, and Gemini.
 
@@ -73,7 +73,7 @@ Use the same `mcpServers` block as for Cursor. The server works with any client 
 
 ### Available Tools
 
-The MCP server exposes 19 tools using dot-notation names organized into a navigable namespace tree. All tools advertise read-only annotations and ship with output schemas for structured responses.
+The MCP server exposes 26 tools using dot-notation names organized into a navigable namespace tree. All tools advertise read-only annotations and ship with output schemas for structured responses.
 
 #### Structure & Navigation
 
@@ -123,6 +123,23 @@ The MCP server exposes 19 tools using dot-notation names organized into a naviga
 | `bible.verse` | Get a single verse by `bookCode`, `chapter`, `verse`. |
 | `bible.verse.urantia_parallels` | Reverse cross-reference: top-10 Urantia paragraphs semantically nearest a Bible verse. |
 | `bible.search.semantic` | Live semantic search over all 38,034 Bible verses; results arrive with their nearest UB paragraphs already attached. |
+
+#### Works (the Bible and 21 other texts)
+
+| Tool | Description |
+|------|-------------|
+| `works.list` | List the Bible and the 21 public domain texts, with tradition, kind, and summary. |
+| `works.search` | Keyword search across the works, or one work with `work`. A reference such as `"John 3:16"` or `"Dhp 183"` returns that passage. |
+| `works.search.semantic` | Search the works by meaning, with the nearest Urantia paragraphs on each result. |
+| `works.read` | Read a reference in one work: a verse, a passage, a range, or a chapter, each with its link. |
+| `works.urantia_parallels` | The 10 Urantia paragraphs closest in meaning to one unit of a work. |
+
+#### Quotes and citations
+
+| Tool | Description |
+|------|-------------|
+| `quotes.verify` | Check whether a quote is in the Urantia Papers: `exact`, `close`, or `not_found`, with the reference. |
+| `cite.get` | A citation of one paragraph in APA, MLA, Chicago, or BibTeX. |
 
 ### Cross-reference enrichment on existing tools
 
@@ -186,7 +203,7 @@ Both give you access to the same data. Choose based on your use case:
 | **Best for** | AI agents (Claude, Cursor, etc.) | Apps, scripts, manual exploration |
 | **Protocol** | JSON-RPC over Streamable HTTP | Standard HTTP |
 | **Auth** | None | None |
-| **Surface** | 19 tools, 2 resources, 2 prompts | All endpoints + `/tools/openai`, `/tools/anthropic` for SDK use |
+| **Surface** | 26 tools, 2 resources, 2 prompts | All endpoints + `/tools/openai`, `/tools/anthropic` for SDK use |
 | **Response format** | MCP content blocks | JSON with `data`/`meta` wrappers |
 
 ## Docs MCP Server
