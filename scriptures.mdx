@@ -4,23 +4,49 @@ sidebarTitle: "World religions"
 description: "Public domain texts of the world's religions, numbered the way people cite them and linked to the Urantia Papers in both directions."
 ---
 
-The API hosts public domain texts of the world's religions. Each one is numbered the way people cite it and linked to the Urantia paragraphs closest in meaning. Most of them belong to the religions that Paper 131, "The World's Religions", summarizes.
+The API hosts public domain texts of the world's religions and traditions. Each one is numbered the way people cite it and linked to the Urantia paragraphs closest in meaning.
 
-| Text | Religion | Translation | Passages | Paper 131 |
+| Work | Tradition | Kind | Edition | Summary |
 |---|---|---|---|---|
-| Lives of Eminent Philosophers, Book 6 | Cynicism | R. D. Hicks, 1925 | 105 sections | 131:1 |
-| Discourses 3.22, "On the Calling of a Cynic" | Cynicism | W. A. Oldfather, 1928 | 22 blocks, sections 1 to 109 | 131:1 |
-| The Dhammapada | Buddhism | F. Max Muller, 1881 | 414 verses (423 numbers) | 131:3 |
-| The Bhagavad Gita | Hinduism | Annie Besant, 4th edition, 1922 | 18 chapters, 701 verses | 131:4 |
-| Shinto Oracles | Shinto | W. G. Aston, 1905 | 15 oracles | 131:7 |
-| The Tao Te Ching | Taoism | James Legge, 1891 | 81 chapters, 236 paragraphs | 131:8 |
-| The Analects | Confucianism | James Legge, 1861 | 20 books, 499 chapters | 131:9 |
-| The Meaning of the Glorious Koran | Islam | Marmaduke Pickthall, 1930 | 114 surahs, 6,236 verses | none |
-| The Japji | Sikhism | Max Arthur Macauliffe, 1909 | 40 passages | none |
+| Lives of Eminent Philosophers, Book 6: The Cynics | Cynic | classic | R. D. Hicks, 1925 | The lives and sayings of Diogenes and the other Cynic philosophers. |
+| Discourses 3.22: On the Calling of a Cynic | Cynic | classic | W. A. Oldfather, 1928 | Epictetus on the life and calling of a Cynic philosopher. |
+| The Dhammapada | Buddhist | scripture | F. Max Muller, 1881 | A collection of the Buddha's sayings in verse. |
+| The Bhagavad Gita | Hindu | scripture | Annie Besant, 4th edition, 1922 | Krishna's teaching to the warrior Arjuna, from the Mahabharata. |
+| Shinto Oracles | Japanese (Shinto) | classic | W. G. Aston, 1905 | Oracles of the Shinto gods, from Aston's study of Shinto. |
+| The Tao Te Ching | Taoist | classic | James Legge, 1891 | The short classic of the Tao, attributed to Laozi. |
+| The Analects of Confucius | Confucian | classic | James Legge, 1861 | The sayings of Confucius, recorded by his students. |
+| The Meaning of the Glorious Koran | Muslim | scripture | Marmaduke Pickthall, 1930 | The scripture of Islam. |
+| The Japji | Sikh | scripture | Max Arthur Macauliffe, 1909 | The opening hymn of the Sikh scripture, by Guru Nanak. |
+| The Book of Mormon | Latter Day Saint | scripture | Joseph Smith, 1830 | The scripture of the Latter Day Saint movement, published in 1830. |
+| The Hymns of the Rigveda | Hindu | scripture | Ralph T. H. Griffith, 1896 | The oldest Vedic hymns. |
+| The Egyptian Book of the Dead | Ancient Egyptian | scripture | Peter Le Page Renouf and Édouard Naville, 1904 | Spells for the journey of the dead, written in tombs and on papyri. |
+| Hesiod: Theogony and Works and Days | Ancient Greek | classic | Hugh G. Evelyn-White, 1914 | Hesiod's poems of the birth of the gods and of the life of work. |
+| The Homeric Hymns | Ancient Greek | classic | Hugh G. Evelyn-White, 1914 | Thirty-three ancient Greek hymns to the gods. |
+| The Poetic Edda | Norse | classic | Henry Adams Bellows, 1923 | Old Norse poems of the gods and heroes. |
+| Rig Veda Americanus: Sacred Songs of the Ancient Mexicans | Aztec (Nahua) | scripture | Daniel G. Brinton, 1890 | Twenty Aztec hymns to the gods, recorded by Sahagún. |
+| Chuang Tzu: Mystic, Moralist, and Social Reformer | Taoist | classic | Herbert A. Giles, 1889 | The writings of the Taoist teacher Zhuangzi. |
+| The Prose Edda | Norse | classic | Arthur Gilchrist Brodeur, 1916 | Snorri Sturluson's prose account of the Norse gods, about 1220. |
+| Kojiki: Records of Ancient Matters | Japanese (Shinto) | classic | Basil Hall Chamberlain, 1882 | The oldest Japanese chronicle, from the creation to the early rulers, 712. |
+| The Upanishads, Part 1 | Hindu | scripture | F. Max Muller, 1879 | Teachings of the Vedas on the self and Brahman. |
+| The Shû King (Book of Documents) | Confucian | classic | James Legge, 1879 | The Book of Documents: speeches and records of the early Chinese kings. |
 
-The Paper 131 column names the section headed with the religion. Paper 131 has no section headed Islam or Sikhism.
+`kind` is `scripture` for a text that its tradition reads as sacred, and `classic` for a story, history, or teaching of a tradition that is not read as scripture. Seven of the texts belong to religions with a section in Paper 131, "The World's Religions": 131:1 (the two Cynic texts), 131:3 (Dhammapada), 131:4 (Gita), 131:7 (Shinto oracles), 131:8 (Tao Te Ching), and 131:9 (Analects). Paper 131 has no section headed Islam or Sikhism. The Upanishads are three of the twelve in Sacred Books of the East, volume 1: the Khândogya, the Kena (Talavakâra), and the Îsâ.
 
-Diogenes Laertius wrote a biography of the Cynics, not scripture, and the Epictetus text is one chapter of Epictetus's Discourses. For Judaism and Christianity, use the [Bible endpoints](/bible). Zoroastrianism and Jainism are planned.
+For the Bible (World English Bible), use the [Bible endpoints](/bible), or `/works` below, which serves the Bible and these texts together.
+
+## One list for every work
+
+```bash
+# The Bible and every text above, with tradition, kind, and summary
+curl https://api.urantia.dev/works
+# One passage, by the reference people use
+curl 'https://api.urantia.dev/works/book-of-mormon/1%20Nephi%203:7'
+# Keyword and semantic search over the Bible and the texts together, or one work with work=
+curl 'https://api.urantia.dev/works/search?q=svetaketu'
+curl 'https://api.urantia.dev/works/search/semantic?q=the%20soul%20after%20death'
+```
+
+Each result has the same shape: the work (`id`, `title`, `tradition`), the `reference`, the `text`, a `url` to the public page that holds the passage, and the nearest Urantia paragraphs. The MCP server has the same calls as the `works.*` tools.
 
 ## List the texts
 
@@ -34,7 +60,7 @@ Each entry names its translator, year, source, and license, and `notes` says how
 {
   "id": "dhammapada-muller-1881",
   "slug": "dhammapada",
-  "religion": "Buddhism",
+  "religion": "Buddhist",
   "title": "The Dhammapada",
   "translator": "F. Max Muller",
   "year": 1881,
@@ -86,6 +112,18 @@ References:
 - **Dhammapada:** the verses are numbered straight through the book, so `Dhp 183` is verse 183, not chapter 183. Muller combines a few pairs of verses, such as `Dhp 58-59`. Asking for either number returns the pair
 - **Japji:** `Japji 0` is the opening (the Mul Mantar), `Japji 1` to `Japji 38` are the pauris, and `Japji 39` is the closing slok
 - **Shinto oracles:** `Oracle 1` to `Oracle 15`. Aston does not number them, so the numbers follow his order, and each oracle carries its shrine as its title
+- **Book of Mormon:** book, chapter, and verse by name, `1 Nephi 3:7` or `Alma 32:21`
+- **Rig Veda:** book, hymn, and verse, `RV 10.129.1`
+- **Book of the Dead:** chapter (spell) and paragraph, `BD 125.3`. The paragraph numbers are ours
+- **Hesiod:** poem and line, `Theogony 116` or `Works and Days 293`. A passage covers a range of lines, such as `Works and Days 293-319`
+- **Homeric Hymns:** hymn and line, `HH 2.1`
+- **Poetic Edda:** poem and stanza by name, `Voluspo 3`
+- **Aztec hymns:** hymn and verse, `Aztec Hymn 1.3`
+- **Chuang Tzu:** chapter and paragraph, `Zhuangzi 2.5`. The paragraph numbers are ours
+- **Prose Edda:** part, chapter, and paragraph, `Gylfaginning 1.1`. The parts are `Prologue`, `Gylfaginning`, and `Skáldskaparmál`. The paragraph numbers are ours
+- **Kojiki:** section and paragraph, `Kojiki 1.1`. The paragraph numbers are ours
+- **Upanishads:** `Khandogya 6.8` (prapathaka and khanda; each passage is one whole khanda, with its verse numbers in the text), `Kena 1.3` (khanda and verse), and `Isa 8` (verse)
+- **Shu King:** part, book, and paragraph, `Shu 5.4.6`. Legge prints his own numbers in only some books, so the paragraph numbers are ours, in order through each book
 
 `refLevels` on each text says how many numbers a full reference has. The prefix is optional, and `2:47` works the same as `2.47`.
 
@@ -127,7 +165,7 @@ curl 'https://api.urantia.dev/paragraphs/131:8.3?include=scriptureParallels'
 curl 'https://api.urantia.dev/paragraphs/2:5.1?include=bibleParallels,scriptureParallels'
 ```
 
-The response gains a `scriptureParallels` array: the 3 closest chunks from each text, 27 in all, grouped by text in the order of the list. Each entry carries its `corpus` (title, religion, translator, year), the chunk `reference` and `text`, and the `similarity` and `rank`. It also works with `format=rag`.
+The response gains a `scriptureParallels` array: the 3 closest chunks from each text, grouped by text in the order of the list. Each entry carries its `corpus` (title, religion, translator, year), the chunk `reference` and `text`, and the `similarity` and `rank`. It also works with `format=rag`.
 
 ## Search by meaning
 
@@ -141,7 +179,7 @@ Searches every text, or one with `"corpus": "bhagavad-gita"`. Each result carrie
 
 ## Patterns across the texts
 
-Four lists rank the Urantia paragraphs by how they relate to all ten texts at once (the nine above and the Bible):
+Four lists rank the Urantia paragraphs by how they relate to all the texts at once (the texts above and the Bible):
 
 ```bash
 # Paragraphs close to many of the texts. Paper 131 is left out: it is a collection of sayings from these religions
@@ -186,5 +224,16 @@ For a study that compares Paper 131 with earlier anthologies of world scripture,
 | The Analects | [Project Gutenberg 4094](https://www.gutenberg.org/ebooks/4094) |
 | The Meaning of the Glorious Koran | [Project Gutenberg 16955](https://www.gutenberg.org/ebooks/16955), which prints three translations side by side. Only Pickthall's is used |
 | The Japji | [Wikisource, Macauliffe, The Sikh Religion, volume 1](https://en.wikisource.org/wiki/The_Sikh_Religion/Volume_1/Japji) |
+| The Book of Mormon | [Project Gutenberg 17](https://www.gutenberg.org/ebooks/17) |
+| The Hymns of the Rigveda | [Wikisource, Griffith](https://en.wikisource.org/wiki/The_Hymns_of_the_Rigveda) |
+| The Egyptian Book of the Dead | [Project Gutenberg 69566](https://www.gutenberg.org/ebooks/69566) |
+| Hesiod and the Homeric Hymns | [Project Gutenberg 348](https://www.gutenberg.org/ebooks/348) |
+| The Poetic Edda | [Project Gutenberg 73533](https://www.gutenberg.org/ebooks/73533) |
+| Rig Veda Americanus | [Project Gutenberg 14993](https://www.gutenberg.org/ebooks/14993) |
+| Chuang Tzu | [Project Gutenberg 59709](https://www.gutenberg.org/ebooks/59709) |
+| The Prose Edda | [Wikisource, Brodeur](https://en.wikisource.org/wiki/The_Prose_Edda_(1916_translation_by_Arthur_Gilchrist_Brodeur)) |
+| Kojiki | [Wikisource, Chamberlain](https://en.wikisource.org/wiki/Kojiki_(Chamberlain,_1882)) |
+| The Upanishads, Part 1 | [Wikisource, Sacred Books of the East, volume 1](https://en.wikisource.org/wiki/Sacred_Books_of_the_East/Volume_1) |
+| The Shû King | [Wikisource, Sacred Books of the East, volume 3](https://en.wikisource.org/wiki/Sacred_Books_of_the_East/Volume_3/The_Shu) |
 
 The text keeps the translator's own words and spelling, including the parentheses that Muller, Legge, and Pickthall use for words they added. Page headers, footnotes, and the Chinese and Sanskrit lines are not included. Aston's own summaries of oracles he does not quote are not included either.
