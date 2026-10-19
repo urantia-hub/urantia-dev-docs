@@ -102,7 +102,7 @@ const { tools } = await fetch("https://api.urantia.dev/tools/openai").then(r => 
 const completion = await openai.chat.completions.create({
   model: "gpt-5",
   messages,
-  tools, // 19 tools, ready to go
+  tools, // 26 tools, ready to go
 });
 ```
 
@@ -112,7 +112,7 @@ const { tools } = await fetch("https://api.urantia.dev/tools/anthropic").then(r 
 const message = await anthropic.messages.create({
   model: "claude-opus-4-7",
   max_tokens: 1024,
-  tools, // 19 tools, ready to go
+  tools, // 26 tools, ready to go
   messages,
 });
 ```
@@ -123,7 +123,7 @@ Each tool corresponds 1:1 with an MCP tool, so you can dispatch the call against
 ## MCP Servers
 
 <Card title="MCP Servers" icon="plug" href="/mcp-servers">
-  Connect AI agents to the Urantia Papers via 2 MCP servers: 19 tools + 2 resources + 2 prompts on the API server, plus docs search. One-click install via Smithery.
+  Connect AI agents to the Urantia Papers via 2 MCP servers: 26 tools + 2 resources + 2 prompts on the API server, plus docs search. One-click install via Smithery.
 </Card>
 
 ## Report a problem

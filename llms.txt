@@ -12,7 +12,7 @@ Streamable HTTP transport. No key and no sign-in. Add it to any MCP client (Clau
 
 {"mcpServers":{"urantia-papers":{"url":"https://api.urantia.dev/mcp"}}}
 
-19 tools: toc.get, papers.list, papers.get, papers.sections, paragraphs.random, paragraphs.get, paragraphs.context, search.fulltext, search.semantic, entities.list, entities.get, entities.paragraphs, audio.get, bible.books, bible.book, bible.chapter, bible.verse, bible.verse.urantia_parallels, bible.search.semantic.
+26 tools: toc.get, papers.list, papers.get, papers.sections, paragraphs.random, paragraphs.get, paragraphs.context, search.fulltext, search.semantic, entities.list, entities.get, entities.paragraphs, audio.get, bible.books, bible.book, bible.chapter, bible.verse, bible.verse.urantia_parallels, bible.search.semantic, works.list, works.search, works.search.semantic, works.read, works.urantia_parallels, quotes.verify, cite.get.
 
 2 resource templates: urantia://paper/{id} and urantia://entity/{id}.
 2 prompt templates: study_assistant and comparative_theology.
@@ -61,8 +61,15 @@ Add ?include=entities,bibleParallels,urantiaParallels,scriptureParallels to a pa
 - GET /bible/:bookCode/:chapter/:verse/urantia-parallels: the 10 nearest Urantia paragraphs for a verse
 - POST /bible/search/semantic: search the Bible by meaning, with Urantia paragraphs on each result
 
+### Works (the Bible and the 21 texts under one set of endpoints)
+- GET /works: every work with id, tradition, kind (scripture, classic, recorded), and summary
+- GET /works/search?q=...: keyword search across the works, or one with work=; a reference such as John 3:16 or Dhp 183 returns that passage
+- GET /works/search/semantic?q=...: search the works by meaning, with Urantia paragraphs on each result
+- GET /works/:work/:ref: read a reference in one work, such as /works/bible/John 3:16 or /works/rig-veda/RV 10.129.1-3
+- GET /works/:work/:ref/urantia-parallels: the 10 nearest Urantia paragraphs for one unit of a work
+
 ### World religions texts
-- GET /scriptures: nine public domain texts with translator, year, source, and license: Diogenes Laertius Book 6 and Epictetus Discourses 3.22 (Cynicism), the Dhammapada, the Bhagavad Gita, Shinto oracles (Aston), the Tao Te Ching, the Analects, the Koran (Pickthall), and the Japji
+- GET /scriptures: 21 public domain texts with translator, year, source, and license, among them the Dhammapada (Buddhist), the Bhagavad Gita, the Rig Veda, and the Upanishads (Hindu), the Tao Te Ching and the Chuang Tzu (Taoist), the Analects and the Shu King (Confucian), the Koran (Muslim), the Japji (Sikh), the Book of Mormon (Latter Day Saint), the Book of the Dead (Ancient Egyptian), Hesiod and the Homeric Hymns (Ancient Greek), the Poetic and Prose Eddas (Norse), the Aztec hymns (Aztec, Nahua), the Kojiki and the Shinto oracles (Japanese, Shinto), and Diogenes Laertius Book 6 and Epictetus 3.22 (Cynic)
 - GET /scriptures/:corpus: one text and its chapters. The corpus is a slug, an id, or a ref prefix: bhagavad-gita, bg
 - GET /scriptures/:corpus/:ref: passages, such as 2.47, 2.47-49, a whole chapter (2), Dhp 183, Quran 2.255, or Epictetus 3.22.45
 - GET /scriptures/:corpus/:ref/urantia-parallels: the 10 nearest Urantia paragraphs for a passage
