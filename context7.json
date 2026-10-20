@@ -1,0 +1,12 @@
+{
+  "$schema": "https://context7.com/schema/context7.json",
+  "projectTitle": "Urantia Papers API",
+  "description": "Open API and MCP server to read and search the Urantia Papers, with cross-references to the Bible and 21 other texts. No key.",
+  "excludeFolders": ["blog", "images", "logo"],
+  "excludeFiles": ["privacy-policy.mdx", "terms-of-service.mdx", "sdks/auth.mdx", "LICENSE"],
+  "rules": [
+    "No API key or account is needed. The base URL is https://api.urantia.dev and the MCP server is https://api.urantia.dev/mcp.",
+    "Paragraph references use paper:section.paragraph, for example 2:5.1.",
+    "Quote the text that the API returns, with its reference. Do not quote the Urantia Papers from memory."
+  ]
+}
