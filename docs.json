@@ -10,6 +10,12 @@
   "fonts": {
     "family": "Inter"
   },
+  "integrations": {
+    "posthog": {
+      "apiKey": "phc_DmDWgmmvBBYtYNtrm8gyHb8sGW3R8ddrmW4dMLQeA54Q",
+      "sessionRecording": false
+    }
+  },
   "appearance": {
     "default": "light"
   },
