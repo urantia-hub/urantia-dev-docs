@@ -157,6 +157,10 @@ The MCP server exposes 26 tools using dot-notation names organized into a naviga
 
 Both can be combined. Parallels are pre-computed via `text-embedding-3-large` cosine similarity, so adding them is cheap. Note: these are *semantic* neighbors, not curated linguistic parallels (e.g. Faw's Paramony), best results trend conceptual rather than verse-citation.
 
+### Spanish text
+
+`toc.get`, `papers.list`, `papers.get`, `papers.sections`, `paragraphs.get`, `paragraphs.context`, and `paragraphs.random` accept `lang: "es"` for the Spanish translation of the text and titles. Each Spanish paragraph has `language` and a `translation` label (a machine translation, CC0). Search stays English. See [Translations](/translations).
+
 ### Resources
 
 In addition to tools, the server exposes two resource templates clients can read directly:

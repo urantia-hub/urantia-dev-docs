@@ -156,37 +156,27 @@ const { data: prefs } = await api.me.preferences.get()
 
 ### Languages
 
+All 197 papers are in Spanish (a machine translation, CC0). Pass `lang: 'es'` to the paper, paragraph, and table of contents calls. See [Translations](/translations).
+
 ```typescript
-// List available languages with translation progress
-const { data: languages } = await api.languages.list()
-// [{ code: "eng", name: "English", entityCount: 4456, paragraphCount: 16570 }, ...]
+// Spanish text and titles (0.7.0 and later)
+const { data: toc } = await api.toc.get({ lang: 'es' })
+const { data: paper } = await api.papers.get('1', { lang: 'es' })
+const { data: p } = await api.paragraphs.get('1:0.1', { lang: 'es' })
+console.log(p.language)    // "es"
+console.log(p.translation) // { method: "machine", license: "CC0-1.0", review: "auto_checked" }
 
-// Get an entity in Spanish
+// Entity names in Spanish, French, Portuguese, German, or Korean
 const { data: entity } = await api.entities.get('machiventa-melchizedek', { lang: 'es' })
-console.log(entity.name)        // "Machiventa Melchizedek"
-console.log(entity.description) // Spanish description
-console.log(entity.language)    // "es"
+console.log(entity.name)   // "Machiventa Melquisedec"
 
-// List entities in French
-const { data: entities } = await api.entities.list({ type: 'being', lang: 'fr' })
-
-// Entity paragraphs in Portuguese
-const { data: mentions } = await api.entities.paragraphs('jesus', { lang: 'pt' })
-
-// Paragraphs in German
-const { data: p } = await api.paragraphs.get('2:0.1', { lang: 'de' })
-
-// Random paragraph in Korean
-const { data: random } = await api.paragraphs.random({ lang: 'ko' })
+// Translation progress for each language
+const { data: languages } = await api.languages.list()
 ```
 
-**Supported languages:** `eng` (English, default), `es` (Spanish), `fr` (French), `pt` (Portuguese), `de` (German), `ko` (Korean).
+**Supported languages:** `eng` (English, default), `es` (Spanish), `fr` (French), `pt` (Portuguese), `de` (German), `ko` (Korean). Paragraph text exists in English and Spanish.
 
-The `language` field in the response tells you which language was returned. If a translation isn't available for the requested language, the API falls back to English and returns `language: "eng"`.
-
-<Info>
-  Entity translations (names, descriptions, aliases) are available for all 4,456 entities in all 5 languages. Paragraph translations are coming soon.
-</Info>
+The `language` field in the response tells you which language was returned. If a translation is not available, the API falls back to English and returns `language: "eng"`.
 
 ## Paragraph References
 

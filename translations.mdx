@@ -1,0 +1,91 @@
+---
+title: "Translations"
+sidebarTitle: "Translations"
+description: "Spanish text for all 197 papers: add lang=es on the API, the MCP server, and the SDK."
+---
+
+The Urantia Papers are available in Spanish: every paragraph of the Foreword and the 196 papers, and every paper, section, and part title. The Spanish is a machine translation, released as CC0 (public domain). Each translated paragraph has a label that says so.
+
+## Get the Spanish text
+
+Add `lang=es` to a request. Without `lang`, the API returns English, as before.
+
+```bash
+curl "https://api.urantia.dev/paragraphs/1:0.1?lang=es"
+curl "https://api.urantia.dev/papers/1?lang=es"
+curl "https://api.urantia.dev/toc?lang=es"
+```
+
+These endpoints accept `lang`:
+
+| Endpoint | What is in Spanish |
+|---|---|
+| `GET /toc` | Part titles, part sponsorships, and paper titles |
+| `GET /papers` | Paper titles |
+| `GET /papers/{id}` | The paper title, and the text and section title of each paragraph |
+| `GET /papers/{id}/sections` | Section titles |
+| `GET /paragraphs/{ref}` | The paragraph text and its titles |
+| `GET /paragraphs/{ref}/context` | The paragraph and the paragraphs around it |
+| `GET /paragraphs/random` | The paragraph text and its titles |
+| `GET /entities/{id}/paragraphs` | The paragraphs that name the entity |
+
+## A translated paragraph
+
+```json
+{
+  "data": {
+    "standardReferenceId": "1:0.1",
+    "paperTitle": "El Padre Universal",
+    "sectionTitle": null,
+    "text": "EL Padre Universal es el Dios de toda la creación, la Primera Fuente y Centro de todas las cosas y de todos los seres. Piensen en Dios primero como creador, después como controlador y, por último, como sostenedor infinito. ...",
+    "language": "es",
+    "translation": {
+      "method": "machine",
+      "license": "CC0-1.0",
+      "review": "auto_checked"
+    }
+  }
+}
+```
+
+The other fields (`id`, `htmlText`, `labels`, `audio`, and the rest) are the same as in English. `htmlText` holds the Spanish text with the same markup.
+
+| Field | Meaning |
+|---|---|
+| `language` | The language of `text`. A paragraph with no translation returns English and `"eng"` |
+| `translation.method` | Always `machine` |
+| `translation.license` | Always `CC0-1.0` |
+| `translation.review` | `auto_checked`: the automatic checks found no problem. `needs_review`: a check flagged the paragraph (its length, a term, or a number), so a person should read it before you rely on it. About 1,240 paragraphs have `needs_review` |
+
+Show the label to your readers, for example "Machine translation". Do not present the Spanish as an official or human translation.
+
+## In the MCP server
+
+The paper and paragraph tools take `lang: "es"`: `toc.get`, `papers.list`, `papers.get`, `papers.sections`, `paragraphs.get`, `paragraphs.context`, and `paragraphs.random`. Each Spanish paragraph has `language` and `translation`, as in the REST API. See [MCP Servers](/mcp-servers).
+
+## In the SDK
+
+`@urantia/api` 0.7.0 and later:
+
+```typescript
+const { data: toc } = await api.toc.get({ lang: 'es' })
+const { data: paper } = await api.papers.get('1', { lang: 'es' })
+const { data: p } = await api.paragraphs.get('1:0.1', { lang: 'es' })
+p.translation // { method: 'machine', license: 'CC0-1.0', review: 'auto_checked' }
+```
+
+## What stays in English
+
+- **Search.** `/search`, `/search/semantic`, and the search tools search the English text and return English results. Use the reference of a result to get its Spanish text.
+- **Audio.** All narration is English.
+- **Topic labels** on papers and paragraphs.
+- **Entity descriptions.** Spanish has entity names only. See [Entities](/entities#translated-entities).
+- **The Bible and the other works.**
+
+## How the translation was made
+
+AI models translated the English, one paper at a time, with a glossary of the terms that the Papers use. No existing Spanish translation was a source. An automatic check compares each paragraph with published translations, and a paragraph that is too close goes back for a new translation.
+
+The text uses "ustedes" for the plural "you", lowercase pronouns for God ("él", "su"), and « » for quotations, so that it reads well in every Spanish-speaking country.
+
+To report a wrong word or an error, use [Feedback](/feedback) and give the reference of the paragraph.
