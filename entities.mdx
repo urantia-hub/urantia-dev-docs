@@ -75,7 +75,7 @@ Returns a paginated list of paragraphs that mention the entity, ordered by posit
 
 ## Translated entities
 
-All 4,456 entities are available in 5 languages: Spanish, French, Portuguese, German, and Korean. Pass `?lang=` to get translated names, descriptions, and aliases.
+Pass `?lang=` to get entity names in another language. Spanish has the names of 2,519 entities, with no descriptions: the description and the other entities stay in English. French, Portuguese, German, and Korean have names and descriptions.
 
 ```bash
 # Get an entity in Spanish
@@ -83,27 +83,23 @@ curl "https://api.urantia.dev/entities/machiventa-melchizedek?lang=es"
 
 # List beings in French
 curl "https://api.urantia.dev/entities?type=being&lang=fr&limit=10"
-
-# Search entities in German
-curl "https://api.urantia.dev/entities?q=melchizedek&lang=de"
 ```
 
-The response includes a `language` field indicating which language was returned:
+The response includes a `language` field:
 
 ```json
 {
   "data": {
     "id": "machiventa-melchizedek",
-    "name": "Machiventa Melchizedek",
+    "name": "Machiventa Melquisedec",
     "type": "being",
-    "description": "Un Hijo Melchizedek que se encarnó como otorgamiento de emergencia en Urantia...",
     "language": "es",
     "citationCount": 55
   }
 }
 ```
 
-If a translation isn't available for the requested language, the API falls back to English and returns `"language": "eng"`.
+If a translation is not available for the requested language, the API falls back to English and returns `"language": "eng"`. For Spanish paragraph text, see [Translations](/translations).
 
 **Supported languages:** `eng` (default), `es`, `fr`, `pt`, `de`, `ko`
 

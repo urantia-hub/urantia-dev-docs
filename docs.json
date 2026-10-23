@@ -61,7 +61,7 @@
           },
           {
             "group": "Data",
-            "pages": ["papers", "paragraphs", "verify-quotes", "entities", "bible", "scriptures", "audio", "video", "cdn"]
+            "pages": ["papers", "paragraphs", "translations", "verify-quotes", "entities", "bible", "scriptures", "audio", "video", "cdn"]
           },
           {
             "group": "SDKs",
