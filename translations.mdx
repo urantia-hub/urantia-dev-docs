@@ -28,6 +28,33 @@ These endpoints accept `lang`:
 | `GET /paragraphs/{ref}/context` | The paragraph and the paragraphs around it |
 | `GET /paragraphs/random` | The paragraph text and its titles |
 | `GET /entities/{id}/paragraphs` | The paragraphs that name the entity |
+| `GET /search`, `POST /search` | Searches the Spanish text and returns Spanish paragraphs |
+| `GET /search/semantic`, `POST /search/semantic` | Returns Spanish paragraphs for a question in Spanish or English |
+
+With `include`, the Papers parallels (`urantiaParallels`) come with their Spanish text and titles, and the entity mentions (`entities`) with their Spanish names. The Bible and the other works in an include stay in English.
+
+## Search in Spanish
+
+Keyword search with `lang=es` searches the Spanish text. A word matches with or without its accents ("religion" finds "religión"), and "documento 1" is a reference, like "1:0.1". The results come as an exact phrase first, then paragraphs with every word. Spanish has no typo fixes.
+
+```bash
+curl "https://api.urantia.dev/search?q=Ajustador%20del%20Pensamiento&lang=es"
+```
+
+```json
+{
+  "data": [
+    { "standardReferenceId": "0:5.9", "paperTitle": "Prólogo", "match": "exact", "language": "es" }
+  ],
+  "meta": { "total": 143 }
+}
+```
+
+Semantic search with `lang=es` takes a question in Spanish or English and returns Spanish paragraphs. A question in Spanish scores lower than the same question in English, so `strength` and `meta.related` allow for that difference.
+
+```bash
+curl "https://api.urantia.dev/search/semantic?q=%C2%BFQu%C3%A9%20es%20el%20alma%3F&lang=es"
+```
 
 ## A translated paragraph
 
@@ -61,25 +88,26 @@ Show the label to your readers, for example "Machine translation". Do not presen
 
 ## In the MCP server
 
-The paper and paragraph tools take `lang: "es"`: `toc.get`, `papers.list`, `papers.get`, `papers.sections`, `paragraphs.get`, `paragraphs.context`, and `paragraphs.random`. Each Spanish paragraph has `language` and `translation`, as in the REST API. See [MCP Servers](/mcp-servers).
+The paper, paragraph, and search tools take `lang: "es"`: `toc.get`, `papers.list`, `papers.get`, `papers.sections`, `paragraphs.get`, `paragraphs.context`, `paragraphs.random`, `search.fulltext`, and `search.semantic`. Each Spanish paragraph has `language` and `translation`, as in the REST API. See [MCP Servers](/mcp-servers).
 
 ## In the SDK
 
-`@urantia/api` 0.7.0 and later:
+`@urantia/api` 0.7.0 and later for the papers and paragraphs, 0.8.0 and later for search:
 
 ```typescript
 const { data: toc } = await api.toc.get({ lang: 'es' })
 const { data: paper } = await api.papers.get('1', { lang: 'es' })
 const { data: p } = await api.paragraphs.get('1:0.1', { lang: 'es' })
 p.translation // { method: 'machine', license: 'CC0-1.0', review: 'auto_checked' }
+const { data: hits } = await api.search.fullText({ q: 'Ajustador del Pensamiento', lang: 'es' })
+const { data: near } = await api.search.semantic({ q: '¿Qué es el alma?', lang: 'es' })
 ```
 
 ## What stays in English
 
-- **Search.** `/search`, `/search/semantic`, and the search tools search the English text and return English results. Use the reference of a result to get its Spanish text.
 - **Audio.** All narration is English.
 - **Topic labels** on papers and paragraphs.
-- **Entity descriptions.** Spanish has entity names only. See [Entities](/entities#translated-entities).
+- **Some entity descriptions.** Spanish has a description for 2,517 entities; the others stay in English. See [Entities](/entities#translated-entities).
 - **The Bible and the other works.**
 
 ## How the translation was made
