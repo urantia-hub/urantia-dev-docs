@@ -170,6 +170,11 @@ console.log(p.translation) // { method: "machine", license: "CC0-1.0", review: "
 const { data: entity } = await api.entities.get('machiventa-melchizedek', { lang: 'es' })
 console.log(entity.name)   // "Machiventa Melquisedec"
 
+// The works: Spanish titles and labels, English text (0.9.0)
+const { data: works } = await api.works.list({ lang: 'es' })
+console.log(works[0].textLanguage) // "eng"
+const { data: books } = await api.bible.books({ lang: 'es' })
+
 // Translation progress for each language
 const { data: languages } = await api.languages.list()
 ```

@@ -103,12 +103,25 @@ const { data: hits } = await api.search.fullText({ q: 'Ajustador del Pensamiento
 const { data: near } = await api.search.semantic({ q: '¿Qué es el alma?', lang: 'es' })
 ```
 
+## The works in Spanish
+
+The Bible and the other works are English texts, and their text stays English. Their catalog words are in Spanish: the titles, traditions, summaries, unit and division labels, chapter titles, and the names of the Bible books. These are a machine translation too, released as CC0.
+
+| Endpoint | What is in Spanish |
+| --- | --- |
+| `GET /works` | The title, tradition, summary, and unit label of each work |
+| `GET /works/{work}/{ref}` | The title and tradition of the work. The passages stay English |
+| `GET /scriptures`, `GET /scriptures/{corpus}` | The title, tradition, labels, and chapter titles |
+| `GET /bible/books` | The book names |
+
+Each work has `textLanguage: "eng"`, in every language. With `lang=es` it also has a `catalogTranslation` label, the same shape as `translation` on a paragraph. A word that has no Spanish yet stays English. The MCP tools `works.list`, `works.read`, and `bible.books` take `lang: "es"` too, and so do `works.list`, `works.read`, and `bible.books` in `@urantia/api` 0.9.0.
+
 ## What stays in English
 
 - **Audio.** All narration is English.
 - **Topic labels** on papers and paragraphs.
 - **Some entity descriptions.** Spanish has a description for 2,517 entities; the others stay in English. See [Entities](/entities#translated-entities).
-- **The Bible and the other works.**
+- **The text of the Bible and the other works.** Their titles and labels are in Spanish: see [The works in Spanish](#the-works-in-spanish).
 
 ## How the translation was made
 
