@@ -1,0 +1,63 @@
+---
+title: "Bhagavad Gita API"
+sidebarTitle: "Bhagavad Gita"
+description: "Bhagavad Gita API: get any passage by its reference, as JSON. Annie Besant (4th edition), 1922. 701 passages, public domain, no key needed."
+---
+
+The API serves **The Bhagavad Gita** (Annie Besant, 4th edition, 1922) as JSON, one passage at a time, by the reference people use. Krishna's teaching to the warrior Arjuna, from the Mahabharata. It has 701 passages in 18 chapters. No key and no account.
+
+## Get a passage
+
+```bash
+# BG 2.47
+curl https://api.urantia.dev/scriptures/bhagavad-gita/2.47
+# A whole chapter
+curl https://api.urantia.dev/scriptures/bhagavad-gita/2
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "bhagavad-gita",
+      "title": "The Bhagavad Gita",
+      "translator": "Annie Besant (4th edition)",
+      "year": 1922
+    },
+    "passages": [
+      {
+        "ref": "BG 2.47",
+        "division": 2,
+        "text": "Thy business is with the action only, never with its fruits; so let not the fruit of action be thy motive, nor be thou to inaction attached."
+      }
+    ]
+  }
+}
+```
+
+The slug `bhagavad-gita`, the id `bhagavad-gita-besant-1922`, and the prefix `bg` all name this text.
+
+## References
+
+Chapter and verse, `BG 2.47`.
+
+`GET /scriptures/bhagavad-gita` lists every chapter with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"bhagavad-gita","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=bhagavad-gita'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/bhagavad-gita/2.47/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** The Bhagavad Gita, translated by Annie Besant (4th edition) (1922)
+- **Source:** [en.wikisource.org](https://en.wikisource.org/wiki/Bhagavad-Gita_(Besant_4th))
+- **License:** Public domain in the United States

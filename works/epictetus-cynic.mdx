@@ -1,0 +1,64 @@
+---
+title: "Epictetus, Discourses 3.22 API"
+sidebarTitle: "Epictetus"
+description: "Epictetus, Discourses 3.22 API: get any passage by its reference, as JSON. W. A. Oldfather, 1928. 22 passages, public domain, no key needed."
+---
+
+The API serves **Discourses 3.22: On the Calling of a Cynic** (W. A. Oldfather, 1928) as JSON, one passage at a time, by the reference people use. Epictetus on the life and calling of a Cynic philosopher. It has 22 passages in 1 book. No key and no account.
+
+## Get a passage
+
+```bash
+# Epictetus 3.22.45-49
+curl https://api.urantia.dev/scriptures/epictetus-cynic/3.22.45
+# A whole book
+curl https://api.urantia.dev/scriptures/epictetus-cynic/3.22
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "epictetus-cynic",
+      "title": "Discourses 3.22: On the Calling of a Cynic",
+      "translator": "W. A. Oldfather",
+      "year": 1928
+    },
+    "passages": [
+      {
+        "ref": "Epictetus 3.22.45-49",
+        "division": 3,
+        "text": "And how is it possible for a man who has nothing, who is naked, without home or hearth, in squalor, without a slave, without a city, to live serenely? Behold, God has sent you the man who will show in practice that it..."
+      }
+    ]
+  }
+}
+```
+
+The slug `epictetus-cynic`, the id `epictetus-3-22-oldfather-1928`, and the prefix `epictetus` all name this text.
+
+## References
+
+Book, chapter, and section, `Epictetus 3.22.45`. Oldfather numbers every fifth section, so each passage covers up to five sections, and `3.22.47` returns `Epictetus 3.22.45-49`. Ask for `3.22` to get the whole chapter.
+
+`GET /scriptures/epictetus-cynic` lists every book with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"epictetus-cynic","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=epictetus-cynic'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/epictetus-cynic/3.22.45/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** Discourses 3.22: On the Calling of a Cynic, translated by W. A. Oldfather (1928)
+- **Source:** [en.wikisource.org](https://en.wikisource.org/wiki/Epictetus,_the_Discourses_as_reported_by_Arrian,_the_Manual,_and_Fragments/Book_3/Chapter_22)
+- **License:** Public domain in the United States
+- **Notes:** One chapter of the Discourses, as reported by Arrian. Oldfather marks every fifth section, so each passage covers up to five sections, such as 3.22.5-9.

@@ -1,12 +1,23 @@
 ---
-title: "Bible API - World English Bible (eng-web)"
+title: "Bible API: every verse of the World English Bible, as JSON"
 sidebarTitle: "Bible"
-description: "Query the entire World English Bible (eng-web) including deuterocanon. 38,034 verses across 81 books, public domain, OSIS book codes, forgiving alias resolution."
+description: "A Bible API with no key: get any verse, chapter, or book of the World English Bible as JSON. 81 books with the Catholic deuterocanon, chapter and verse counts, public domain."
 ---
 
-The API hosts the entire **World English Bible** (eng-web Classic edition) as a queryable resource. 38,034 verses across 81 books — the full ecumenical canon: 39 Old Testament + 15 deuterocanonical + 27 New Testament. Public domain text from [eBible.org](https://ebible.org/Scriptures/eng-web_usfm.zip), updated to the 2026-04-23 snapshot.
+The API hosts the entire **World English Bible** (eng-web Classic edition) as a queryable resource. 38,034 verses across 81 books, the full ecumenical canon: 39 Old Testament + 15 deuterocanonical + 27 New Testament. Public domain text from [eBible.org](https://ebible.org/Scriptures/eng-web_usfm.zip), updated to the 2026-04-23 snapshot.
 
-The Bible API exists as the foundation for forthcoming UB ↔ Bible cross-references. It's also useful on its own for any agent or app that needs verse-level Bible access alongside the Urantia Papers.
+No key and no account. Each verse also links to the closest paragraphs of the Urantia Papers (see [Cross-references and search](#cross-references-and-search)), and the API works on its own for any app or agent that needs Bible verses.
+
+## Quick start
+
+```bash
+# One verse
+curl https://api.urantia.dev/bible/John/3/16
+# A whole chapter
+curl https://api.urantia.dev/bible/Ps/23
+# Every book, with its chapter and verse counts
+curl https://api.urantia.dev/bible/books
+```
 
 ## Why WEB Classic
 
@@ -14,11 +25,11 @@ Three deliberate choices:
 
 - **WEB Classic, not the British or Protestant editions.** The Classic edition (`eng-web`) renders God's proper name as "Yahweh" instead of "LORD," matching the Urantia Papers' usage in Papers 96–97.
 - **Includes deuterocanon.** WEB's ecumenical edition has Tobit, Judith, Sirach, Wisdom, Baruch (with the Letter of Jeremiah as chapter 6), Greek Daniel (with Prayer of Azariah, Susanna, and Bel and the Dragon embedded in context), and the Maccabees series.
-- **Public domain.** No license restrictions — the only constraint is that the name "World English Bible" is reserved for faithful copies.
+- **Public domain.** No license restrictions. The only constraint is that the name "World English Bible" is reserved for faithful copies.
 
 ## Book codes (OSIS)
 
-We use OSIS book codes throughout: `Gen`, `Matt`, `1Macc`, `DanGr`, etc. — short, machine-friendly, standardized across CrossWire.
+We use OSIS book codes throughout: `Gen`, `Matt`, `1Macc`, `DanGr`, etc.: short, machine-friendly, standardized across CrossWire.
 
 The endpoint accepts **OSIS, USFM (`GEN`), full names (`Genesis`), and common aliases**, all case-insensitive and tolerant of hyphens/underscores:
 
@@ -33,7 +44,7 @@ Embedded books resolve to their containing canonical book. `letterofjeremiah` an
 
 ## Endpoints
 
-### List all 81 books
+### List all 81 books, with chapter and verse counts
 
 ```bash
 curl https://api.urantia.dev/bible/books
@@ -123,7 +134,7 @@ curl https://api.urantia.dev/bible/DanGr/3/24
 curl https://api.urantia.dev/bible/1Macc/2/19
 ```
 
-WEB embeds the Prayer of Azariah, Susanna, and Bel and the Dragon inside Greek Daniel in context (because they make more sense that way — the WEB editor's deliberate choice). The Letter of Jeremiah is included as chapter 6 of Baruch.
+WEB embeds the Prayer of Azariah, Susanna, and Bel and the Dragon inside Greek Daniel in context (because they make more sense that way, the WEB editor's deliberate choice). The Letter of Jeremiah is included as chapter 6 of Baruch.
 
 ## Errors
 
@@ -151,7 +162,7 @@ Five query surfaces span the cross-corpus space:
 | **UB paragraph → Bible verses** | `GET /paragraphs/{ref}?include=bibleParallels` | pre-computed, `text-embedding-3-large` |
 | **Bible verse → UB paragraphs** | `GET /bible/{book}/{chapter}/{verse}/urantia-parallels` | pre-computed, `text-embedding-3-large` |
 
-Live searches use 1536-d 3-small for HNSW indexability (pgvector caps HNSW at 2000-d for the `vector` type). Pre-computed cross-references use 3072-d 3-large for the +8pt empirical quality benefit on Bible-style retrieval — fine for batch compute, infeasible for live queries.
+Live searches use 1536-d 3-small for HNSW indexability (pgvector caps HNSW at 2000-d for the `vector` type). Pre-computed cross-references use 3072-d 3-large for the +8pt empirical quality benefit on Bible-style retrieval. That is fine for batch compute and too slow for live queries.
 
 You can combine includes: `?include=entities,bibleParallels,urantiaParallels` returns all three on a single round-trip.
 
@@ -167,9 +178,9 @@ curl -X POST https://api.urantia.dev/bible/search/semantic \
 
 Optional filters:
 
-- `canon`: `"ot"` | `"deuterocanon"` | `"nt"` — restrict to a part of the canon
-- `bookCode`: any OSIS, USFM, full name, or alias — restrict to a single book
-- `urantiaParallelLimit`: 0–10, default 3 — how many UB paragraphs to attach per Bible chunk (0 suppresses)
+- `canon`: `"ot"` | `"deuterocanon"` | `"nt"`: restrict to a part of the canon
+- `bookCode`: any OSIS, USFM, full name, or alias: restrict to a single book
+- `urantiaParallelLimit`: 0–10, default 3: how many UB paragraphs to attach per Bible chunk (0 suppresses)
 
 Response:
 
@@ -229,7 +240,7 @@ Returns the top 10 most-similar OTHER Urantia paragraphs by cosine similarity. S
 }
 ```
 
-## Cross-references — UB ↔ Bible parallels
+## Cross-references: UB ↔ Bible parallels
 
 Pre-computed semantic parallels between every Urantia paragraph and the Bible, in both directions. ~146,000 UB→Bible rows + ~176,000 Bible→UB rows, top-10 nearest neighbors per source. Generated with OpenAI's `text-embedding-3-large` (3072-d) and exact KNN.
 
@@ -302,9 +313,9 @@ Returns the verse, the chunk it belongs to, and up to 10 UB paragraphs ranked by
 
 **These are *semantic* parallels, not curated parallels.** OpenAI's embedding model treats surface-level vocabulary as meaning, but the Urantia Papers use standard religious terms ("Father", "Spirit", "Son") in nonstandard ways. Some matches will be subtly wrong.
 
-Use them as starting points for further reading and as RAG context for AI agents — not as authoritative parallels. Every row carries `similarity`, `source: "semantic"`, and `embeddingModel` so consumers can filter and audit.
+Use them as starting points for further reading and as RAG context for AI agents, not as authoritative parallels. Every row carries `similarity`, `source: "semantic"`, and `embeddingModel` so consumers can filter and audit.
 
-In practice the system surfaces some genuinely striking matches: Matt 5:3 (Beatitudes) → UB 140:3.3 ("Happy are the poor in spirit, the humble") at similarity 0.854 — the UB literally rephrases the Sermon on the Mount.
+An example of a close match: Matt 5:3 (Beatitudes) → UB 140:3.3 ("Happy are the poor in spirit, the humble") at similarity 0.854. The two sentences share most of their words.
 
 ### Why no Faw's Paramony
 

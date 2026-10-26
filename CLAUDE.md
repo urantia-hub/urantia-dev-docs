@@ -28,6 +28,7 @@ urantia.dev and UrantiaHub are separate products. In these docs UrantiaHub appea
   - `overview.mdx` — Install, package comparison, "Using Both Together", demo link
   - `api.mdx` — @urantia/api usage patterns, endpoint groups, error handling
   - `auth.mdx` — @urantia/auth OAuth flows (redirect/popup/server), session management, scopes
+- `works/` — One page per world religions text (21), made once from the live API (`/scriptures/{slug}` and one passage each). The overview table in `scriptures.mdx` links to them. When a text is added to the API, add its page and its entry in the "Each text" group
 - `api-reference/` — Auto-generated endpoint docs from OpenAPI spec (17 endpoints)
 - `blog/` — Developer tutorials (3 posts, shown under the Tutorials tab)
 
@@ -44,7 +45,7 @@ Guides tab groups: Getting Started, Data, SDKs (Overview, @urantia/api, @urantia
 
 ## Notes
 
-- No reader content here. The Concepts and Quotes sections and two search-bait blog posts were removed on 2026-10-03: they were written for search traffic, and about half of their quoted passages did not match the cited paragraph. Do not add pages that explain or quote the text. Any quote on a docs page must be copied from the API and checked against `api.urantia.dev/paragraphs/<ref>`. Old `/concepts/*` and `/quotes/*` URLs redirect to `/` (see `redirects` in docs.json).
+- No reader content here. The Concepts and Quotes sections and two search-bait blog posts were removed on 2026-10-03: they were written for search traffic, and about half of their quoted passages did not match the cited paragraph. Do not add pages that explain or quote the text. Any quote on a docs page must be copied from the API and checked against `api.urantia.dev/paragraphs/<ref>`. Old `/concepts/*`, `/quotes/*`, and the two removed blog posts answer 404 here and 410 on urantia.dev (since 2026-10-26), so search engines drop them. A redirect to `/` is a soft 404 to Google.
 
 - Directories copy `mcp-servers.mdx` as raw text (mcpservers.org does). Keep that page free of `<Tabs>`, badge images, and other components that do not survive a copy. Use plain headed sections
 - When a directory approves a listing (Claude, ChatGPT), change that tab in `assistants.mdx` to lead with the one-click install and keep the custom-connector steps as the fallback

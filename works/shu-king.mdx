@@ -1,0 +1,62 @@
+---
+title: "Shu King (Book of Documents) API"
+sidebarTitle: "Shu King"
+description: "Shu King (Book of Documents) API: get any passage by its reference, as JSON. James Legge, 1879. 480 passages, public domain, no key needed."
+---
+
+The API serves **The Shû King (Book of Documents)** (James Legge, 1879) as JSON, one passage at a time, by the reference people use. The Book of Documents: speeches and records of the early Chinese kings. It has 480 passages in 5 parts. No key and no account.
+
+## Get a passage
+
+```bash
+# Shu 5.4.6
+curl https://api.urantia.dev/scriptures/shu-king/5.4.6
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "shu-king",
+      "title": "The Shû King (Book of Documents)",
+      "translator": "James Legge",
+      "year": 1879
+    },
+    "passages": [
+      {
+        "ref": "Shu 5.4.6",
+        "division": 5,
+        "text": "iii. 'Third, of the eight (objects of) government.— The first is food; the second, wealth and articles of convenience; the third, sacrifices; the fourth, (the business of) the Minister of Works; the fifth, (that of) the..."
+      }
+    ]
+  }
+}
+```
+
+The slug `shu-king`, the id `shu-king-legge-1879`, and the prefix `shu` all name this text.
+
+## References
+
+Part, book, and paragraph, `Shu 5.4.6`. Legge prints his own numbers in only some books, so the paragraph numbers are ours, in order through each book.
+
+`GET /scriptures/shu-king` lists every part with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"shu-king","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=shu-king'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/shu-king/5.4.6/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** The Shû King (Book of Documents), translated by James Legge (1879)
+- **Source:** [en.wikisource.org](https://en.wikisource.org/wiki/Sacred_Books_of_the_East/Volume_3/The_Shu)
+- **License:** Public domain in the United States
+- **Notes:** Part, book, and paragraph (Shu 2.1.3). Legge numbers the chapters of each book, but the Wikisource pages show his numbers for some books only, so the paragraphs are numbered in order through each book, and through the sections of a book with sections. His introduction and notes are not here.

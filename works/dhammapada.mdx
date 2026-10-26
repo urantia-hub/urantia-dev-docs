@@ -1,0 +1,61 @@
+---
+title: "Dhammapada API"
+sidebarTitle: "Dhammapada"
+description: "Dhammapada API: get any passage by its reference, as JSON. F. Max Muller, 1881. 414 passages, public domain, no key needed."
+---
+
+The API serves **The Dhammapada** (F. Max Muller, 1881) as JSON, one passage at a time, by the reference people use. A collection of the Buddha's sayings in verse. It has 414 passages in 26 chapters. No key and no account.
+
+## Get a passage
+
+```bash
+# Dhp 183
+curl https://api.urantia.dev/scriptures/dhammapada/183
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "dhammapada",
+      "title": "The Dhammapada",
+      "translator": "F. Max Muller",
+      "year": 1881
+    },
+    "passages": [
+      {
+        "ref": "Dhp 183",
+        "division": 14,
+        "text": "Not to commit any sin, to do good, and to purify one's mind, that is the teaching of (all) the Awakened."
+      }
+    ]
+  }
+}
+```
+
+The slug `dhammapada`, the id `dhammapada-muller-1881`, and the prefix `dhp` all name this text.
+
+## References
+
+The verses are numbered straight through the book, so `Dhp 183` is verse 183, not chapter 183. Muller combines a few pairs of verses, such as `Dhp 58-59`. Asking for either number returns the pair.
+
+`GET /scriptures/dhammapada` lists every chapter with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"dhammapada","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=dhammapada'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/dhammapada/183/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** The Dhammapada, translated by F. Max Muller (1881)
+- **Source:** [www.gutenberg.org](https://www.gutenberg.org/ebooks/2017)
+- **License:** Public domain in the United States

@@ -1,0 +1,62 @@
+---
+title: "Poetic Edda API"
+sidebarTitle: "Poetic Edda"
+description: "Poetic Edda API: get any passage by its reference, as JSON. Henry Adams Bellows, 1923. 1,567 passages, public domain, no key needed."
+---
+
+The API serves **The Poetic Edda** (Henry Adams Bellows, 1923) as JSON, one passage at a time, by the reference people use. Old Norse poems of the gods and heroes. It has 1,567 passages in 35 poems. No key and no account.
+
+## Get a passage
+
+```bash
+# Voluspo 3
+curl https://api.urantia.dev/scriptures/poetic-edda/Voluspo%203
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "poetic-edda",
+      "title": "The Poetic Edda",
+      "translator": "Henry Adams Bellows",
+      "year": 1923
+    },
+    "passages": [
+      {
+        "ref": "Voluspo 3",
+        "division": 1,
+        "text": "Of old was the age when Ymir lived; Sea nor cool waves nor sand there were; Earth had not been, nor heaven above, But a yawning gap, and grass nowhere."
+      }
+    ]
+  }
+}
+```
+
+The slug `poetic-edda`, the id `poetic-edda-bellows-1923`, and the prefix `edda` all name this text.
+
+## References
+
+Poem and stanza by name, `Voluspo 3`.
+
+`GET /scriptures/poetic-edda` lists every poem with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"poetic-edda","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=poetic-edda'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/poetic-edda/Voluspo%203/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** The Poetic Edda, translated by Henry Adams Bellows (1923)
+- **Source:** [www.gutenberg.org](https://www.gutenberg.org/ebooks/73533)
+- **License:** Public domain in the United States
+- **Notes:** Poem and stanza (Voluspo 3), with Bellows's spellings of the names. The prose of the manuscript is kept with the stanza that it leads into. Fra Dautha Sinfjotla and Drap Niflunga are prose only: their paragraphs are numbered in order. Bellows's introductions and notes are not here.

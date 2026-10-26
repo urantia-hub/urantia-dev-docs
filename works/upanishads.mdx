@@ -1,0 +1,62 @@
+---
+title: "Upanishads API"
+sidebarTitle: "Upanishads"
+description: "Upanishads API: get any passage by its reference, as JSON. F. Max Muller, 1879. 207 passages, public domain, no key needed."
+---
+
+The API serves **The Upanishads, Part 1** (F. Max Muller, 1879) as JSON, one passage at a time, by the reference people use. Teachings of the Vedas on the self and Brahman. It has 207 passages in 3 upanishads. No key and no account.
+
+## Get a passage
+
+```bash
+# Khandogya 6.8
+curl https://api.urantia.dev/scriptures/upanishads/Khandogya%206.8
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "upanishads",
+      "title": "The Upanishads, Part 1",
+      "translator": "F. Max Muller",
+      "year": 1879
+    },
+    "passages": [
+      {
+        "ref": "Khandogya 6.8",
+        "division": 1,
+        "text": "1. Uddâlaka Âruni said to his son Svetaketu: 'Learn from me the true nature of sleep (svapna). When a man sleeps here, then, my dear son, he becomes united with the True, he is gone to his own (Self). Therefore they..."
+      }
+    ]
+  }
+}
+```
+
+The slug `upanishads`, the id `upanishads-muller-1879`, and the prefix `upanishad` all name this text.
+
+## References
+
+`Khandogya 6.8` (prapathaka and khanda; each passage is one whole khanda, with its verse numbers in the text), `Kena 1.3` (khanda and verse), and `Isa 8` (verse).
+
+`GET /scriptures/upanishads` lists every upanishad with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"upanishads","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=upanishads'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/upanishads/Khandogya%206.8/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** The Upanishads, Part 1, translated by F. Max Muller (1879)
+- **Source:** [en.wikisource.org](https://en.wikisource.org/wiki/Sacred_Books_of_the_East/Volume_1)
+- **License:** Public domain in the United States
+- **Notes:** The three Upanishads of Sacred Books of the East 1 that are on Wikisource: the Khândogya, by book and Khanda (Khandogya 6.8, one passage for each Khanda, with Müller's verse numbers); the Kena or Talavakâra, by Khanda and verse (Kena 1.3); and the Îsâ, by verse (Isa 6). The Aitareya and the Kaushîtaki of that volume are not on Wikisource, so they are not here.

@@ -1,0 +1,62 @@
+---
+title: "Shinto Oracles API"
+sidebarTitle: "Shinto Oracles"
+description: "Shinto Oracles API: get any passage by its reference, as JSON. W. G. Aston, 1905. 15 passages, public domain, no key needed."
+---
+
+The API serves **Shinto Oracles** (W. G. Aston, 1905) as JSON, one passage at a time, by the reference people use. Oracles of the Shinto gods, from Aston's study of Shinto. It has 15 passages in 1 collection. No key and no account.
+
+## Get a passage
+
+```bash
+# Oracle 1
+curl https://api.urantia.dev/scriptures/shinto-oracles/1
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "shinto-oracles",
+      "title": "Shinto Oracles",
+      "translator": "W. G. Aston",
+      "year": 1905
+    },
+    "passages": [
+      {
+        "ref": "Oracle 1",
+        "division": 1,
+        "text": "In the last days the world will be disturbed and all men troubled. The sovereign house will show respect for the military house, and local governors will make friends with wearisome fellows (Buddhist monks). Buddhist..."
+      }
+    ]
+  }
+}
+```
+
+The slug `shinto-oracles`, the id `shinto-oracles-aston-1905`, and the prefix `oracle` all name this text.
+
+## References
+
+`Oracle 1` to `Oracle 15`. Aston does not number them, so the numbers follow his order, and each oracle carries its shrine as its title.
+
+`GET /scriptures/shinto-oracles` lists every collection with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"shinto-oracles","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=shinto-oracles'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/shinto-oracles/1/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** Shinto Oracles, translated by W. G. Aston (1905)
+- **Source:** [en.wikisource.org](https://en.wikisource.org/wiki/Shinto:_The_Way_of_the_Gods/Chapter_14)
+- **License:** Public domain in the United States
+- **Notes:** Oracles of Shinto shrines from the Wa Rongo (1669), as Aston quotes them in Shinto: The Way of the Gods, chapter 14. Aston does not number them, so the numbers follow his order. His summaries of other oracles are not included.

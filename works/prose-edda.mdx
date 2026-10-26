@@ -1,0 +1,62 @@
+---
+title: "Prose Edda API"
+sidebarTitle: "Prose Edda"
+description: "Prose Edda API: get any passage by its reference, as JSON. Arthur Gilchrist Brodeur, 1916. 603 passages, public domain, no key needed."
+---
+
+The API serves **The Prose Edda** (Arthur Gilchrist Brodeur, 1916) as JSON, one passage at a time, by the reference people use. Snorri Sturluson's prose account of the Norse gods, about 1220. It has 603 passages in 3 parts. No key and no account.
+
+## Get a passage
+
+```bash
+# Gylfaginning 1.1
+curl https://api.urantia.dev/scriptures/prose-edda/Gylfaginning%201.1
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "prose-edda",
+      "title": "The Prose Edda",
+      "translator": "Arthur Gilchrist Brodeur",
+      "year": 1916
+    },
+    "passages": [
+      {
+        "ref": "Gylfaginning 1.1",
+        "division": 2,
+        "text": "King Gylfi ruled the land that men now call Sweden. It is told of him that he gave to a wandering woman, in return for her merry-making, a plow-land in his realm, as much as four oxen might turn up in a day and a night...."
+      }
+    ]
+  }
+}
+```
+
+The slug `prose-edda`, the id `prose-edda-brodeur-1916`, and the prefix `prose edda` all name this text.
+
+## References
+
+Part, chapter, and paragraph, `Gylfaginning 1.1`. The parts are `Prologue`, `Gylfaginning`, and `Skáldskaparmál`. The paragraph numbers are ours.
+
+`GET /scriptures/prose-edda` lists every part with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"prose-edda","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=prose-edda'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/prose-edda/Gylfaginning%201.1/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** The Prose Edda, translated by Arthur Gilchrist Brodeur (1916)
+- **Source:** [en.wikisource.org](https://en.wikisource.org/wiki/The_Prose_Edda_(1916_translation_by_Arthur_Gilchrist_Brodeur))
+- **License:** Public domain in the United States
+- **Notes:** Part, chapter, and paragraph (Gylfaginning 34.2): the chapters are Brodeur's, and their paragraphs are numbered in order, with each verse in the paragraph before it. Gylfaginning 34 is the whole chapter. Brodeur's introduction and notes are not here; his brackets are kept.

@@ -1,0 +1,62 @@
+---
+title: "Diogenes Laertius, Book 6 API"
+sidebarTitle: "Diogenes Laertius"
+description: "Diogenes Laertius, Book 6 API: get any passage by its reference, as JSON. R. D. Hicks, 1925. 105 passages, public domain, no key needed."
+---
+
+The API serves **Lives of Eminent Philosophers, Book 6: The Cynics** (R. D. Hicks, 1925) as JSON, one passage at a time, by the reference people use. The lives and sayings of Diogenes and the other Cynic philosophers. It has 105 passages in 1 book. No key and no account.
+
+## Get a passage
+
+```bash
+# DL 6.20
+curl https://api.urantia.dev/scriptures/diogenes-laertius-6/6.20
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "diogenes-laertius-6",
+      "title": "Lives of Eminent Philosophers, Book 6: The Cynics",
+      "translator": "R. D. Hicks",
+      "year": 1925
+    },
+    "passages": [
+      {
+        "ref": "DL 6.20",
+        "division": 6,
+        "text": "Diogenes was a native of Sinope, son of Hicesius, a banker. Diocles relates that he went into exile because his father was entrusted with the money of the state and adulterated the coinage. But Eubulides in his book on..."
+      }
+    ]
+  }
+}
+```
+
+The slug `diogenes-laertius-6`, the id `diogenes-laertius-6-hicks-1925`, and the prefix `dl` all name this text.
+
+## References
+
+Book and section, `DL 6.20`. Each section also names the life it belongs to, such as Diogenes.
+
+`GET /scriptures/diogenes-laertius-6` lists every book with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"diogenes-laertius-6","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=diogenes-laertius-6'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/diogenes-laertius-6/6.20/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** Lives of Eminent Philosophers, Book 6: The Cynics, translated by R. D. Hicks (1925)
+- **Source:** [en.wikisource.org](https://en.wikisource.org/wiki/Lives_of_the_Eminent_Philosophers/Book_VI)
+- **License:** Public domain in the United States
+- **Notes:** Book 6 only: the lives and sayings of Antisthenes, Diogenes, Crates, Hipparchia, and the other Cynics. A biography, not scripture.

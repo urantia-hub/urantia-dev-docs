@@ -1,0 +1,63 @@
+---
+title: "Tao Te Ching API"
+sidebarTitle: "Tao Te Ching"
+description: "Tao Te Ching API: get any passage by its reference, as JSON. James Legge, 1891. 236 passages, public domain, no key needed."
+---
+
+The API serves **The Tao Te Ching** (James Legge, 1891) as JSON, one passage at a time, by the reference people use. The short classic of the Tao, attributed to Laozi. It has 236 passages in 81 chapters. No key and no account.
+
+## Get a passage
+
+```bash
+# TTC 25.1
+curl https://api.urantia.dev/scriptures/tao-te-ching/25.1
+# A whole chapter
+curl https://api.urantia.dev/scriptures/tao-te-ching/25
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "tao-te-ching",
+      "title": "The Tao Te Ching",
+      "translator": "James Legge",
+      "year": 1891
+    },
+    "passages": [
+      {
+        "ref": "TTC 25.1",
+        "division": 25,
+        "text": "There was something undefined and complete, coming into existence before Heaven and Earth. How still it was and formless, standing alone, and undergoing no change, reaching everywhere and in no danger (of being..."
+      }
+    ]
+  }
+}
+```
+
+The slug `tao-te-ching`, the id `tao-te-ching-legge-1891`, and the prefix `ttc` all name this text.
+
+## References
+
+Chapter and paragraph, `TTC 25.1`. Ask for `25` to get the whole chapter.
+
+`GET /scriptures/tao-te-ching` lists every chapter with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"tao-te-ching","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=tao-te-ching'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/tao-te-ching/25.1/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** The Tao Te Ching, translated by James Legge (1891)
+- **Source:** [www.gutenberg.org](https://www.gutenberg.org/ebooks/216)
+- **License:** Public domain in the United States

@@ -61,7 +61,7 @@
           },
           {
             "group": "Data",
-            "pages": ["papers", "paragraphs", "translations", "verify-quotes", "entities", "bible", "scriptures", "audio", "video", "cdn"]
+            "pages": ["papers", "paragraphs", "translations", "verify-quotes", "entities", "bible", "scriptures", {"group": "Each text", "pages": ["works/quran", "works/bhagavad-gita", "works/tao-te-ching", "works/book-of-mormon", "works/dhammapada", "works/analects", "works/rig-veda", "works/upanishads", "works/book-of-the-dead", "works/poetic-edda", "works/prose-edda", "works/kojiki", "works/chuang-tzu", "works/homeric-hymns", "works/hesiod", "works/japji", "works/shinto-oracles", "works/aztec-hymns", "works/shu-king", "works/diogenes-laertius-6", "works/epictetus-cynic"]}, "audio", "video", "cdn"]
           },
           {
             "group": "SDKs",
@@ -207,12 +207,6 @@
     "baseUrl": "https://api.urantia.dev"
   },
   "openapi": "api-reference/openapi.json",
-  "redirects": [
-    { "source": "/concepts/:slug*", "destination": "/" },
-    { "source": "/quotes/:slug*", "destination": "/" },
-    { "source": "/blog/urantia-book-for-beginners", "destination": "/" },
-    { "source": "/blog/religious-text-apis-compared", "destination": "/" }
-  ],
   "footer": {
     "socials": {
       "website": "https://urantia.dev",
