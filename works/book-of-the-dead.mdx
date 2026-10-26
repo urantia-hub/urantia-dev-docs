@@ -1,0 +1,64 @@
+---
+title: "Egyptian Book of the Dead API"
+sidebarTitle: "Book of the Dead"
+description: "Egyptian Book of the Dead API: get any passage by its reference, as JSON. Peter Le Page Renouf and Édouard Naville, 1904. 1,907 passages, public domain, no key needed."
+---
+
+The API serves **The Egyptian Book of the Dead** (Peter Le Page Renouf and Édouard Naville, 1904) as JSON, one passage at a time, by the reference people use. Spells for the journey of the dead, written in tombs and on papyri. It has 1,907 passages in 169 chapters. No key and no account.
+
+## Get a passage
+
+```bash
+# BD 125.3
+curl https://api.urantia.dev/scriptures/book-of-the-dead/125.3
+# A whole chapter
+curl https://api.urantia.dev/scriptures/book-of-the-dead/125
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "book-of-the-dead",
+      "title": "The Egyptian Book of the Dead",
+      "translator": "Peter Le Page Renouf and Édouard Naville",
+      "year": 1904
+    },
+    "passages": [
+      {
+        "ref": "BD 125.3",
+        "division": 125,
+        "text": "I am come to thee, oh my Lord: I have brought myself that I may look upon thy glory. I know thee, and I know the name of the Forty-two gods who make their appearance with thee in the Hall of Righteousness; devouring..."
+      }
+    ]
+  }
+}
+```
+
+The slug `book-of-the-dead`, the id `book-of-the-dead-renouf-1904`, and the prefix `bd` all name this text.
+
+## References
+
+Chapter (spell) and paragraph, `BD 125.3`. The paragraph numbers are ours.
+
+`GET /scriptures/book-of-the-dead` lists every chapter with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"book-of-the-dead","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=book-of-the-dead'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/book-of-the-dead/125.3/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** The Egyptian Book of the Dead, translated by Peter Le Page Renouf and Édouard Naville (1904)
+- **Source:** [www.gutenberg.org](https://www.gutenberg.org/ebooks/69566)
+- **License:** Public domain in the United States
+- **Notes:** Chapter and paragraph (BD 125.3): the chapter numbers are Lepsius's, as printed; the paragraphs are numbered in order. A chapter with a letter (30A, 30B) shares the number of its chapter. Renouf translated chapters 1 to 139, Naville 140 to 186. The chapters that are only a picture, a repeat of another chapter, or the editor's description have no passages.

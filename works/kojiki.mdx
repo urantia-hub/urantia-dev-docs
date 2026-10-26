@@ -1,0 +1,64 @@
+---
+title: "Kojiki API"
+sidebarTitle: "Kojiki"
+description: "Kojiki API: get any passage by its reference, as JSON. Basil Hall Chamberlain, 1882. 291 passages, public domain, no key needed."
+---
+
+The API serves **Kojiki: Records of Ancient Matters** (Basil Hall Chamberlain, 1882) as JSON, one passage at a time, by the reference people use. The oldest Japanese chronicle, from the creation to the early rulers, 712. It has 291 passages in 180 sections. No key and no account.
+
+## Get a passage
+
+```bash
+# Kojiki 1.1
+curl https://api.urantia.dev/scriptures/kojiki/1.1
+# A whole section
+curl https://api.urantia.dev/scriptures/kojiki/1
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "kojiki",
+      "title": "Kojiki: Records of Ancient Matters",
+      "translator": "Basil Hall Chamberlain",
+      "year": 1882
+    },
+    "passages": [
+      {
+        "ref": "Kojiki 1.1",
+        "division": 1,
+        "text": "The names of the Deities that were born in the Plain of High Heaven when the Heaven and Earth began were the Deity Master-of-the-August-Centre-of-Heaven, next the High-August-Producing-Wondrous Deity, next the..."
+      }
+    ]
+  }
+}
+```
+
+The slug `kojiki`, the id `kojiki-chamberlain-1882`, and the prefix `kojiki` all name this text.
+
+## References
+
+Section and paragraph, `Kojiki 1.1`. The paragraph numbers are ours.
+
+`GET /scriptures/kojiki` lists every section with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"kojiki","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=kojiki'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/kojiki/1.1/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** Kojiki: Records of Ancient Matters, translated by Basil Hall Chamberlain (1882)
+- **Source:** [en.wikisource.org](https://en.wikisource.org/wiki/Kojiki_(Chamberlain,_1882))
+- **License:** Public domain in the United States
+- **Notes:** Section and paragraph (Kojiki 4.2): the 180 sections are Chamberlain's, and their paragraphs are numbered in order, with each song in the paragraph that leads into it. The passages that he gave in Latin are kept so. His introduction and notes are not here.

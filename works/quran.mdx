@@ -1,0 +1,64 @@
+---
+title: "Quran API"
+sidebarTitle: "Quran"
+description: "Quran API: get any passage by its reference, as JSON. Marmaduke Pickthall, 1930. 6,236 passages, public domain, no key needed."
+---
+
+The API serves **The Meaning of the Glorious Koran** (Marmaduke Pickthall, 1930) as JSON, one passage at a time, by the reference people use. The scripture of Islam. It has 6,236 passages in 114 surahs. No key and no account.
+
+## Get a passage
+
+```bash
+# Quran 2.255
+curl https://api.urantia.dev/scriptures/quran/2.255
+# A whole surah
+curl https://api.urantia.dev/scriptures/quran/1
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "quran",
+      "title": "The Meaning of the Glorious Koran",
+      "translator": "Marmaduke Pickthall",
+      "year": 1930
+    },
+    "passages": [
+      {
+        "ref": "Quran 2.255",
+        "division": 2,
+        "text": "Allah! There is no deity save Him, the Alive, the Eternal. Neither slumber nor sleep overtaketh Him. Unto Him belongeth whatsoever is in the heavens and whatsoever is in the earth. Who is he that intercedeth with Him..."
+      }
+    ]
+  }
+}
+```
+
+The slug `quran`, the id `koran-pickthall-1930`, and the prefix `quran` all name this text.
+
+## References
+
+Surah and verse, `Quran 2.255`, in the standard count of 6,236 verses.
+
+`GET /scriptures/quran` lists every surah with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"quran","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=quran'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/quran/2.255/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** The Meaning of the Glorious Koran, translated by Marmaduke Pickthall (1930)
+- **Source:** [www.gutenberg.org](https://www.gutenberg.org/ebooks/16955)
+- **License:** Public domain in the United States
+- **Notes:** Verse numbers follow the standard count of 6,236 verses. Project Gutenberg 16955 prints three translations side by side; only Pickthall's is used.

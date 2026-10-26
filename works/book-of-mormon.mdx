@@ -1,0 +1,62 @@
+---
+title: "Book of Mormon API"
+sidebarTitle: "Book of Mormon"
+description: "Book of Mormon API: get any verse by book, chapter, and verse, as JSON. The 1830 edition, 6,604 verses, public domain, no key needed."
+---
+
+The API serves **The Book of Mormon** (Joseph Smith, 1830) as JSON, one passage at a time, by the reference people use. The scripture of the Latter Day Saint movement, published in 1830. It has 6,604 passages in 15 books. No key and no account.
+
+## Get a passage
+
+```bash
+# 1 Nephi 3:7
+curl https://api.urantia.dev/scriptures/book-of-mormon/1%20Nephi%203%3A7
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "book-of-mormon",
+      "title": "The Book of Mormon",
+      "translator": "Joseph Smith",
+      "year": 1830
+    },
+    "passages": [
+      {
+        "ref": "1 Nephi 3:7",
+        "division": 1,
+        "text": "And it came to pass that I, Nephi, said unto my father: I will go and do the things which the Lord hath commanded, for I know that the Lord giveth no commandments unto the children of men, save he shall prepare a way..."
+      }
+    ]
+  }
+}
+```
+
+The slug `book-of-mormon`, the id `book-of-mormon-1830`, and the prefix `bom` all name this text.
+
+## References
+
+Book, chapter, and verse by name, `1 Nephi 3:7` or `Alma 32:21`.
+
+`GET /scriptures/book-of-mormon` lists every book with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"book-of-mormon","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=book-of-mormon'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/book-of-mormon/1%20Nephi%203%3A7/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** The Book of Mormon, published by Joseph Smith (1830)
+- **Source:** [www.gutenberg.org](https://www.gutenberg.org/ebooks/17)
+- **License:** Public domain in the United States
+- **Notes:** The text of Project Gutenberg #17, which follows a later LDS edition. Verse numbers as printed. Its title page names Joseph Smith, Jun. as translator.

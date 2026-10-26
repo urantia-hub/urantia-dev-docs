@@ -1,0 +1,62 @@
+---
+title: "Hesiod API"
+sidebarTitle: "Hesiod"
+description: "Hesiod API: get any passage by its reference, as JSON. Hugh G. Evelyn-White, 1914. 171 passages, public domain, no key needed."
+---
+
+The API serves **Hesiod: Theogony and Works and Days** (Hugh G. Evelyn-White, 1914) as JSON, one passage at a time, by the reference people use. Hesiod's poems of the birth of the gods and of the life of work. It has 171 passages in 2 poems. No key and no account.
+
+## Get a passage
+
+```bash
+# Theogony 116-138
+curl https://api.urantia.dev/scriptures/hesiod/Theogony%20116
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "hesiod",
+      "title": "Hesiod: Theogony and Works and Days",
+      "translator": "Hugh G. Evelyn-White",
+      "year": 1914
+    },
+    "passages": [
+      {
+        "ref": "Theogony 116-138",
+        "division": 1,
+        "text": "Verily at the first Chaos came to be, but next wide-bosomed Earth, the ever-sure foundations of all the deathless ones who hold the peaks of snowy Olympus, and dim Tartarus in the depth of the wide-pathed Earth, and..."
+      }
+    ]
+  }
+}
+```
+
+The slug `hesiod`, the id `hesiod-evelyn-white-1914`, and the prefix `hesiod` all name this text.
+
+## References
+
+Poem and line, `Theogony 116` or `Works and Days 293`. A passage covers a range of lines, such as `Works and Days 293-319`.
+
+`GET /scriptures/hesiod` lists every poem with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"hesiod","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=hesiod'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/hesiod/Theogony%20116/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** Hesiod: Theogony and Works and Days, translated by Hugh G. Evelyn-White (1914)
+- **Source:** [www.gutenberg.org](https://www.gutenberg.org/ebooks/348)
+- **License:** Public domain in the United States
+- **Notes:** The prose translation, cut where Evelyn-White marks the Greek line numbers (Theogony 116-138). The Shield of Heracles and the fragments of the lost poems are not here.

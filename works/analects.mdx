@@ -1,0 +1,63 @@
+---
+title: "Analects of Confucius API"
+sidebarTitle: "Analects"
+description: "Analects of Confucius API: get any passage by its reference, as JSON. James Legge, 1861. 499 passages, public domain, no key needed."
+---
+
+The API serves **The Analects of Confucius** (James Legge, 1861) as JSON, one passage at a time, by the reference people use. The sayings of Confucius, recorded by his students. It has 499 passages in 20 books. No key and no account.
+
+## Get a passage
+
+```bash
+# Analects 15.23
+curl https://api.urantia.dev/scriptures/analects/15.23
+# A whole book
+curl https://api.urantia.dev/scriptures/analects/15
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "analects",
+      "title": "The Analects of Confucius",
+      "translator": "James Legge",
+      "year": 1861
+    },
+    "passages": [
+      {
+        "ref": "Analects 15.23",
+        "division": 15,
+        "text": "Tsze-kung asked, saying, 'Is there one word which may serve as a rule of practice for all one's life?' The Master said, 'Is not RECIPROCITY such a word? What you do not want done to yourself, do not do to others.'"
+      }
+    ]
+  }
+}
+```
+
+The slug `analects`, the id `analects-legge-1861`, and the prefix `analects` all name this text.
+
+## References
+
+Book and chapter, `Analects 15.23`.
+
+`GET /scriptures/analects` lists every book with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"analects","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=analects'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/analects/15.23/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** The Analects of Confucius, translated by James Legge (1861)
+- **Source:** [www.gutenberg.org](https://www.gutenberg.org/ebooks/4094)
+- **License:** Public domain in the United States

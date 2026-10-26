@@ -1,0 +1,62 @@
+---
+title: "Homeric Hymns API"
+sidebarTitle: "Homeric Hymns"
+description: "Homeric Hymns API: get any passage by its reference, as JSON. Hugh G. Evelyn-White, 1914. 220 passages, public domain, no key needed."
+---
+
+The API serves **The Homeric Hymns** (Hugh G. Evelyn-White, 1914) as JSON, one passage at a time, by the reference people use. Thirty-three ancient Greek hymns to the gods. It has 220 passages in 33 hymns. No key and no account.
+
+## Get a passage
+
+```bash
+# HH 2.1-3
+curl https://api.urantia.dev/scriptures/homeric-hymns/2.1
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "homeric-hymns",
+      "title": "The Homeric Hymns",
+      "translator": "Hugh G. Evelyn-White",
+      "year": 1914
+    },
+    "passages": [
+      {
+        "ref": "HH 2.1-3",
+        "division": 2,
+        "text": "I begin to sing of rich-haired Demeter, awful goddess—of her and her trim-ankled daughter whom Aidoneus rapt away, given to him by all-seeing Zeus the loud-thunderer."
+      }
+    ]
+  }
+}
+```
+
+The slug `homeric-hymns`, the id `homeric-hymns-evelyn-white-1914`, and the prefix `hh` all name this text.
+
+## References
+
+Hymn and line, `HH 2.1`.
+
+`GET /scriptures/homeric-hymns` lists every hymn with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"homeric-hymns","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=homeric-hymns'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/homeric-hymns/2.1/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** The Homeric Hymns, translated by Hugh G. Evelyn-White (1914)
+- **Source:** [www.gutenberg.org](https://www.gutenberg.org/ebooks/348)
+- **License:** Public domain in the United States
+- **Notes:** Hymn and Greek lines (HH 2.1-3), as Evelyn-White marks them. A gap in the Greek text is left out.

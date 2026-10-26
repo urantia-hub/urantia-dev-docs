@@ -1,0 +1,62 @@
+---
+title: "Rig Veda API"
+sidebarTitle: "Rig Veda"
+description: "Rig Veda API: get any passage by its reference, as JSON. Ralph T. H. Griffith, 1896. 10,505 passages, public domain, no key needed."
+---
+
+The API serves **The Hymns of the Rigveda** (Ralph T. H. Griffith, 1896) as JSON, one passage at a time, by the reference people use. The oldest Vedic hymns. It has 10,505 passages in 10 books. No key and no account.
+
+## Get a passage
+
+```bash
+# RV 10.129.1
+curl https://api.urantia.dev/scriptures/rig-veda/10.129.1
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "rig-veda",
+      "title": "The Hymns of the Rigveda",
+      "translator": "Ralph T. H. Griffith",
+      "year": 1896
+    },
+    "passages": [
+      {
+        "ref": "RV 10.129.1",
+        "division": 10,
+        "text": "THEN was not non-existent nor existent: there was no realm of air, no sky beyond it. What covered in, and where? and what gave shelter? Was water there, unfathomed depth of water?"
+      }
+    ]
+  }
+}
+```
+
+The slug `rig-veda`, the id `rig-veda-griffith-1896`, and the prefix `rv` all name this text.
+
+## References
+
+Book, hymn, and verse, `RV 10.129.1`.
+
+`GET /scriptures/rig-veda` lists every book with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"rig-veda","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=rig-veda'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/rig-veda/10.129.1/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** The Hymns of the Rigveda, translated by Ralph T. H. Griffith (1896)
+- **Source:** [en.wikisource.org](https://en.wikisource.org/wiki/The_Hymns_of_the_Rigveda)
+- **License:** Public domain in the United States
+- **Notes:** From Wikisource: book, hymn, verse (RV 10.129.1). The hymns that he gave only in his appendix or in Latin are not on those pages, so they are not here.

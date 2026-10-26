@@ -1,0 +1,62 @@
+---
+title: "Japji API"
+sidebarTitle: "Japji"
+description: "Japji API: get any passage by its reference, as JSON. Max Arthur Macauliffe, 1909. 40 passages, public domain, no key needed."
+---
+
+The API serves **The Japji** (Max Arthur Macauliffe, 1909) as JSON, one passage at a time, by the reference people use. The opening hymn of the Sikh scripture, by Guru Nanak. It has 40 passages in 1 composition. No key and no account.
+
+## Get a passage
+
+```bash
+# Japji 1
+curl https://api.urantia.dev/scriptures/japji/1
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "japji",
+      "title": "The Japji",
+      "translator": "Max Arthur Macauliffe",
+      "year": 1909
+    },
+    "passages": [
+      {
+        "ref": "Japji 1",
+        "division": 1,
+        "text": "By thinking I cannot obtain a conception of Him, even though I think hundreds of thousands of times. Even though I be silent and keep my attention firmly fixed on Him, I cannot preserve silence. The hunger of the hungry..."
+      }
+    ]
+  }
+}
+```
+
+The slug `japji`, the id `japji-macauliffe-1909`, and the prefix `japji` all name this text.
+
+## References
+
+`Japji 0` is the opening (the Mul Mantar), `Japji 1` to `Japji 38` are the pauris, and `Japji 39` is the closing slok.
+
+`GET /scriptures/japji` lists every composition with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"japji","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=japji'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/japji/1/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** The Japji, translated by Max Arthur Macauliffe (1909)
+- **Source:** [en.wikisource.org](https://en.wikisource.org/wiki/The_Sikh_Religion/Volume_1/Japji)
+- **License:** Public domain in the United States
+- **Notes:** From The Sikh Religion, volume 1. Japji 0 is the opening (the Mul Mantar), Japji 1 to 38 are the pauris, and Japji 39 is the closing slok.

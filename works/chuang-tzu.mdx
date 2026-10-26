@@ -1,0 +1,64 @@
+---
+title: "Chuang Tzu (Zhuangzi) API"
+sidebarTitle: "Chuang Tzu"
+description: "Chuang Tzu (Zhuangzi) API: get any passage by its reference, as JSON. Herbert A. Giles, 1889. 2,145 passages, public domain, no key needed."
+---
+
+The API serves **Chuang Tzu: Mystic, Moralist, and Social Reformer** (Herbert A. Giles, 1889) as JSON, one passage at a time, by the reference people use. The writings of the Taoist teacher Zhuangzi. It has 2,145 passages in 33 chapters. No key and no account.
+
+## Get a passage
+
+```bash
+# Zhuangzi 2.5
+curl https://api.urantia.dev/scriptures/chuang-tzu/2.5
+# A whole chapter
+curl https://api.urantia.dev/scriptures/chuang-tzu/2
+```
+
+```json
+{
+  "data": {
+    "corpus": {
+      "slug": "chuang-tzu",
+      "title": "Chuang Tzu: Mystic, Moralist, and Social Reformer",
+      "translator": "Herbert A. Giles",
+      "year": 1889
+    },
+    "passages": [
+      {
+        "ref": "Zhuangzi 2.5",
+        "division": 2,
+        "text": "\"The breath of the universe,\" continued Tzŭ Ch'i, \"is called wind. At times, it is inactive. But when active, every aperture resounds to the blast. Have you never listened to its growing roar?"
+      }
+    ]
+  }
+}
+```
+
+The slug `chuang-tzu`, the id `chuang-tzu-giles-1889`, and the prefix `zhuangzi` all name this text.
+
+## References
+
+Chapter and paragraph, `Zhuangzi 2.5`. The paragraph numbers are ours.
+
+`GET /scriptures/chuang-tzu` lists every chapter with its first and last reference.
+
+## Search
+
+```bash
+# By meaning
+curl -X POST https://api.urantia.dev/scriptures/search/semantic \
+  -H "Content-Type: application/json" \
+  -d '{"q":"your question","corpus":"chuang-tzu","limit":5}'
+# By keyword
+curl 'https://api.urantia.dev/works/search?q=your%20words&work=chuang-tzu'
+```
+
+Each passage also links to the closest paragraphs of the Urantia Papers: `GET /scriptures/chuang-tzu/2.5/urantia-parallels`. The [world religions guide](/scriptures) explains how the links are made, and the [MCP server](/mcp-servers) has the same calls for AI agents.
+
+## Source
+
+- **Text:** Chuang Tzu: Mystic, Moralist, and Social Reformer, translated by Herbert A. Giles (1889)
+- **Source:** [www.gutenberg.org](https://www.gutenberg.org/ebooks/59709)
+- **License:** Public domain in the United States
+- **Notes:** Chapter and paragraph (Zhuangzi 2.5): Giles's paragraphs have no numbers, so they are numbered in order. His notes and remarks are not here.
