@@ -30,7 +30,7 @@ urantia.dev and UrantiaHub are separate products. In these docs UrantiaHub appea
   - `auth.mdx` — @urantia/auth OAuth flows (redirect/popup/server), session management, scopes
 - `works/` — One page per world religions text (21), made once from the live API (`/scriptures/{slug}` and one passage each). The overview table in `scriptures.mdx` links to them. When a text is added to the API, add its page and its entry in the "Each text" group
 - `api-reference/` — Auto-generated endpoint docs from OpenAPI spec (17 endpoints)
-- `es/` — Three Spanish pages (index, assistants, quickstart) under the language switch (`navigation.languages`, es has its own navbar). The rest stays English; a new Spanish page goes in the es group of docs.json
+- No docs pages in other languages (Kelson, 2026-10-26): the upkeep of twin pages is not worth it. Spanish is documented in English on `translations.mdx`
 - `blog/` — Developer tutorials (3 posts, shown under the Tutorials tab)
 
 ## Navigation (docs.json)
