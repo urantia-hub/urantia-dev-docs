@@ -1,0 +1,44 @@
+---
+title: "Una API y un servidor MCP para los Documentos de Urantia"
+sidebarTitle: "Inicio"
+description: "Los 197 documentos en inglés y en español, párrafo por párrafo. Sin clave y sin cuenta."
+---
+
+urantia.dev da acceso estructurado a los Documentos de Urantia: los 197 documentos, 1,626 secciones y más de 14,500 párrafos, en inglés y en español. Puedes pedir cualquier párrafo por su referencia, buscar por palabras o por significado, y conectar un asistente de IA para que lea el texto real.
+
+No necesitas una clave, una cuenta ni un registro.
+
+## Elige tu camino
+
+<Columns cols={2}>
+  <Card title="Asistentes de IA" icon="comments" href="/es/assistants">
+    Conecta Claude, ChatGPT, Grok o Gemini. No necesitas programar.
+  </Card>
+  <Card title="Primeros pasos" icon="rocket" href="/es/quickstart">
+    Haz tu primera llamada a la API en español en un minuto.
+  </Card>
+</Columns>
+
+## El texto en español
+
+El texto en español es una traducción automática, publicada como CC0 (dominio público). Cada párrafo traducido lleva una etiqueta que lo indica. Muestra esa etiqueta a tus lectores, por ejemplo "Traducción automática".
+
+Para recibir el texto en español, agrega `lang=es` a la petición:
+
+```bash
+curl "https://api.urantia.dev/paragraphs/1:0.1?lang=es"
+```
+
+Sin `lang`, la API responde en inglés.
+
+## Qué sigue en inglés
+
+- **La documentación completa.** Estas páginas son un punto de partida. Las demás páginas, y la [referencia de la API](/api-reference/introduction), están en inglés.
+- **El audio.** Toda la narración está en inglés.
+- **El texto de la Biblia y de las otras obras.** Sus títulos y etiquetas están en español, pero el texto sigue en inglés.
+
+Para los detalles de cada endpoint en español, consulta [Translations](/translations) (en inglés).
+
+## Ayuda
+
+Para informar de una palabra equivocada o de un error, escribe a [kelson@urantia.dev](mailto:kelson@urantia.dev) y da la referencia del párrafo, por ejemplo 2:5.1.

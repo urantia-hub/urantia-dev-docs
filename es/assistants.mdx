@@ -1,0 +1,136 @@
+---
+title: "Usa los Documentos de Urantia en tu asistente de IA"
+sidebarTitle: "Asistentes de IA"
+description: "Conecta Claude, ChatGPT, Grok o Gemini a los Documentos de Urantia. El asistente lee el texto real y lo cita con referencias. No necesitas clave ni cuenta."
+---
+
+Puedes conectar un asistente de IA a los Documentos de Urantia. Después, el asistente busca el texto cuando le preguntas, y cita el párrafo con su referencia, por ejemplo 2:5.1. No responde de memoria.
+
+Solo necesitas una cosa, la dirección del servidor:
+
+```
+https://api.urantia.dev/mcp
+```
+
+No hay clave, ni cuenta, ni registro. La conexión solo lee el texto. No puede guardar ni cambiar nada.
+
+## Configúralo
+
+Elige tu asistente. Los pasos usan los nombres de los menús en inglés. Si tu aplicación está en español, busca el nombre equivalente. Cada empresa cambia sus menús de vez en cuando, así que un nombre puede ser un poco distinto. El enlace al final de cada pestaña abre las instrucciones de esa empresa.
+
+<Tabs>
+  <Tab title="Claude">
+    <Steps>
+      <Step title="Abre la configuración de conectores">
+        En Claude, abre **Settings** y luego **Connectors**.
+      </Step>
+      <Step title="Agrega un conector personalizado">
+        Selecciona **Add custom connector**. Como nombre, escribe `Urantia Papers`. Como dirección, pega `https://api.urantia.dev/mcp`. Selecciona **Add**.
+      </Step>
+      <Step title="Actívalo en una conversación">
+        En una conversación, selecciona **+**, luego **Connectors**, y activa **Urantia Papers**.
+      </Step>
+    </Steps>
+
+    Funciona en todos los planes de Claude. El plan Free permite un conector personalizado.
+
+    [Instrucciones de Claude para conectores personalizados](https://support.claude.com/en/articles/11175166)
+  </Tab>
+  <Tab title="ChatGPT">
+    <Steps>
+      <Step title="Abre el plugin">
+        Abre el [plugin Urantia Papers](https://chatgpt.com/plugins/plugin_asdk_app_6ac15926d5388191a941565bfaaa2a9a), o selecciona **Plugins** en ChatGPT y busca `Urantia Papers`.
+      </Step>
+      <Step title="Instálalo">
+        Selecciona **Install plugin**, o el **+** que aparece junto a él en los resultados.
+      </Step>
+      <Step title="Configúralo">
+        En la ventana que se abre, selecciona **Set up Urantia Papers**. ChatGPT inicia una conversación, carga la habilidad de investigación y comprueba la conexión.
+      </Step>
+      <Step title="Úsalo en una conversación">
+        Haz una pregunta que nombre los Documentos de Urantia, por ejemplo: "¿Qué dicen los Documentos de Urantia sobre el Ajustador del Pensamiento? Cita los párrafos con sus referencias."
+      </Step>
+    </Steps>
+
+    **Si el plugin no te aparece**, agrega el servidor a mano en el modo de desarrollador:
+
+    <Steps>
+      <Step title="Activa el modo de desarrollador">
+        En ChatGPT, abre **Settings** y luego **Apps & Connectors**. Abre **Advanced settings** y activa **Developer mode**.
+      </Step>
+      <Step title="Crea el conector">
+        Vuelve a **Apps & Connectors** y selecciona **Create**. Como nombre, escribe `Urantia Papers`. Como dirección, pega `https://api.urantia.dev/mcp`. Como autenticación, elige **No authentication**. Selecciona **Create**.
+      </Step>
+      <Step title="Úsalo en una conversación">
+        En una conversación nueva, selecciona **+** y elige **Urantia Papers**.
+      </Step>
+    </Steps>
+
+    El modo de desarrollador necesita un plan de pago de ChatGPT.
+
+    [Instrucciones de OpenAI para el modo de desarrollador](https://platform.openai.com/docs/guides/developer-mode)
+  </Tab>
+  <Tab title="Grok">
+    <Steps>
+      <Step title="Abre la página de conectores">
+        En Grok, selecciona **Plugins** en el menú lateral, o ve a [grok.com/connectors](https://grok.com/connectors).
+      </Step>
+      <Step title="Agrega un conector personalizado">
+        Selecciona **New Connector** y luego **Custom**. En **Name**, escribe `Urantia Papers`. En **Server URL**, pega `https://api.urantia.dev/mcp`. Selecciona **Add Connector**.
+      </Step>
+      <Step title="Comprueba que está conectado">
+        "Urantia Papers" aparece ahora en **Connected**.
+      </Step>
+      <Step title="Haz una pregunta">
+        Inicia una conversación y pregunta sobre los Documentos de Urantia.
+      </Step>
+    </Steps>
+
+    **Opcional: agrega la habilidad de investigación.** La habilidad le indica a Grok que use primero el conector y que cite solo el texto que encuentra. Las respuestas llegan más rápido y se apegan al texto. El archivo está en inglés, y funciona igual con preguntas en español.
+
+    1. Abre el [archivo de la habilidad](https://raw.githubusercontent.com/urantia-hub/urantia-papers-claude-code-plugin/main/skills/urantia-research/SKILL.md) y guarda la página en tu computadora con el nombre `SKILL.md`.
+    2. En Grok, abre **Skills**, luego **New Skill** y luego **Upload skill file**. Elige el archivo.
+    3. "urantia-research" aparece ahora en tus habilidades.
+
+    [Instrucciones de xAI para conectores](https://docs.x.ai/grok/connectors)
+  </Tab>
+  <Tab title="Gemini">
+    <Steps>
+      <Step title="Abre las aplicaciones conectadas">
+        En [Gemini](https://gemini.google.com), abre **Settings** y luego **Connected Apps**.
+      </Step>
+      <Step title="Agrega una aplicación personalizada">
+        En **Custom apps**, selecciona **Add a custom app**. Pega `https://api.urantia.dev/mcp` y selecciona **Next**.
+      </Step>
+    </Steps>
+
+    Google ofrece las aplicaciones personalizadas solo en algunos planes y cuentas. Si no ves **Add a custom app**, tu cuenta todavía no tiene esa función.
+  </Tab>
+</Tabs>
+
+<Note>
+  Probamos la conexión con Claude y con Grok. Los pasos de ChatGPT y Gemini vienen de las instrucciones de cada empresa. Si un paso no coincide con lo que ves, escribe a [kelson@urantia.dev](mailto:kelson@urantia.dev).
+</Note>
+
+## Qué preguntar
+
+Nombra los Documentos de Urantia en tu pregunta, para que el asistente sepa que debe buscarlos. Si preguntas en español, el asistente lee el texto en español.
+
+- "¿Qué dicen los Documentos de Urantia sobre el Ajustador del Pensamiento? Cita los párrafos con sus referencias."
+- "Muéstrame el párrafo 2:5.10 de los Documentos de Urantia, con los dos párrafos de antes y de después."
+- "Resume el documento 1 de los Documentos de Urantia y cita los párrafos que uses."
+- "¿Quién es Machiventa Melquisedec en los Documentos de Urantia?"
+- "¿Qué párrafos de los Documentos de Urantia se parecen más en significado a Mateo 5:3?"
+
+## Qué esperar
+
+- **El asistente pide permiso antes de buscar.** La primera vez, puede pedir permiso para usar el conector. Permítelo.
+- **Las respuestas traen referencias.** Una referencia como 110:4.2 significa documento 110, sección 4, párrafo 2. Puedes comprobar cualquier cita en esa referencia.
+- **Lee en inglés y en español.** El texto en español es una traducción automática. También puede leer la Biblia (World English Bible, en inglés) y encontrar párrafos relacionados entre las dos.
+- **Solo lee.** No puede guardar notas, marcadores ni nada sobre ti.
+
+Si una respuesta no trae referencias, pide: "Usa el conector de los Documentos de Urantia y cita el texto exacto."
+
+## Para herramientas de programación
+
+Para Claude Code, Cursor, Codex y otras herramientas de desarrollo, consulta [MCP Servers](/mcp-servers) (en inglés).
