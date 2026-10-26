@@ -51,11 +51,7 @@
     }
   },
   "navigation": {
-    "languages": [
-      {
-        "language": "en",
-        "default": true,
-        "tabs": [
+    "tabs": [
       {
         "tab": "Guides",
         "groups": [
@@ -198,18 +194,6 @@
             "group": "Tutorials",
             "pages": ["blog/daily-quote-bot", "blog/building-urantia-ai-chatbot", "blog/mcp-server-urantia-book"]
           }
-        ]
-      }
-    ]
-      },
-      {
-        "language": "es",
-        "navbar": {
-          "links": [{"label": "Demo", "href": "https://demo.urantia.dev"}],
-          "primary": {"type": "button", "label": "Primeros pasos", "href": "https://docs.urantia.dev/es/quickstart"}
-        },
-        "groups": [
-          {"group": "Documentación", "pages": ["es/index", "es/assistants", "es/quickstart"]}
         ]
       }
     ]
