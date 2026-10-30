@@ -125,8 +125,33 @@ Each work has `textLanguage: "eng"`, in every language. With `lang=es` it also h
 
 ## How the translation was made
 
-AI models translated the English, one paper at a time, with a glossary of the terms that the Papers use. No existing Spanish translation was a source. An automatic check compares each paragraph with published translations, and a paragraph that is too close goes back for a new translation.
+### Why a new translation
+
+The published Spanish translations of the Papers are under copyright. An app, a website, or an AI assistant cannot copy them or serve them without permission. This translation is CC0: anyone can copy it, change it, and use it, with no permission and no credit.
+
+### A clean room
+
+AI models translated the English, one paper at a time. Each model saw the English text of its paper and a glossary that gives one Spanish word for each term of the Papers. No model saw a published Spanish translation, and none could search the web.
+
+An automatic check compares each paragraph with published translations. A paragraph that is too close to one goes back for a new translation, written from the English again.
+
+### Review
+
+The checks look at each paragraph for its length, its numbers, and its terms. A paragraph that a check flags has `translation.review: "needs_review"`.
+
+Reviewers also read samples side by side with published Spanish editions, to find our errors. The reviewers were AI models, and they did not edit the text. Separate models made the fixes. They saw only the English, our Spanish, and the notes of the reviewers, which are in English. The first review, in October 2026, read 80 paragraphs from 10 papers. It led to these changes:
+
+- The names of peoples are lowercase, as Spanish writes them ("los noditas", "los anditas"), in 264 paragraphs
+- "Orden" is masculine for an order of beings, in 144 paragraphs
+- Small fixes in 19 other paragraphs
+
+### Style
 
 The text uses "ustedes" for the plural "you", lowercase pronouns for God ("él", "su"), and « » for quotations, so that it reads well in every Spanish-speaking country.
 
-To report a wrong word or an error, use [Feedback](/feedback) and give the reference of the paragraph.
+### Limits
+
+- It is a machine translation. A sentence can read too close to the English, and a word can have the wrong sense.
+- It is not a translation of Urantia Foundation, and the Foundation did not review or approve it.
+
+To report a wrong word or an error, use [Feedback](/feedback) and give the reference of the paragraph. A fix in the API reaches every app that uses it.
