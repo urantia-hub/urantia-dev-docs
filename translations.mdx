@@ -4,7 +4,7 @@ sidebarTitle: "Translations"
 description: "Spanish text for all 197 papers: add lang=es on the API, the MCP server, and the SDK."
 ---
 
-The Urantia Papers are available in Spanish: every paragraph of the Foreword and the 196 papers, and every paper, section, and part title. The Spanish is a machine translation, released as CC0 (public domain). Each translated paragraph has a label that says so.
+The Urantia Papers are available in Spanish: every paragraph of the Foreword and the 196 papers, and every paper, section, and part title. The Spanish is an AI translation, made with Claude Opus 5.5 in October 2026 and released as CC0 (public domain). No human translator wrote it. Each translated paragraph has a label that says so.
 
 ## Get the Spanish text
 
@@ -80,11 +80,11 @@ The other fields (`id`, `htmlText`, `labels`, `audio`, and the rest) are the sam
 | Field | Meaning |
 |---|---|
 | `language` | The language of `text`. A paragraph with no translation returns English and `"eng"` |
-| `translation.method` | Always `machine` |
+| `translation.method` | Always `machine`: an AI translation |
 | `translation.license` | Always `CC0-1.0` |
 | `translation.review` | `auto_checked`: the automatic checks found no problem. `needs_review`: a check flagged the paragraph (its length, a term, or a number), so a person should read it before you rely on it. About 1,240 paragraphs have `needs_review` |
 
-Show the label to your readers, for example "Machine translation". Do not present the Spanish as an official or human translation.
+Show the label to your readers, for example "AI translation". Do not present the Spanish as an official or human translation.
 
 ## In the MCP server
 
@@ -105,7 +105,7 @@ const { data: near } = await api.search.semantic({ q: '¿Qué es el alma?', lang
 
 ## The works in Spanish
 
-The Bible and the other works are English texts, and their text stays English. Their catalog words are in Spanish: the titles, traditions, summaries, unit and division labels, chapter titles, and the names of the Bible books. These are a machine translation too, released as CC0.
+The Bible and the other works are English texts, and their text stays English. Their catalog words are in Spanish: the titles, traditions, summaries, unit and division labels, chapter titles, and the names of the Bible books. These are an AI translation too, released as CC0.
 
 | Endpoint | What is in Spanish |
 | --- | --- |
@@ -131,9 +131,9 @@ The published Spanish translations of the Papers are under copyright. An app, a 
 
 ### How it was made
 
-1. **We built our own glossary, from the English.** The Papers use about 2,560 special terms: beings, places, orders, and words with a meaning of their own, such as "morontia" and "personality". For each term, an AI model found its meaning in the English text and chose one Spanish word. A second model chose a word on its own, and where the two differed, a third model decided. No published translation was a source.
-2. **Each paper went to a new AI model with three things only:** the English text of the paper, our glossary, and our style rules. The model never saw a published Spanish translation, and it could not search the web.
-3. **A program checked each paragraph for copying.** It is a program, not an AI model. It compares our text with the published Spanish editions and gives only a number: how much of the wording matches. Two human translations share about 13 to 34 percent of their wording, because both follow the same English. A paragraph above 60 percent went back to a new model, which got the English again and none of the old wording. The check is there because an AI model can remember a published translation from its training.
+1. **We built our own glossary, from the English.** The Papers use about 2,560 special terms: beings, places, orders, and words with a meaning of their own, such as "morontia" and "personality". For each term, an AI model found its meaning in the English text and chose one Spanish word. For each key concept and each term with less than high confidence, a second model chose a word on its own, without the first choice. Another model saw only the Spanish words and said what each one suggests. Where these results disagreed, a separate model decided. The models were Claude Opus 5.5, Claude Sonnet 5.5, and Claude Fable 5.1. No published translation was a source.
+2. **Claude Opus 5.5 translated each paper, in a new session for each paper, with three things only:** the English text of the paper, our glossary, and our style rules. The model never saw a published Spanish translation, and it could not search the web.
+3. **A program checked each paragraph for copying.** It is a program, not an AI model. It compares our text with the published Spanish editions and gives only a number: how much of the wording matches. Two human translations share about 13 to 34 percent of their wording, because both follow the same English. A paragraph above 60 percent went back to a new session, which got the English again and none of the old wording. The check is there because an AI model can remember a published translation from its training.
 
 ### How good it is
 
@@ -149,7 +149,7 @@ In October 2026, reviewers read 80 paragraphs from 10 papers, from all four part
 
 The minor issues in our text were 52 notes in 33 paragraphs: awkward wording (18), a word in a slightly wrong sense (14), grammar (10), a term (7), and a small omission or addition (3).
 
-These scores are from before the fixes below. The reviewers were AI models, from the same family as the models that translated the text, and they did not edit it. A review by Spanish speakers is a stronger test, and we have not done one yet.
+These scores are from before the fixes below. The reviewers were AI models (Claude Opus 5.5 and Claude Sonnet 5.5), from the same family as the model that translated the text, and they did not edit it. A review by Spanish speakers is a stronger test, and we have not done one yet.
 
 Separate models then made the fixes. They saw only the English, our Spanish, and the notes of the reviewers, which are in English. The changes:
 
@@ -165,7 +165,7 @@ The text uses "ustedes" for the plural "you", lowercase pronouns for God ("él",
 
 ### Limits
 
-- It is a machine translation. A sentence can read too close to the English, and a word can have the wrong sense.
+- It is an AI translation, and no human translator wrote it. A sentence can read too close to the English, and a word can have the wrong sense.
 - It is not a translation of Urantia Foundation, and the Foundation did not review or approve it.
 
 To report a wrong word or an error, use [Feedback](/feedback) and give the reference of the paragraph. A fix in the API reaches every app that uses it.
