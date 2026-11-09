@@ -155,7 +155,7 @@ The MCP server exposes 26 tools using dot-notation names organized into a naviga
 | `include_bible_parallels` | Top-10 Bible verses semantically nearest each UB paragraph. |
 | `include_urantia_parallels` | Top-10 Urantia paragraphs semantically nearest each UB paragraph (UB ↔ UB "see also"). |
 
-Both can be combined. Parallels are pre-computed via `text-embedding-3-large` cosine similarity, so adding them is cheap. Note: these are *semantic* neighbors, not curated linguistic parallels (e.g. Faw's Paramony), best results trend conceptual rather than verse-citation.
+Both can be combined. Parallels are pre-computed via `text-embedding-3-large` cosine similarity, so adding them is cheap. They are found by meaning, so they link passages on the same subject also when the words differ. See [How the links are made](/scriptures#how-the-links-are-made).
 
 ### Spanish text
 
