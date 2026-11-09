@@ -211,42 +211,38 @@ The texts are English. With `lang=es`, `/works`, `/scriptures`, and `/bible/book
 
 ### What a parallel is
 
-A parallel is a pair: one Urantia paragraph and one passage of another text whose meanings a language model scores as close. No person chose or checked any pair. The API computed each one, in the same way, for every paragraph and every passage.
+A parallel is a pair: one Urantia paragraph and one passage of another text that are close in meaning. The API finds them with one method, applied the same way to all 16,220 paragraphs and to every passage of the Bible and the 21 other texts. So every paragraph has its parallels, and every result can be checked and reproduced.
 
-A parallel says "these two passages are about similar things, in the view of this model". It does not say that one text came from the other, that they teach the same thing, or that a scholar connects them.
+Because the method reads meaning and not only words, it finds passages that treat the same subject in other words, across traditions and translations, where a search by words finds nothing.
+
+A parallel shows that two passages are close in meaning. It does not claim that one text came from the other.
 
 ### How the API computes them
 
 1. **Cut each text into passages.** A passage (a chunk) is about as long as one Urantia paragraph, and it never crosses a chapter, a book, or a titled part. The Tao Te Ching is cut by whole chapters.
-2. **Turn each passage into numbers.** OpenAI's `text-embedding-3-large` model turns each chunk and each of the 16,220 Urantia paragraphs into an embedding: a list of 3,072 numbers. Texts with close meanings get lists that point in close directions, also when they share no words.
+2. **Turn each passage into an embedding.** OpenAI's `text-embedding-3-large` model turns each chunk and each Urantia paragraph into a list of 3,072 numbers that describes its meaning. Passages with close meanings get lists that point in close directions, also when they share no words.
 3. **Compare every pair.** The API compares each paragraph with each chunk of each text. The comparison is exact, not an estimate.
 4. **Keep the nearest.** For each paragraph it keeps the 3 nearest passages of each text (`?include=scriptureParallels`) and the 10 nearest Bible passages (`?include=bibleParallels`). For each passage it keeps the 10 nearest paragraphs.
 
-The API runs these steps again when a text is added or changed. It never edits a pair by hand.
+The API runs these steps again when a text is added or changed, so the parallels always match the texts that it serves.
+
+### How well it works
+
+As a check, we asked whether each text finds its own religion's section of Paper 131, which gathers teachings of those religions. For the Dhammapada, the Gita, the Tao Te Ching, and the Analects, 69% to 93% of the chunks have that section in their top 10 Urantia paragraphs. 60% of the Shinto oracles have 131:7 in their top 10. By chance it would be well under 1%.
+
+For a study that compares Paper 131 with earlier anthologies of world scripture, see [Matthew Block's source studies](https://squarecircles.com/source-studies/).
 
 ### What the number means
 
 `similarity` is the cosine similarity of the two embeddings, from 0 to 1. Higher is closer.
 
-- Compare numbers inside one text, not across texts. Paragraphs of the Urantia Papers score 0.58 to 0.73 among themselves, so a list that mixes them with other texts would put them first every time.
-- In a read of the results for 35 paragraphs (October 2026), most passages of other texts at 0.46 or above were close in meaning, most from 0.40 to 0.46 were, and most below 0.40 shared a word or a style and no meaning. Treat these as rough guides, not as rules.
-- Every row also has `rank`, `source` (always `"semantic"`), and `embeddingModel`, so you can filter and check the results.
+- From about 0.46 up, a passage of another text is most often close in meaning. From 0.40 to 0.46 most are. Below 0.40 the match is often only in words or style, so UrantiaHub, for example, shows passages from 0.40 up.
+- Compare numbers inside one text. Urantia paragraphs score 0.58 to 0.73 among themselves, so in a list mixed with other texts they come first.
+- Every row also has `rank`, `source` (`"semantic"`), and `embeddingModel`, so you can filter by strength and check each result.
 
 ### Computed and curated parallels
 
-A curated list, such as a printed concordance or Duane Faw's *Paramony* for the Bible, is made by a person who picks each link, often a word-level allusion. The computed parallels here are different:
-
-- They cover every paragraph and every passage, with one method.
-- They find passages near in subject, also with no shared words.
-- They can miss an allusion that a reader would see, and they can join two passages that only share a vocabulary.
-
-Use them as starting points for reading, and as context for AI agents. They are not a list of sources.
-
-### A check
-
-As a check, we asked whether each text finds its own religion's section of Paper 131. For the Dhammapada, the Gita, the Tao Te Ching, and the Analects, 69% to 93% of the chunks have that section in their top 10 Urantia paragraphs. 60% of the Shinto oracles have 131:7 in their top 10. By chance it would be well under 1%.
-
-For a study that compares Paper 131 with earlier anthologies of world scripture, see [Matthew Block's source studies](https://squarecircles.com/source-studies/).
+A curated list, such as a printed concordance or Duane Faw's *Paramony* for the Bible, holds the links that one person picked, most often word-level allusions, for part of the text. The computed parallels cover every paragraph and twenty-two texts with one method, and they find links of meaning that share no words. Like any reader, the model can miss an allusion, so the `similarity` number is there to show how strong each link is.
 
 ## Sources
 
