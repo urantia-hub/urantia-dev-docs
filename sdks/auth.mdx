@@ -163,6 +163,22 @@ const { data: bookmarks } = await api.me.bookmarks.list()
 
 A `401` means that the token ended, or that the person removed your app in their account. Try one refresh. If the refresh is refused, clear your session.
 
+## Sync bookmarks and notes
+
+If your app keeps a copy of a person's bookmarks or notes, ask only for what changed. Pass `since` to the list, and keep the `syncedAt` of the answer for the next sync.
+
+```typescript
+const changes = await api.me.bookmarks.list({ since: lastSyncedAt, limit: 100 })
+for (const bookmark of changes.data) save(bookmark)        // made or changed at or after since
+for (const gone of changes.deleted ?? []) remove(gone.id)  // deleted at or after since
+lastSyncedAt = changes.syncedAt
+```
+
+- `GET /me/bookmarks?since=` and `GET /me/notes?since=` take an ISO 8601 time.
+- `syncedAt` is a little before the time of the read, so an item can come two times. Keep one item for each `id`.
+- The service keeps a delete for 90 days. A `since` older than that gets a `410`: get the full list again, without `since`.
+- There are no webhooks. Sync when your app opens or when the person asks.
+
 ## Permissions
 
 | Permission | What the person reads on the consent screen |
@@ -172,12 +188,33 @@ A `401` means that the token ended, or that the person removed your app in their
 | `notes` | See and change your notes |
 | `reading-progress` | See and change your reading progress |
 | `preferences` | See and change your reader settings |
+| `bookmarks:read` | See your bookmarks |
+| `notes:read` | See your notes |
+| `reading-progress:read` | See your reading progress |
+| `preferences:read` | See your reader settings |
+
+A read-only permission allows `GET` only. A full permission includes its read-only one, so a person who allowed `bookmarks` is not asked again for `bookmarks:read`. Start with read-only permissions if your app only reads.
 
 A token reaches only what its permissions allow. Your app can ask only for permissions that it registered. A new permission later asks the person again.
 
 ## What a person can do
 
-A person manages their account at [accounts.urantiahub.com](https://accounts.urantiahub.com). There they see each app that has access, remove one, or delete the account. A removal holds at once: your next request with that person's token gets a `401`. A good place for a link to that page is next to your sign-out button.
+A person manages their account at [accounts.urantiahub.com](https://accounts.urantiahub.com). There they see each app that has access, remove one, download a copy of their data as one file, or delete the account. A removal holds at once: your next request with that person's token gets a `401`. A good place for a link to that page is next to your sign-out button.
+
+## Data, security, and terms
+
+- **Where the data is**: account data is in a Postgres database at Supabase, in the United States, encrypted at rest. All traffic uses TLS.
+- **How it is kept**: row level security is on for every table. App secrets and refresh tokens are stored only as hashes. The service never stores a raw IP address.
+- **A breach**: if a breach touches the data of people who signed in through your app, we tell you and them without delay.
+- **If the service ends or changes hands**: people get the chance to download or delete their data first.
+- **Age**: the service is not for children. It is not directed at anyone under 18.
+- **Terms and privacy**: the [Terms of Service](/terms-of-service) and the [Privacy Policy](/privacy-policy) of urantia.dev cover the API and this SDK.
+- **License**: the content of the API is CC0 and the code is MIT. You can use all of it, in research and in published work. Credit is not required, and a link to urantia.dev is welcome.
+- **References**: the `/me` routes take a paragraph as `2:0.1`, `2.0.1`, or `1:2.0.1`, and store the global ID (`1:2.0.1`).
+- **Reading progress**: each app decides when a paragraph counts as read. The service stores what an app sends.
+- **Stability**: a change that breaks a route comes as a new route, never as a change of the old one. Changes are in the [changelog](/changelog).
+- **Rate limit**: 200 requests a minute for each caller address.
+- **Review and testing**: other people can use your app after a review. Until then, you, the owner, can sign in to it.
 
 ## Check a token in your own backend
 
