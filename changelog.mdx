@@ -6,6 +6,17 @@ description: "Latest updates and releases for the Urantia Papers API, documentat
 
 Stay updated on new features, improvements, and changes to the Urantia Papers API ecosystem.
 
+## November 2026
+
+### November 9, 2026
+
+#### Read-only permissions and sync
+
+- New permissions `bookmarks:read`, `notes:read`, `reading-progress:read`, and `preferences:read` allow `GET` only. See [Permissions](/sdks/auth#permissions).
+- `GET /me/bookmarks` and `GET /me/notes` take `since`, and answer `syncedAt` and `deleted`. See [Sync bookmarks and notes](/sdks/auth#sync-bookmarks-and-notes). `@urantia/api` 0.10.0 has the option, and its list types now say `pagination`, which is what the API answers.
+- A person can download a copy of their account data on their account page.
+- The `@urantia/auth` page has a section on data, security, and terms, and the Privacy Policy says what we do after a breach.
+
 ## October 2026
 
 ### October 29, 2026
