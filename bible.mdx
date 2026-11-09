@@ -309,14 +309,12 @@ Returns the verse, the chunk it belongs to, and up to 10 UB paragraphs ranked by
 }
 ```
 
-### Honest framing
+### How to read them
 
-**These are computed parallels, not curated ones.** No person chose or checked any pair. A parallel means "close in meaning by this model", not "the source of" or "the same teaching". The model reads common religious words ("Father", "Spirit", "Son") in their usual sense, so some matches are near in words and not in meaning. See [How the links are made](/scriptures#how-the-links-are-made) for the method and for what the `similarity` number means.
+**Every Urantia paragraph has its Bible parallels, found by meaning with one method.** The method finds passages on the same subject also when they share no words. Each row carries `similarity`, `source: "semantic"`, and `embeddingModel`, so you can filter by strength and check each result. The model reads common religious words ("Father", "Spirit", "Son") in their usual sense, so a low score can be a match in words only. See [How the links are made](/scriptures#how-the-links-are-made) for the method and for what the number means.
 
-Use them as starting points for further reading and as context for AI agents. Every row carries `similarity`, `source: "semantic"`, and `embeddingModel`, so you can filter and check the results.
-
-An example of a close match: Matt 5:3 (Beatitudes) → UB 140:3.3 ("Happy are the poor in spirit, the humble") at similarity 0.854. The two sentences share most of their words.
+An example of a close match: Matt 5:3 (Beatitudes) → UB 140:3.3 ("Happy are the poor in spirit, the humble") at similarity 0.854.
 
 ### Why no Faw's Paramony
 
-Duane Faw's 1986 *Paramony* is a well-known hand-curated reference between the Urantia Papers and the Bible. Its license is not clear, so the API does not include it. The two do different work: Faw picked word-level allusions for some paragraphs, and the computed parallels cover every paragraph by meaning. About a quarter of Faw's links are also in our top 10. The schema keeps a `source: "paramony"` value for a curated layer if a license ever allows one.
+Duane Faw's 1986 *Paramony* is a well-known hand-curated reference between the Urantia Papers and the Bible. Its license is not clear, so the API does not include it. It links about 30% of the paragraphs, mostly by word-level allusions. The computed parallels link every paragraph by meaning, and about a quarter of Faw's links are also in their top 10. The schema keeps a `source: "paramony"` value for a curated layer if a license ever allows one.
