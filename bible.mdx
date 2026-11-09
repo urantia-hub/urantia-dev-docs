@@ -311,12 +311,12 @@ Returns the verse, the chunk it belongs to, and up to 10 UB paragraphs ranked by
 
 ### Honest framing
 
-**These are *semantic* parallels, not curated parallels.** OpenAI's embedding model treats surface-level vocabulary as meaning, but the Urantia Papers use standard religious terms ("Father", "Spirit", "Son") in nonstandard ways. Some matches will be subtly wrong.
+**These are computed parallels, not curated ones.** No person chose or checked any pair. A parallel means "close in meaning by this model", not "the source of" or "the same teaching". The model reads common religious words ("Father", "Spirit", "Son") in their usual sense, so some matches are near in words and not in meaning. See [How the links are made](/scriptures#how-the-links-are-made) for the method and for what the `similarity` number means.
 
-Use them as starting points for further reading and as RAG context for AI agents, not as authoritative parallels. Every row carries `similarity`, `source: "semantic"`, and `embeddingModel` so consumers can filter and audit.
+Use them as starting points for further reading and as context for AI agents. Every row carries `similarity`, `source: "semantic"`, and `embeddingModel`, so you can filter and check the results.
 
 An example of a close match: Matt 5:3 (Beatitudes) → UB 140:3.3 ("Happy are the poor in spirit, the humble") at similarity 0.854. The two sentences share most of their words.
 
 ### Why no Faw's Paramony
 
-Duane Faw's 1986 *Paramony* is the gold-standard hand-curated UB↔Bible reference, but its license is uncertain and we generate strictly better RAG context with semantic search at 100% paragraph coverage (vs Faw's ~30%). Our schema reserves a `source: "paramony"` value for a future curated layer if his license ever clears.
+Duane Faw's 1986 *Paramony* is a well-known hand-curated reference between the Urantia Papers and the Bible. Its license is not clear, so the API does not include it. The two do different work: Faw picked word-level allusions for some paragraphs, and the computed parallels cover every paragraph by meaning. About a quarter of Faw's links are also in our top 10. The schema keeps a `source: "paramony"` value for a curated layer if a license ever allows one.
