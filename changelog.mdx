@@ -10,6 +10,12 @@ Stay updated on new features, improvements, and changes to the Urantia Papers AP
 
 ### November 9, 2026
 
+#### Text edition, scripture parallels in MCP, and kept deletes
+
+- [Edition of the text](/preservation#edition-of-the-text): the API serves the Standard Reference Text, downloaded from Urantia Foundation in January 2024.
+- The MCP paragraph and search tools take `include_scripture_parallels`: the 3 passages nearest in meaning from each of the 21 world religions texts. `@urantia/api` 0.11.0 has the `ScriptureParallel` type.
+- Sync keeps at most the newest 1,000 deletes of each kind for a person. See [Sync bookmarks and notes](/sdks/auth#sync-bookmarks-and-notes).
+
 #### Read-only permissions and sync
 
 - New permissions `bookmarks:read`, `notes:read`, `reading-progress:read`, and `preferences:read` allow `GET` only. See [Permissions](/sdks/auth#permissions).

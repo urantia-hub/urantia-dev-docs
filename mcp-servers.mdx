@@ -148,14 +148,15 @@ The MCP server exposes 26 tools using dot-notation names organized into a naviga
 
 ### Cross-reference enrichment on existing tools
 
-`paragraphs.get`, `paragraphs.random`, `search.fulltext`, and `search.semantic` accept two optional booleans that attach pre-computed semantic neighbors to each result:
+`paragraphs.get`, `paragraphs.random`, `search.fulltext`, and `search.semantic` accept three optional booleans that attach pre-computed semantic neighbors to each result:
 
 | Param | What you get |
 |-------|--------------|
 | `include_bible_parallels` | Top-10 Bible verses semantically nearest each UB paragraph. |
 | `include_urantia_parallels` | Top-10 Urantia paragraphs semantically nearest each UB paragraph (UB ↔ UB "see also"). |
+| `include_scripture_parallels` | The 3 passages nearest in meaning from each of the 21 world religions texts, for each UB paragraph. |
 
-Both can be combined. Parallels are pre-computed via `text-embedding-3-large` cosine similarity, so adding them is cheap. They are found by meaning, so they link passages on the same subject also when the words differ. See [How the links are made](/scriptures#how-the-links-are-made).
+All three can be combined. Parallels are pre-computed via `text-embedding-3-large` cosine similarity, so adding them is cheap. They are found by meaning, so they link passages on the same subject also when the words differ. See [How the links are made](/scriptures#how-the-links-are-made).
 
 ### Spanish text
 

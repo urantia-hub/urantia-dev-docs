@@ -176,7 +176,7 @@ lastSyncedAt = changes.syncedAt
 
 - `GET /me/bookmarks?since=` and `GET /me/notes?since=` take an ISO 8601 time.
 - `syncedAt` is a little before the time of the read, so an item can come two times. Keep one item for each `id`.
-- The service keeps a delete for 90 days. A `since` older than that gets a `410`: get the full list again, without `since`.
+- The service keeps a delete for 90 days, and at most the newest 1,000 deletes of bookmarks, and of notes, for each person. A `since` older than 90 days, or older than the oldest kept delete when the 1,000 are full, gets a `410`: get the full list again, without `since`.
 - There are no webhooks. Sync when your app opens or when the person asks.
 
 ## Permissions
