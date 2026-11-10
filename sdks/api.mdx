@@ -141,7 +141,7 @@ await api.me.bookmarks.delete('2:0.1')
 // Notes
 await api.me.notes.create({ ref: '2:0.1', text: 'Insightful passage' })
 const { data: notes } = await api.me.notes.list()
-await api.me.notes.update(noteId, { text: 'Updated text' })
+await api.me.notes.update(note.id, { text: 'Updated text', updatedAt: note.updatedAt }) // 0.12.0
 await api.me.notes.delete(noteId)
 
 // Reading Progress

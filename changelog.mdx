@@ -10,6 +10,12 @@ Stay updated on new features, improvements, and changes to the Urantia Papers AP
 
 ### November 9, 2026
 
+#### 2024 text corrections and safe note changes
+
+- The text now has the 2 corrections that Urantia Foundation approved in 2024: 98:3.8 reads "two-score", and 133:7.9 reads "associator". The text is now the same as the Foundation download 1.22. See [Edition of the text](/preservation#edition-of-the-text).
+- `PUT /me/notes/{id}` requires the `updatedAt` that your app read. If the note changed after that, the answer is a `409` with the note as it is now in `current`. `@urantia/api` 0.12.0 throws `NoteConflictError`. See [Change a note that another app can change](/sdks/auth#change-a-note-that-another-app-can-change).
+- Two saves of a bookmark of the same paragraph, at the same moment, make one bookmark.
+
 #### Text edition, scripture parallels in MCP, and kept deletes
 
 - [Edition of the text](/preservation#edition-of-the-text): the API serves the Standard Reference Text, downloaded from Urantia Foundation in January 2024.

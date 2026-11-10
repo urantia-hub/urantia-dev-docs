@@ -179,6 +179,25 @@ lastSyncedAt = changes.syncedAt
 - The service keeps a delete for 90 days, and at most the newest 1,000 deletes of bookmarks, and of notes, for each person. A `since` older than 90 days, or older than the oldest kept delete when the 1,000 are full, gets a `410`: get the full list again, without `since`.
 - There are no webhooks. Sync when your app opens or when the person asks.
 
+### Change a note that another app can change
+
+A person can change the same note in two apps. Send the `updatedAt` of the note as your app read it. If the note changed after that, the API refuses the change, so your app does not write over the other change.
+
+```typescript
+import { NoteConflictError } from '@urantia/api'
+
+try {
+  await api.me.notes.update(note.id, { text, updatedAt: note.updatedAt })
+} catch (err) {
+  if (!(err instanceof NoteConflictError)) throw err
+  show(err.current)  // the note as it is now; ask the person, then send again with err.current.updatedAt
+}
+```
+
+- `PUT /me/notes/{id}` requires `updatedAt` (since November 9, 2026). Without it, the answer is a `400`.
+- If the note changed, the answer is a `409` with the note as it is now in `current`. `@urantia/api` 0.12.0 throws `NoteConflictError`, with that note in `err.current`.
+- Two saves of a bookmark of the same paragraph make one bookmark. The first save answers `201`, and a later save answers `200`.
+
 ## Permissions
 
 | Permission | What the person reads on the consent screen |
