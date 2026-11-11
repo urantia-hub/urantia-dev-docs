@@ -61,7 +61,7 @@
           },
           {
             "group": "Data",
-            "pages": ["papers", "paragraphs", "translations", "verify-quotes", "entities", "bible", "scriptures", {"group": "Each text", "pages": ["works/quran", "works/bhagavad-gita", "works/tao-te-ching", "works/book-of-mormon", "works/dhammapada", "works/analects", "works/rig-veda", "works/upanishads", "works/book-of-the-dead", "works/poetic-edda", "works/prose-edda", "works/kojiki", "works/chuang-tzu", "works/homeric-hymns", "works/hesiod", "works/japji", "works/shinto-oracles", "works/aztec-hymns", "works/shu-king", "works/diogenes-laertius-6", "works/epictetus-cynic"]}, "audio", "video", "cdn"]
+            "pages": ["papers", "paragraphs", "editions", "translations", "verify-quotes", "entities", "bible", "scriptures", {"group": "Each text", "pages": ["works/quran", "works/bhagavad-gita", "works/tao-te-ching", "works/book-of-mormon", "works/dhammapada", "works/analects", "works/rig-veda", "works/upanishads", "works/book-of-the-dead", "works/poetic-edda", "works/prose-edda", "works/kojiki", "works/chuang-tzu", "works/homeric-hymns", "works/hesiod", "works/japji", "works/shinto-oracles", "works/aztec-hymns", "works/shu-king", "works/diogenes-laertius-6", "works/epictetus-cynic"]}, "audio", "video", "cdn"]
           },
           {
             "group": "SDKs",
@@ -110,6 +110,13 @@
               "api-reference/endpoint/get-random-paragraph",
               "api-reference/endpoint/get-paragraph",
               "api-reference/endpoint/get-paragraph-context"
+            ]
+          },
+          {
+            "group": "Editions",
+            "pages": [
+              "api-reference/endpoint/list-editions",
+              "api-reference/endpoint/list-variants"
             ]
           },
           {

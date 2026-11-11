@@ -67,6 +67,11 @@ const { data: p } = await api.paragraphs.get('2:0.1')
 const { data: random } = await api.paragraphs.random()
 const { data: ctx } = await api.paragraphs.context('2:0.1', { window: 3 })
 
+// Editions (0.13.0): the 1955 text and the changes since then
+const { data: old } = await api.paragraphs.get('98:3.8', { edition: '1955', include: 'variants' })
+const { data: editions } = await api.editions.list()
+const { data: changes } = await api.editions.variants({ paper: 98 })
+
 // Entities
 const { data: entities } = await api.entities.list({ type: 'being', limit: 20 })
 const { data: entity } = await api.entities.get('jesus')

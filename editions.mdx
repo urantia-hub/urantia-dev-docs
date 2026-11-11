@@ -1,0 +1,101 @@
+---
+title: "Editions of the text"
+sidebarTitle: "Editions"
+description: "Read the English text as it was in 1955 or in each Standard Reference Text, and see each change with its source."
+---
+
+The API serves the Standard Reference Text of 2024 by default: the Urantia Foundation download 1.22. Add `edition` to a request to read an older edition, and `include=variants` to see each change to a paragraph since 1955.
+
+| Edition id | Edition | Changes adopted in its year |
+|---|---|---|
+| `1955` | First printing (1955) | |
+| `srt-2009` | Standard Reference Text, 2009 | 161 |
+| `srt-2015` | Standard Reference Text, 2015 | 7 |
+| `srt-2018` | Standard Reference Text, 2018 | 7 |
+| `srt-2021` | Standard Reference Text, 2021 (Foundation download 21) | 4 |
+| `srt-2024` | Standard Reference Text, 2024 (Foundation download 1.22), the default | 2 |
+
+The API also accepts the Foundation's number (`1.22`, `21`) or its version stamp (`UF-202412132348`) as the id. `GET /editions` gives this list.
+
+## Get the text of an edition
+
+```bash
+curl "https://api.urantia.dev/paragraphs/98:3.8?edition=1955"
+```
+
+The 1955 text of 98:3.8 reads "more than twoscore self-elevated human deities". The default edition reads "two-score". Each paragraph in the answer has `edition`, and the answer has `meta.edition`:
+
+```json
+"meta": {
+  "edition": {
+    "id": "1955",
+    "label": "First printing (1955)",
+    "year": 1955,
+    "foundationVersion": null,
+    "versionStamp": null
+  }
+}
+```
+
+`edition` works on:
+
+- `GET /paragraphs/{ref}`, `GET /paragraphs/{ref}/context`, and `GET /paragraphs/random`
+- `GET /papers/{id}`
+- The MCP tools `paragraphs.get`, `paragraphs.context`, and `papers.get`
+- `@urantia/api` 0.13.0: `api.paragraphs.get(ref, { edition: '1955' })` and `api.papers.get(id, { edition: '1955' })`
+
+Search reads the default edition only, and its answers say so in `meta.edition`. Older editions are in English only: an edition other than the default with `lang=es` is a `400`. An id that the API does not know is a `400` with the type `unknown-edition`.
+
+## See the changes
+
+Add `include=variants` to see the changes to each paragraph. Most paragraphs have none, and get `[]`.
+
+```bash
+curl "https://api.urantia.dev/paragraphs/98:3.8?include=variants"
+```
+
+```json
+"variants": [
+  {
+    "year": 2024,
+    "kind": "text",
+    "before": "more than twoscore self-elevated human deities",
+    "after": "more than two-score self-elevated human deities",
+    "applied": true,
+    "source": { "list": "adopted-corrections-1955-text", "report": "approved-2024" },
+    "page1955": "1081.2",
+    "reason": "The hyphenated form is the consistent usage elsewhere in the text. The decision was made to standardize on that form."
+  }
+]
+```
+
+| Field | Meaning |
+|---|---|
+| `year` | The year of the committee report that adopted the change. `null` when no report lists it. |
+| `kind` | `text`: words or punctuation. `format`: italics only. `printing`: a fault of the printed 1955 book that no electronic text had. |
+| `before`, `after` | The words before the change (the 1955 wording) and after it. |
+| `applied` | `true` when the default edition has the change. |
+| `source` | The Foundation's list of adopted corrections and the committee report. Both are `null` for a change that no list records. |
+| `foundBy` | `"scan"` for a change that no list records, found in the photos of the 1955 pages. |
+| `page1955` | The page (and paragraph) of the first printing. |
+| `reason` | The committee's reason, from the Foundation's list. |
+
+`GET /editions/variants` lists all 181 changes. Filter with `paper=98`, `ref=98:3.8`, or `kind=text`.
+
+## How each edition is made
+
+The API stores the default edition. It makes an older edition from it: it undoes each `text` change of a later year, newest first. The changes come from Urantia Foundation sources only: the [list of adopted corrections](https://urantia.org/study/adopted-corrections-1955-text) and the committee reports on the [text standardization page](https://www.urantia.org/urantia-book/text-standardization-detail).
+
+- **`srt-2024`** is the Foundation download 1.22, word for word.
+- **`srt-2021`** is the same, word for word, as the Foundation download of January 2024 (download 21) in all 14,593 paragraphs. 26 table rows differ in white space only.
+- **`1955`** was compared with the photos of each page of a first printing ([archive.org](https://archive.org/details/TheUrantiaBook1955FirstEdition)). 178 of the listed changes match the photos. At 162:7.2 the 1955 page breaks "bond- / servant" at a line end, so the photo cannot show if the hyphen is part of the word. The scan has no pages 2092 to 2097, so 196:3.35 is not compared. A compare of the whole book found one change that no list records: in 1955, 27:6.4 has no comma in "every possible method of instruction including the higher graph technique". The `1955` edition has that row, with `foundBy: "scan"`.
+- **`srt-2009`, `srt-2015`, and `srt-2018`** are made from the year of each report. No Foundation download of their time is available to compare them with.
+
+## Limits
+
+- `htmlText` of an older edition changes only the words of each change, so its markup stays. A `format` change (italics only) is not undone in an older edition.
+- A `printing` change is a fault of the printed 1955 book. No edition of the API has it.
+- Two listed changes are not in download 1.22: 58:1.7 (a comma, adopted in 2015) and the brackets of 119:8.9. They have `applied: false`, and the text of each edition has the 1955 wording there.
+- The references (`2:0.1`) are the standard references, the same in each edition.
+
+To check a quote word for word, use [Verify quotes](/verify-quotes).
