@@ -162,6 +162,10 @@ All three can be combined. Parallels are pre-computed via `text-embedding-3-larg
 
 `toc.get`, `papers.list`, `papers.get`, `papers.sections`, `paragraphs.get`, `paragraphs.context`, and `paragraphs.random` accept `lang: "es"` for the Spanish translation of the text and titles. Each Spanish paragraph has `language` and a `translation` label (an AI translation, CC0). `search.fulltext` and `search.semantic` also accept `lang: "es"`: the keyword search reads the Spanish text, and the semantic search takes a question in Spanish and returns the Spanish paragraphs. See [Translations](/translations).
 
+### Editions of the text
+
+`paragraphs.get`, `paragraphs.context`, and `papers.get` accept `edition` for an older edition of the English text: `"1955"`, `"srt-2009"`, `"srt-2015"`, `"srt-2018"`, `"srt-2021"`, or `"srt-2024"` (the default). `include_variants: true` adds each change to a paragraph since 1955, with its year, 1955 page, and reason. See [Editions of the text](/editions).
+
 ### Resources
 
 In addition to tools, the server exposes two resource templates clients can read directly:

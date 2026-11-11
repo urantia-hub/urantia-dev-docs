@@ -8,6 +8,17 @@ Stay updated on new features, improvements, and changes to the Urantia Papers AP
 
 ## November 2026
 
+### November 11, 2026
+
+#### Editions of the text
+
+- `edition` on `GET /paragraphs/{ref}`, `/paragraphs/{ref}/context`, `/paragraphs/random`, and `/papers/{id}` gives the text of an older edition: `1955` or a Standard Reference Text from 2009 to 2021. The default stays `srt-2024`. See [Editions of the text](/editions)
+- `include=variants` gives each change to a paragraph since 1955: the words before and after, the year, the 1955 page, and the reason
+- New endpoints: `GET /editions` and `GET /editions/variants`
+- Each answer of these routes, and of search, has `meta.edition`
+- The MCP tools `paragraphs.get`, `paragraphs.context`, and `papers.get` take `edition` and `include_variants`
+- `@urantia/api` 0.13.0 adds the `edition` option, `include: 'variants'`, and `api.editions`
+
 ### November 9, 2026
 
 #### 2024 text corrections and safe note changes
