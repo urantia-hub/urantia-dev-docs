@@ -180,7 +180,8 @@ This is the real response to the request above:
                     "text": "added"
                 }
             ],
-            "edition": "srt-2024"
+            "edition": "srt-2024",
+            "editions": ["1955", "srt-2009", "srt-2015", "srt-2018", "srt-2021", "srt-2024"]
         },
         "claimedReference": {
             "ref": "47:3.7",
@@ -197,7 +198,7 @@ This is the real response to the request above:
   - `close`: the same passage, with small changes.
   - `not_found`: the quote is not in the Urantia Papers.
 - **`match`** is the best paragraph: its reference, the exact text that the quote matches, and a similarity from 0 to 1. For `not_found`, it is the nearest paragraph, or `null` when none is near.
-- **`edition`** is the edition of the text that the quote matches: `srt-2024` (the default), or an older one when the quote has the older wording. See [Editions of the text](/editions).
+- **`edition`** is the newest edition of the text that the quote matches: `srt-2024` (the default), or an older one when the quote has the older wording. **`editions`** lists each edition that has the quoted wording, oldest first. See [Editions of the text](/editions).
 - **`differences`** lists each place the quote differs, as the quote's words and the words in the text. An empty side means a word was added or left out.
 - **`claimedReference`** says whether the reference you gave exists, and how the quote compares with that paragraph. A right quote with a wrong reference shows as `not_found` here and `exact` in `verdict`.
 - **`alsoFoundAt`** lists other references where the quote appears word for word.
@@ -206,6 +207,6 @@ This is the real response to the request above:
 
 Case and punctuation are ignored, and curly and straight quote marks count as the same. The API finds the paragraphs that share the most words with the quote, then aligns the words of each one with the quote to find the matching passage.
 
-A quote of an older edition matches too. "a roster of more than twoscore self-elevated human deities" is the wording of 98:3.8 before the 2024 correction, so it is `exact` with `edition: "srt-2021"`, the newest edition with that wording, and `variants` lists the change. A change of punctuation, a capital letter, or a hyphen is not seen, because those are ignored. Such a quote matches the default edition.
+A quote of an older edition matches too. "a roster of more than twoscore self-elevated human deities" is the wording of 98:3.8 before the 2024 correction, so it is `exact` with `edition: "srt-2021"`, the newest edition with that wording. `editions` is `["1955", "srt-2009", "srt-2015", "srt-2018", "srt-2021"]`: the wording was in the first printing and changed in 2024. `variants` lists the change. A change of punctuation, a capital letter, or a hyphen is not seen, because those are ignored. Such a quote matches the default edition.
 
 A quote must fall within one paragraph. A quote that spans two paragraphs shows as `close` or `not_found`.

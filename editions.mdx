@@ -9,13 +9,15 @@ The API serves the Standard Reference Text of 2024 by default: the Urantia Found
 | Edition id | Edition | Changes adopted in its year |
 |---|---|---|
 | `1955` | First printing (1955) | |
-| `srt-2009` | Standard Reference Text, 2009 | 161 |
+| `srt-2009` | Standard Reference Text, 2009 | 161 (156 dated 2009, and 5 that no report dates) |
 | `srt-2015` | Standard Reference Text, 2015 | 7 |
 | `srt-2018` | Standard Reference Text, 2018 | 7 |
 | `srt-2021` | Standard Reference Text, 2021 (Foundation download 21) | 4 |
 | `srt-2024` | Standard Reference Text, 2024 (Foundation download 1.22), the default | 2 |
 
-The API also accepts the Foundation's number (`1.22`, `21`) or its version stamp (`UF-202412132348`) as the id. `GET /editions` gives this list.
+The API also accepts the Foundation's number (`1.22`, `21`) or its version stamp (`UF-202412132348`) as the id. `GET /editions` and the MCP tool `editions.list` give this list.
+
+A change with no report year (`year: null`) is in every Standard Reference Text, so it counts with `srt-2009`. 1955 has no changes: it is the original.
 
 ## Get the text of an edition
 
@@ -80,7 +82,9 @@ curl "https://api.urantia.dev/paragraphs/98:3.8?include=variants"
 | `page1955` | The page (and paragraph) of the first printing. |
 | `reason` | The committee's reason, from the Foundation's list. |
 
-`GET /editions/variants` lists all 181 changes. Filter with `paper=98`, `ref=98:3.8`, or `kind=text`.
+`GET /editions/variants` lists all 181 changes. Filter with `paper=98`, `ref=98:3.8`, `kind=text`, or `edition=srt-2021` (the changes adopted in that edition). The MCP tool `editions.variants` takes the same filters.
+
+To compare 1955 with a later edition, take the changes of each edition after 1955 up to it. 1955 and `srt-2018` differ by the changes of `srt-2009`, `srt-2015`, and `srt-2018`.
 
 ## How each edition is made
 
@@ -97,5 +101,7 @@ The API stores the default edition. It makes an older edition from it: it undoes
 - A `printing` change is a fault of the printed 1955 book. No edition of the API has it.
 - Two listed changes are not in download 1.22: 58:1.7 (a comma, adopted in 2015) and the brackets of 119:8.9. They have `applied: false`, and the text of each edition has the 1955 wording there.
 - The references (`2:0.1`) are the standard references, the same in each edition.
+- The audio reads the default edition. An older edition gives the same `audio` links.
+- [Verify quotes](/verify-quotes) ignores case, punctuation, and hyphens, so it does not see a change of only those. A quote with the 1955 capital letters matches the default edition.
 
 To check a quote word for word, use [Verify quotes](/verify-quotes).
