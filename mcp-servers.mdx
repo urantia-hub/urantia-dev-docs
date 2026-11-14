@@ -1,7 +1,7 @@
 ---
 title: "MCP server for the Urantia Papers"
 sidebarTitle: "MCP Servers"
-description: "Connect Claude, Cursor, or any MCP client to the Urantia Papers. 26 tools, 2 resource templates, 2 prompts. No key needed."
+description: "Connect Claude, Cursor, or any MCP client to the Urantia Papers. 28 tools, 2 resource templates, 2 prompts. No key needed."
 ---
 
 The Urantia Papers API has a built-in [Model Context Protocol](https://modelcontextprotocol.io) (MCP) server. An AI agent that connects to it can read and search the Urantia Papers and quote them by reference.
@@ -10,7 +10,7 @@ The Urantia Papers API has a built-in [Model Context Protocol](https://modelcont
 https://api.urantia.dev/mcp
 ```
 
-It has 26 read-only tools, 2 resource templates, and 2 prompts. It needs no key, no account, and no local process.
+It has 28 read-only tools, 2 resource templates, and 2 prompts. It needs no key, no account, and no local process.
 
 Not a developer? See [AI Assistants](/assistants) for steps in Claude, ChatGPT, Grok, and Gemini.
 
@@ -78,7 +78,7 @@ Use the same `mcpServers` block as for Cursor. The server works with any client 
 
 ### Available Tools
 
-The MCP server exposes 26 tools using dot-notation names organized into a navigable namespace tree. All tools advertise read-only annotations and ship with output schemas for structured responses.
+The MCP server exposes 28 tools using dot-notation names organized into a navigable namespace tree. All tools advertise read-only annotations and ship with output schemas for structured responses.
 
 #### Structure & Navigation
 
@@ -146,6 +146,13 @@ The MCP server exposes 26 tools using dot-notation names organized into a naviga
 | `quotes.verify` | Check whether a quote is in the Urantia Papers: `exact`, `close`, or `not_found`, with the reference. |
 | `cite.get` | A citation of one paragraph in APA, MLA, Chicago, or BibTeX. |
 
+#### Editions
+
+| Tool | Description |
+|------|-------------|
+| `editions.list` | The editions of the English text, from the 1955 first printing to `srt-2024` (the default), with the count of changes each one adopted. |
+| `editions.variants` | The changes to the text since 1955. Filter by `paper`, `ref`, `kind`, or `edition` (the changes adopted in that edition). |
+
 ### Cross-reference enrichment on existing tools
 
 `paragraphs.get`, `paragraphs.random`, `search.fulltext`, and `search.semantic` accept three optional booleans that attach pre-computed semantic neighbors to each result:
@@ -164,7 +171,9 @@ All three can be combined. Parallels are pre-computed via `text-embedding-3-larg
 
 ### Editions of the text
 
-`paragraphs.get`, `paragraphs.context`, and `papers.get` accept `edition` for an older edition of the English text: `"1955"`, `"srt-2009"`, `"srt-2015"`, `"srt-2018"`, `"srt-2021"`, or `"srt-2024"` (the default). `include_variants: true` adds each change to a paragraph since 1955, with its year, 1955 page, and reason. See [Editions of the text](/editions).
+`paragraphs.get`, `paragraphs.context`, and `papers.get` accept `edition` for an older edition of the English text: `"1955"`, `"srt-2009"`, `"srt-2015"`, `"srt-2018"`, `"srt-2021"`, or `"srt-2024"` (the default). `include_variants: true` adds each change to a paragraph since 1955, with its year, 1955 page, and reason. `editions.list` and `editions.variants` list the editions and all the changes. See [Editions of the text](/editions).
+
+The answer to `initialize` has `instructions`: a short guide to the references, the tools, and the editions, for the agent to read.
 
 ### Resources
 
@@ -217,7 +226,7 @@ Both give you access to the same data. Choose based on your use case:
 | **Best for** | AI agents (Claude, Cursor, etc.) | Apps, scripts, manual exploration |
 | **Protocol** | JSON-RPC over Streamable HTTP | Standard HTTP |
 | **Auth** | None | None |
-| **Surface** | 26 tools, 2 resources, 2 prompts | All endpoints + `/tools/openai`, `/tools/anthropic` for SDK use |
+| **Surface** | 28 tools, 2 resources, 2 prompts | All endpoints + `/tools/openai`, `/tools/anthropic` for SDK use |
 | **Response format** | MCP content blocks | JSON with `data`/`meta` wrappers |
 
 ## Docs MCP Server
