@@ -12,7 +12,7 @@ Streamable HTTP transport. No key and no sign-in. Add it to any MCP client (Clau
 
 {"mcpServers":{"urantia-papers":{"url":"https://api.urantia.dev/mcp"}}}
 
-26 tools: toc.get, papers.list, papers.get, papers.sections, paragraphs.random, paragraphs.get, paragraphs.context, search.fulltext, search.semantic, entities.list, entities.get, entities.paragraphs, audio.get, bible.books, bible.book, bible.chapter, bible.verse, bible.verse.urantia_parallels, bible.search.semantic, works.list, works.search, works.search.semantic, works.read, works.urantia_parallels, quotes.verify, cite.get.
+28 tools: toc.get, papers.list, papers.get, papers.sections, paragraphs.random, paragraphs.get, paragraphs.context, search.fulltext, search.semantic, entities.list, entities.get, entities.paragraphs, audio.get, bible.books, bible.book, bible.chapter, bible.verse, bible.verse.urantia_parallels, bible.search.semantic, works.list, works.search, works.search.semantic, works.read, works.urantia_parallels, quotes.verify, cite.get, editions.list, editions.variants.
 
 2 resource templates: urantia://paper/{id} and urantia://entity/{id}.
 2 prompt templates: study_assistant and comparative_theology.
@@ -22,6 +22,8 @@ Recommended flow for an agent:
 2. search.semantic for a question, or search.fulltext for exact words.
 3. paragraphs.context, to read the paragraphs around a result.
 4. papers.get, when the whole paper matters.
+
+Editions: the text is the Standard Reference Text of 2024 (srt-2024) by default. editions.list gives each edition, from the 1955 first printing (the original). editions.variants lists the changes since 1955; from and to give each change between two editions in one call. paragraphs.get, paragraphs.context, and papers.get take edition ("1955") and include_variants. Guide: https://docs.urantia.dev/editions
 
 Setup guide: https://docs.urantia.dev/mcp-servers
 Agent guide: https://docs.urantia.dev/ai-agents
@@ -80,7 +82,12 @@ Add ?include=entities,bibleParallels,urantiaParallels,scriptureParallels to a pa
 The cross-references are semantic neighbors computed from embeddings. They are not a curated list, and a match does not mean two teachings are the same.
 
 ### Verify a quote
-- POST /quotes/verify: checks whether a quotation is in the Urantia Papers. Body: {"text": "the quoted words", "ref": "2:5.1"} (ref optional). Returns exact, close, or not_found, with the reference, the exact text, and each word that differs
+- POST /quotes/verify: checks whether a quotation is in the Urantia Papers. Body: {"text": "the quoted words", "ref": "2:5.1"} (ref optional). Returns exact, close, or not_found, with the reference, the exact text, and each word that differs. It also matches the wording of an older edition: match.editions lists each edition that has it.
+
+### Editions of the text
+- GET /editions: the editions, from 1955 (the first printing) to srt-2024 (the default), with the count of changes each adopted
+- GET /editions/variants: each change since 1955. Filter with paper, ref, kind, edition (one edition), or from and to (between two editions, such as from=1955&to=srt-2015)
+- ?edition=1955 on /paragraphs/{ref}, /paragraphs/{ref}/context, /paragraphs/random, and /papers/{id} gives the older text; ?include=variants adds each change
 
 ### Audio, citations, and more
 - GET /audio/:ref: narration URLs for a paragraph

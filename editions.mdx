@@ -84,7 +84,7 @@ curl "https://api.urantia.dev/paragraphs/98:3.8?include=variants"
 
 `GET /editions/variants` lists all 181 changes. Filter with `paper=98`, `ref=98:3.8`, `kind=text`, or `edition=srt-2021` (the changes adopted in that edition). The MCP tool `editions.variants` takes the same filters.
 
-To compare 1955 with a later edition, take the changes of each edition after 1955 up to it. 1955 and `srt-2018` differ by the changes of `srt-2009`, `srt-2015`, and `srt-2018`.
+To compare two editions, use `from` and `to`: `GET /editions/variants?from=1955&to=srt-2015` gives each change between the first printing and `srt-2015`. The defaults are `1955` and `srt-2024`. `meta.applied` counts the changes that the default text has.
 
 ## How each edition is made
 

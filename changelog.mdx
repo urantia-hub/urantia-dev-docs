@@ -13,7 +13,7 @@ Stay updated on new features, improvements, and changes to the Urantia Papers AP
 #### Editions in MCP
 
 - New MCP tools: `editions.list` (the editions and their counts of changes) and `editions.variants` (the changes since 1955, by paper, paragraph, kind, or edition). The MCP server has 28 tools. See [Editions of the text](/editions)
-- `GET /editions/variants` takes `edition`: the changes adopted in that edition
+- `GET /editions/variants` takes `edition`: the changes adopted in that edition. `from` and `to` give each change between two editions, such as `from=1955&to=srt-2015`, and `meta.applied` counts the changes that the default text has
 - [Verify quotes](/verify-quotes) adds `match.editions`: each edition that has the quoted wording, oldest first
 - The MCP answer to `initialize` has `instructions` and a server description
 - A `format` change no longer has an empty `<em></em>` in `before` or `after`
