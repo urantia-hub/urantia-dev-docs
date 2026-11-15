@@ -137,12 +137,10 @@ The published Spanish translations of the Papers are under copyright. An app, a 
 
 ### How good it is
 
-We tested the translation two times, with blind reviews. A reviewer read the English paragraph and several Spanish versions side by side, with no names, so it did not know which version was ours. For each version it gave a score from 1 to 5 for accuracy (the same meaning as the English) and for fluency (natural Spanish), and it listed each error as major (a change of meaning) or minor. It also ranked the versions from best to worst.
-
-#### Second test, November 2026
+In November 2026 we tested the translation with a blind review. A reviewer read the English paragraph and several Spanish versions side by side, with no names, so it did not know which version was ours. For each version it gave a score from 1 to 5 for accuracy (the same meaning as the English) and for fluency (natural Spanish), and it listed each error as major (a change of meaning) or minor. It also ranked the versions from best to worst.
 
 - **Four versions:** ours and the three published Spanish editions: 1993 (Latin America), 2009 (Europe), and 2021 (International).
-- **A new sample:** 80 paragraphs from 10 papers (5, 12, 27, 41, 59, 85, 99, 120, 143, and 174), from all four parts of the book.
+- **The sample:** 80 paragraphs from 10 papers (5, 12, 27, 41, 59, 85, 99, 120, 143, and 174), from all four parts of the book.
 - **Eight reviewers from three AI companies:** Anthropic (Claude Opus 5.5 two times, Claude Sonnet 5.5 two times, and Claude Fable 5.2), OpenAI (GPT-6 Astra and GPT-6.1 Sol), and Google (Gemini 4 Carbon). Each reviewer worked on its own. GPT-6 Astra reviewed 9 of the 10 papers, so the test has 632 reviews.
 
 | Measure, all 632 reviews | This translation | 2021 (International) | 2009 (Europe) | 1993 (Latin America) |
@@ -164,27 +162,15 @@ The result is the same when the reviewers are not from Anthropic, the company th
 
 The main difference is accuracy. In fluency, our text and the 2021 edition are close (4.63 and 4.54).
 
-#### First test, October 2026
-
-80 paragraphs from 10 papers, two reviewers for each paragraph (Claude Opus 5.5 and Claude Sonnet 5.5), and three versions: ours, the 2009 edition, and the 1993 edition.
-
-| Measure | This translation | 2009 (Europe) | 1993 (Latin America) |
-|---|---|---|---|
-| Accuracy, average of 5 | 4.93 | 4.58 | 4.21 |
-| Reviews that gave 5 for accuracy | 93 percent | 61 percent | 36 percent |
-| Fluency, average of 5 | 4.84 | 4.67 | 3.87 |
-| Major errors noted | 0 | 6 | 26 |
-| Reviews that noted no error | 73 percent | 32 percent | 8 percent |
-
-#### What these tests do not show
+#### What the test does not show
 
 - The reviewers are AI models. A review by people who speak Spanish is a stronger test, and we have not done one yet.
 - 80 paragraphs are a sample, not the whole book.
-- The scores of each test are from before the fixes that followed it.
+- The scores are from before the fixes that followed the test.
 
 ### How the fixes were made
 
-After each test, we read the notes of the reviewers on our text. We fixed a note only when we agreed with it. Separate AI models made the fixes, and they saw only three things: the English, our Spanish, and the problem, written in English. They never saw a published translation or a Spanish wording from a reviewer.
+After each review, we read the notes of the reviewers on our text. We fixed a note only when we agreed with it. Separate AI models made the fixes, and they saw only three things: the English, our Spanish, and the problem, written in English. They never saw a published translation or a Spanish wording from a reviewer.
 
 Each fix then had to pass the copy check again. The check compares the paragraph with each published edition. A fix failed when the paragraph matched an edition more than 60 percent, or when the fix made the match more than 10 points higher. A failed fix went back to a new session and was written again from the English.
 
@@ -192,8 +178,8 @@ A fix must also keep our glossary and our term decisions. A reviewer does not kn
 
 The fixes:
 
-- **October 2026:** the names of peoples are lowercase, as Spanish writes them ("los noditas", "los anditas"), in 264 paragraphs. "Orden" is masculine for an order of beings, in 144 paragraphs. Small fixes in 19 other paragraphs.
-- **November 2026:** 103 paragraphs.
+- **October 2026, after an earlier review with fewer versions and reviewers:** the names of peoples are lowercase, as Spanish writes them ("los noditas", "los anditas"), in 264 paragraphs. "Orden" is masculine for an order of beings, in 144 paragraphs. Small fixes in 19 other paragraphs.
+- **November 2026, after the test above:** 103 paragraphs.
   - 25 errors of meaning, grammar, and wording that the reviewers found.
   - The same problems in other paragraphs of the book. "Revolve" became "orbitar" where the English means an orbit, in 16 paragraphs. "Self-conscious" became "autoconsciente", in 23 paragraphs. "Should" became "debería" where the English gives advice beside a "must", in 30 paragraphs.
   - 9 paragraphs that now follow the term decisions.
