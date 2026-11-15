@@ -141,15 +141,15 @@ In November 2026 we tested the translation with a blind review. A reviewer read 
 
 - **Four versions:** ours and the three published Spanish editions: 1993 (Latin America), 2009 (Europe), and 2021 (International).
 - **The sample:** 80 paragraphs from 10 papers (5, 12, 27, 41, 59, 85, 99, 120, 143, and 174), from all four parts of the book.
-- **Eight reviewers from three AI companies:** Anthropic (Claude Opus 5.5 two times, Claude Sonnet 5.5 two times, and Claude Fable 5.2), OpenAI (GPT-6 Astra and GPT-6.1 Sol), and Google (Gemini 4 Carbon). Each reviewer worked on its own. GPT-6 Astra reviewed 9 of the 10 papers, so the test has 632 reviews.
+- **Eight reviewers from three AI companies:** Anthropic (Claude Opus 5.5 two times, Claude Sonnet 5.5 two times, and Claude Fable 5.2), OpenAI (GPT-6 Astra and GPT-6.1 Sol), and Google (Gemini 4 Carbon). Each reviewer worked on its own and read all 80 paragraphs, so the test has 640 reviews.
 
-| Measure, all 632 reviews | This translation | 2021 (International) | 2009 (Europe) | 1993 (Latin America) |
+| Measure, all 640 reviews | This translation | 2021 (International) | 2009 (Europe) | 1993 (Latin America) |
 |---|---|---|---|---|
 | Ranked best | 70 percent | 14 percent | 14 percent | 2 percent |
 | Average rank (1 is best, 4 is last) | 1.42 | 2.57 | 2.46 | 3.55 |
 | Accuracy, average of 5 | 4.93 | 4.25 | 4.38 | 3.90 |
-| Fluency, average of 5 | 4.63 | 4.54 | 4.47 | 3.53 |
-| Major errors noted | 6 | 150 | 115 | 290 |
+| Fluency, average of 5 | 4.63 | 4.55 | 4.47 | 3.53 |
+| Major errors noted | 6 | 157 | 116 | 303 |
 
 Our version ranked above the 2021 edition in 81 percent of the reviews, above the 2009 edition in 82 percent, and above the 1993 edition in 95 percent.
 
@@ -158,15 +158,14 @@ The result is the same when the reviewers are not from Anthropic, the company th
 | Reviewers | Reviews | Ours ranked best | Ours: accuracy | Ours: major errors | 2021: accuracy | 2021: major errors |
 |---|---|---|---|---|---|---|
 | Anthropic only | 400 | 72 percent | 4.92 | 1 | 4.22 | 46 |
-| OpenAI and Google only | 232 | 67 percent | 4.95 | 5 | 4.30 | 104 |
+| OpenAI and Google only | 240 | 67 percent | 4.95 | 5 | 4.30 | 111 |
 
-The main difference is accuracy. In fluency, our text and the 2021 edition are close (4.63 and 4.54).
+The main difference is accuracy. In fluency, our text and the 2021 edition are close (4.63 and 4.55).
 
 #### What the test does not show
 
 - The reviewers are AI models. A review by people who speak Spanish is a stronger test, and we have not done one yet.
 - 80 paragraphs are a sample, not the whole book.
-- The scores are from before the fixes that followed the test.
 
 ### How the fixes were made
 
