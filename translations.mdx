@@ -82,7 +82,7 @@ The other fields (`id`, `htmlText`, `labels`, `audio`, and the rest) are the sam
 | `language` | The language of `text`. A paragraph with no translation returns English and `"eng"` |
 | `translation.method` | Always `machine`: an AI translation |
 | `translation.license` | Always `CC0-1.0` |
-| `translation.review` | `auto_checked`: the automatic checks found no problem. `needs_review`: a check flagged the paragraph (its length, a term, or a number), so a person should read it before you rely on it. About 1,240 paragraphs have `needs_review` |
+| `translation.review` | `auto_checked`: the automatic checks found no problem. `needs_review`: a check flagged the paragraph (its length, a term, or a number), so a person should read it before you rely on it. In November 2026 we read every flagged paragraph, so no paragraph has `needs_review` now |
 
 Show the label to your readers, for example "AI translation". Do not present the Spanish as an official or human translation.
 
@@ -182,8 +182,12 @@ The fixes:
   - 25 errors of meaning, grammar, and wording that the reviewers found.
   - The same problems in other paragraphs of the book. "Revolve" became "orbitar" where the English means an orbit, in 16 paragraphs. "Self-conscious" became "autoconsciente", in 23 paragraphs. "Should" became "debería" where the English gives advice beside a "must", in 30 paragraphs.
   - 9 paragraphs that now follow the term decisions.
+- **November 2026, after a read of every flagged paragraph:** 32 paragraphs.
+  - The automatic checks flagged about 1,240 paragraphs. Most flags were false alarms: an English word in its ordinary sense ("actual" for "real", "love" as a verb), or a correct Spanish form that the check did not see. We made the checks better, and we read each remaining flag with its paragraph and the glossary.
+  - 30 paragraphs got fixes. "Devil" became "diablo" in 11 paragraphs. The technical "actual" became "en acto" in 5. Other fixes are "indwelling", "star cloud", "pattern", "ghost worship", "adánico" for consistency, and 2 words that a sentence had dropped.
+  - 2 paragraphs read too close to a published edition, and we wrote them again from the English.
 
-Each paragraph also has an automatic check for its length, its numbers, and its terms. A paragraph that a check flags has `translation.review: "needs_review"`.
+Each paragraph also has an automatic check for its length, its numbers, and its terms. A paragraph that a check flags has `translation.review: "needs_review"`. A flag that we read and found wrong is recorded for that exact text, so a later change to the paragraph is checked again.
 
 ### Style
 
